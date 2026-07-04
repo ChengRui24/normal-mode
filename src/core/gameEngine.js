@@ -57,26 +57,25 @@ export function resolveChapterOutcome(chapterId, state) {
   const self = state.stats.self ?? 0;
   const energy = state.stats.energy ?? 0;
   const relationship = state.stats.relationship ?? 0;
-  const money = state.stats.money ?? 0;
 
-  if (state.tags.includes("公开表达") && reputation <= 2 && evidence <= 0 && relationship <= 2) {
-    return { id: "backlash", label: "反噬", counters: { explainedIntent: 3 } };
+  if (state.tags.includes("public_post") && evidence <= 1 && relationship <= 3) {
+    return { id: "backlash", label: "反噬", counters: { explain: 3 } };
   }
 
-  if (evidence >= 2 && reputation >= 9 && self >= 9) {
-    return { id: "recognized", label: "问题被部分承认", counters: { recognition: 1 } };
+  if (evidence >= 3 && reputation >= 5 && self >= 5) {
+    return { id: "recognized", label: "问题被部分承认", counters: {} };
   }
 
-  if (state.tags.includes("退出成本") && (money >= 3 || self >= 9)) {
-    return { id: "left", label: "退出环境", counters: { paidForSafety: 1 } };
+  if (state.tags.includes("exit_cost")) {
+    return { id: "left", label: "退出环境", counters: {} };
   }
 
-  if (evidence >= 1 && energy <= 5) {
+  if (evidence >= 1 && energy <= 3) {
     return { id: "recorded", label: "流程记录但处理有限", counters: {} };
   }
 
   if (energy <= 2 || relationship <= 2) {
-    return { id: "stopped", label: "放弃处理", counters: { gaveUpForProof: 1 } };
+    return { id: "stopped", label: "放弃处理", counters: {} };
   }
 
   return { id: "limited", label: "问题未闭合", counters: {} };
@@ -84,14 +83,14 @@ export function resolveChapterOutcome(chapterId, state) {
 
 export function buildEndingStats(state) {
   return [
-    ["修改表达方式", state.counters.adjustedExpression ?? 0],
-    ["放弃近路", state.counters.avoidedShortcut ?? 0],
-    ["假装有人同行", state.counters.pretendedAccompanied ?? 0],
-    ["保存证据", state.counters.savedEvidence ?? 0],
-    ["笑着跳过不适", state.counters.laughedOffDiscomfort ?? 0],
-    ["解释自己没有恶意", state.counters.explainedIntent ?? 0],
-    ["为了安全额外付费", state.counters.paidForSafety ?? 0],
-    ["因为无法证明而放弃", state.counters.gaveUpForProof ?? 0]
+    ["放弃近路", state.counters.detour ?? 0],
+    ["解释自己", state.counters.explain ?? 0],
+    ["保存证据", state.counters.evidenceSaved ?? 0],
+    ["把话收回去", state.counters.silence ?? 0],
+    ["为安全额外付费", state.counters.paidSafety ?? 0],
+    ["暂时退让", state.counters.concede ?? 0],
+    ["让别人知道", state.counters.seekHelp ?? 0],
+    ["明确拒绝", state.counters.clearRefusal ?? 0]
   ];
 }
 
@@ -129,6 +128,8 @@ export function buildEndingStatusLines(state) {
 export function resolvePassStyle(state) {
   const dangerous = STAT_KEYS.filter((key) => (state.stats[key] ?? STAT_MAX) <= DANGER_MAX);
   const counters = state.counters ?? {};
+  const tags = state.tags ?? [];
+  const routeStrategyCount = (counters.detour ?? 0) + (counters.paidSafety ?? 0) + (counters.seekHelp ?? 0);
 
   if (dangerous.length >= 3) {
     return {
@@ -138,7 +139,7 @@ export function resolvePassStyle(state) {
     };
   }
 
-  if ((state.stats.safety ?? STAT_MAX) <= DANGER_MAX) {
+  if ((state.stats.safety ?? STAT_MAX) <= DANGER_MAX || routeStrategyCount >= 5) {
     return {
       id: "high-alert",
       label: "高警觉通关",
@@ -146,7 +147,7 @@ export function resolvePassStyle(state) {
     };
   }
 
-  if ((state.stats.energy ?? STAT_MAX) <= DANGER_MAX) {
+  if (((state.stats.energy ?? STAT_MAX) <= DANGER_MAX && (state.stats.reputation ?? 0) >= 6) || tags.includes("default_filler") || tags.includes("invisible_labor")) {
     return {
       id: "overworked",
       label: "过劳通关",
@@ -154,7 +155,7 @@ export function resolvePassStyle(state) {
     };
   }
 
-  if ((state.stats.relationship ?? STAT_MAX) <= DANGER_MAX) {
+  if ((state.stats.relationship ?? STAT_MAX) <= DANGER_MAX && (counters.seekHelp ?? 0) <= 1) {
     return {
       id: "isolated",
       label: "孤立通关",
@@ -162,7 +163,7 @@ export function resolvePassStyle(state) {
     };
   }
 
-  if ((state.stats.self ?? STAT_MAX) <= DANGER_MAX && (state.stats.reputation ?? 0) >= 6) {
+  if ((state.stats.reputation ?? 0) >= 8 && (state.stats.self ?? STAT_MAX) <= 3 && ((counters.silence ?? 0) + (counters.concede ?? 0)) >= 2) {
     return {
       id: "low-conflict",
       label: "低冲突通关",
@@ -170,7 +171,7 @@ export function resolvePassStyle(state) {
     };
   }
 
-  if ((state.stats.self ?? 0) >= 9 && ((counters.explainedIntent ?? 0) + (counters.savedEvidence ?? 0)) >= 3) {
+  if ((state.stats.self ?? 0) >= 8 && (state.stats.energy ?? STAT_MAX) <= 4 && ((counters.explain ?? 0) + (counters.evidenceSaved ?? 0)) >= 3) {
     return {
       id: "appeal",
       label: "申诉通关",
@@ -178,7 +179,7 @@ export function resolvePassStyle(state) {
     };
   }
 
-  if ((state.tags ?? []).includes("退出成本")) {
+  if (tags.includes("exit_cost")) {
     return {
       id: "exited",
       label: "退出通关",
@@ -196,16 +197,16 @@ export function resolvePassStyle(state) {
 export function buildCostLines(state) {
   const lines = [];
   if ((state.stats.money ?? 0) <= INITIAL_STATS.money - 2) {
-    lines.push("为了安全和退出，你支付了更多费用。");
+    lines.push("很多选择不是你不想选，而是在出现前就被余额拿走了。");
   }
   if ((state.stats.safety ?? 0) <= INITIAL_STATS.safety - 2) {
-    lines.push("没有发生的事，也参与塑造了你。");
+    lines.push("你没有一直遇到危险，但你一直在为危险做准备。");
   }
   if ((state.stats.energy ?? 0) <= INITIAL_STATS.energy - 2) {
-    lines.push("你完成了很多补救、解释和整理。");
+    lines.push("你还能继续生活，只是不再总有力气解释。");
   }
   if ((state.stats.self ?? 0) <= INITIAL_STATS.self - 2) {
-    lines.push("很多次你选择让事情过去。");
+    lines.push("你不是没有边界，只是边界每次都需要力气。");
   }
   if ((state.stats.relationship ?? 0) <= INITIAL_STATS.relationship - 2) {
     lines.push("你不是没有人，只是求助也有成本。");

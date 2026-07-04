@@ -5,15 +5,14 @@ const TABLE_FILES = ["cards.csv", "choices.csv", "triggers.csv", "stat-config.cs
 const CARD_GROUPS = ["intro", "level", "settlement", "ending", "crisis", "insert"];
 const ORDINARY_GROUPS = new Set(["intro", "level", "settlement", "ending"]);
 const COUNTER_KEYS = [
-  "adjustedExpression",
-  "avoidedShortcut",
-  "pretendedAccompanied",
-  "savedEvidence",
-  "laughedOffDiscomfort",
-  "explainedIntent",
-  "paidForSafety",
-  "gaveUpForProof",
-  "recognition"
+  "detour",
+  "seekHelp",
+  "explain",
+  "silence",
+  "concede",
+  "clearRefusal",
+  "evidenceSaved",
+  "paidSafety"
 ];
 
 function empty(value) {
@@ -338,7 +337,14 @@ export function buildContentTables({ levels, statConfig }) {
 }
 
 function compactObject(object) {
-  return Object.fromEntries(Object.entries(object).filter(([, value]) => value !== undefined && value !== ""));
+  return Object.fromEntries(
+    Object.entries(object).filter(([, value]) => {
+      if (value === undefined || value === "") return false;
+      if (Array.isArray(value)) return value.length > 0;
+      if (value && typeof value === "object") return Object.keys(value).length > 0;
+      return true;
+    })
+  );
 }
 
 function buildChoice(row, config) {
@@ -480,10 +486,17 @@ export function buildDataModulesFromTables(tables) {
   const triggerRows = parseCsv(tables["triggers.csv"]);
   const config = configFromTable(parseCsv(tables["stat-config.csv"]));
   const cards = buildCards(cardRows, choiceRows, triggerRows, config);
-  const groups = Object.fromEntries(
-    CARD_GROUPS.map((group) => [group, sortedRows(cards.filter((card, index) => cardRows[index].group === group).map((card, index) => ({ ...card, order: cardRows.find((row) => row.id === card.id)?.order ?? index })))])
-  );
   const cardById = new Map(cards.map((card) => [card.id, card]));
+  const groups = Object.fromEntries(
+    CARD_GROUPS.map((group) => [
+      group,
+      sortedRows(
+        cardRows
+          .filter((row) => row.group === group)
+          .map((row) => ({ ...cardById.get(row.id), order: row.order }))
+      ).map(({ order, ...card }) => card)
+    ])
+  );
   const orderedCardIds = sortedRows(
     cardRows
       .filter((row) => !empty(row.playOrder))

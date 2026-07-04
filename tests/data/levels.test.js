@@ -14,7 +14,7 @@ import { createInitialState } from "../../src/core/initialState.js";
 
 const expectedOrderedIds = [
   "P-I",
-  "P-01", "P-02", "P-03", "P-04",
+  "P-01", "P-02", "P-03", "P-04", "P-S",
   "C1-I",
   "C1-01", "C1-02", "C1-03", "C1-04", "C1-05", "C1-06", "C1-07", "C1-S",
   "C2-I",
@@ -28,12 +28,49 @@ const expectedOrderedIds = [
   "C6-I",
   "C6-01", "C6-02", "C6-03", "C6-04", "C6-05", "C6-06", "C6-07", "C6-08", "C6-S",
   "E-I",
-  "E-01", "E-02", "E-03", "E-04", "E-05", "E-06", "E-07", "E-08", "E-09", "E-10"
+  "E-01", "E-02", "E-03", "E-04", "E-05", "E-06", "E-07", "E-08", "E-09", "E-10", "E-11"
 ];
 
 const statKeySet = new Set(STAT_KEYS);
 const hiddenKeySet = new Set(HIDDEN_KEYS);
 const counterKeySet = new Set(Object.keys(createInitialState().counters));
+const forbiddenBeforeReveal = [
+  "女性",
+  "女人",
+  "女生",
+  "男性",
+  "男人",
+  "性别",
+  "女权",
+  "父权",
+  "凝视",
+  "弱者",
+  "弱位",
+  "处境",
+  "压迫",
+  "规训",
+  "结构性",
+  "受害者",
+  "骚扰",
+  "创伤"
+];
+
+function textFields(card) {
+  return [
+    card.chapterTitle,
+    card.kicker,
+    card.title,
+    card.text,
+    card.scene,
+    card.content,
+    card.objective,
+    card.buttonLabel,
+    card.reveal,
+    ...(card.choices ?? []).flatMap((choice) => [choice.label, choice.result])
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
 
 describe("level data", () => {
   it("keeps the approved one-playthrough order", () => {
@@ -64,10 +101,10 @@ describe("level data", () => {
       "P-I", "C1-I", "C2-I", "C3-I", "C4-I", "C5-I", "C6-I", "E-I"
     ]);
     expect(SETTLEMENT_CARDS.map((card) => card.id)).toEqual([
-      "C1-S", "C2-S", "C3-S", "C4-S", "C5-S", "C6-S"
+      "P-S", "C1-S", "C2-S", "C3-S", "C4-S", "C5-S", "C6-S"
     ]);
     expect(ENDING_CARDS.map((card) => card.id)).toEqual([
-      "E-01", "E-02", "E-03", "E-04", "E-05", "E-06", "E-07", "E-08", "E-09", "E-10"
+      "E-01", "E-02", "E-03", "E-04", "E-05", "E-06", "E-07", "E-08", "E-09", "E-10", "E-11"
     ]);
   });
 
@@ -97,7 +134,7 @@ describe("level data", () => {
       chapterTitle: "第一章：筛选",
       kicker: "第一章",
       title: "筛选",
-      text: "你需要获得一个位置。这里的人会看你的资料、回答、语气、反应，也会看一些你以为不该重要的东西。你还不知道，很多评价会留下来。",
+      text: "你需要获得一个位置。这里的人会看你的资料、回答、语气和反应，也会看一些你以为不该重要的东西。你还不知道，很多评价会留下来。",
       objective: "目标：获得一个位置。",
       buttonLabel: "进入筛选",
       theme: {
@@ -108,6 +145,7 @@ describe("level data", () => {
     });
 
     expect(getCardById("E-I").buttonLabel).toBe("查看结果");
+    expect(getCardById("C5-I").objective).toBe("目标：靠近别人，同时保留距离。");
   });
 
   it("uses colder chapter settlement copy without mechanic explanations", () => {
@@ -118,7 +156,7 @@ describe("level data", () => {
       chapterTitle: "第一章：筛选",
       title: "记录更新",
       text: "你获得了一个位置。它暂时接收你，也开始要求你用之后的表现继续证明自己。",
-      reveal: "记录更新：信誉。"
+      reveal: "记录更新：信誉。有些评价会留下来，之后还会被调用。"
     });
 
     expect(getCardById("C6-S")).toEqual({
@@ -152,13 +190,46 @@ describe("level data", () => {
     expect(getCardById("E-01").title).toBe("记录完成");
     expect(getCardById("E-01").title).not.toBe("数值总览");
     expect(getCardById("E-04").title).toBe("通关方式");
-    expect(getCardById("E-08").title).toBe("档案更新");
-    expect(getCardById("E-10").title).toBe("普通生活");
+    expect(getCardById("E-08").title).toBe("角色档案二");
+    expect(getCardById("E-10").title).toBe("主题揭示");
+    expect(getCardById("E-11").title).toBe("二周目入口");
   });
 
   it("includes at least one conditional insert card", () => {
     expect(INSERT_CARDS.length).toBeGreaterThanOrEqual(1);
-    expect(INSERT_CARDS[0].trigger.tagsAll).toContain("低电量风险");
+    expect(INSERT_CARDS[0].trigger.tagsAll).toContain("low_battery");
+  });
+
+  it("keeps v0.4 hidden keys and counter keys", () => {
+    expect(HIDDEN_KEYS).toEqual(["time", "evidence", "exposure", "credit", "conflict"]);
+    expect(Object.keys(createInitialState().counters)).toEqual([
+      "detour",
+      "seekHelp",
+      "explain",
+      "silence",
+      "concede",
+      "clearRefusal",
+      "evidenceSaved",
+      "paidSafety"
+    ]);
+  });
+
+  it("keeps direct topic words out of pre-ending text", () => {
+    const preRevealCards = [
+      ...INTRO_CARDS.filter((card) => card.id !== "E-I"),
+      ...LEVEL_CARDS,
+      ...SETTLEMENT_CARDS,
+      ...CRISIS_CARDS,
+      ...INSERT_CARDS,
+      ...ENDING_CARDS.filter((card) => ["E-01", "E-02", "E-03", "E-04", "E-05", "E-06", "E-07"].includes(card.id))
+    ];
+
+    for (const card of preRevealCards) {
+      const text = textFields(card);
+      for (const word of forbiddenBeforeReveal) {
+        expect(text, `${card.id} contains ${word}`).not.toContain(word);
+      }
+    }
   });
 
   it("uses only approved schema keys in ordinary and insert cards", () => {
@@ -194,8 +265,7 @@ describe("level data", () => {
   it("keeps approved insert triggers and disabled-choice requirements", () => {
     expect(getCardById("I-C3-footsteps").trigger).toEqual({
       afterCardId: "C3-04",
-      tagsAll: ["低电量风险", "人少夜路"],
-      hiddenMax: {},
+      tagsAll: ["low_battery", "night_quiet_route"],
       statMax: { safety: 2 }
     });
 
@@ -217,5 +287,6 @@ describe("level data", () => {
   it("can retrieve cards by id", () => {
     expect(getCardById("C3-04").title).toBe("加班后的路线");
     expect(getCardById("C6-08").title).toBe("处理结果");
+    expect(getCardById("P-S").text).toBe("你准时抵达。今天没有发生什么。只是你已经调整过自己，确认过电量，避开过一次不确定，也把一段普通的路走得比导航更长。");
   });
 });

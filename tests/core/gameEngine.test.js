@@ -37,18 +37,18 @@ describe("game engine choice application", () => {
       label: "打车",
       result: "你不用走夜路了，但余额又少了一截。",
       effects: { money: -2, safety: 1 },
-      hiddenEffects: { enclosed: 1 },
-      tagsAdded: ["平台行程"],
+      hiddenEffects: { time: 1 },
+      tagsAdded: ["platform_trip"],
       visibleChanges: ["money", "safety"],
-      track: { paidForSafety: 1 }
+      track: { paidSafety: 1 }
     });
 
     expect(next.phase).toBe("result");
     expect(next.stats.money).toBe(4);
     expect(next.stats.safety).toBe(7);
-    expect(next.hidden.enclosed).toBe(1);
-    expect(next.tags).toContain("平台行程");
-    expect(next.counters.paidForSafety).toBe(1);
+    expect(next.hidden.time).toBe(1);
+    expect(next.tags).toContain("platform_trip");
+    expect(next.counters.paidSafety).toBe(1);
     expect(next.pendingResult.visibleChanges).toEqual([
       { key: "money", label: "钱", delta: -2 },
       { key: "safety", label: "安全感", delta: 1 }
@@ -122,7 +122,7 @@ describe("game engine choice application", () => {
       hiddenEffects: {},
       tagsAdded: ["继续消耗"],
       visibleChanges: ["self", "energy", "money"],
-      track: { explainedIntent: 1 }
+      track: { explain: 1 }
     });
 
     expect(next.pendingResult.visibleChanges).toEqual([
@@ -212,15 +212,21 @@ describe("game engine progression", () => {
 
     const next = advanceAfterResult(state);
 
-    expect(next.currentCardId).toBe("C1-I");
-    expect(next.phase).toBe("intro");
-    expect(next.visibleStats).toEqual(["reputation"]);
+    expect(next.currentCardId).toBe("P-S");
+    expect(next.phase).toBe("settlement");
+    expect(next.visibleStats).toEqual([]);
 
     const chapterStart = advanceAfterResult(next);
 
-    expect(chapterStart.currentCardId).toBe("C1-01");
-    expect(chapterStart.phase).toBe("choice");
+    expect(chapterStart.currentCardId).toBe("C1-I");
+    expect(chapterStart.phase).toBe("intro");
     expect(chapterStart.visibleStats).toEqual(["reputation"]);
+
+    const firstChapterCard = advanceAfterResult(chapterStart);
+
+    expect(firstChapterCard.currentCardId).toBe("C1-01");
+    expect(firstChapterCard.phase).toBe("choice");
+    expect(firstChapterCard.visibleStats).toEqual(["reputation"]);
   });
 
   it("uses intro phase between settlement and the next chapter", () => {
@@ -244,7 +250,7 @@ describe("game engine progression", () => {
       currentCardId: "C3-04",
       visibleStats: ["reputation", "money", "safety"],
       stats: { ...createInitialState().stats, safety: 2 },
-      tags: ["低电量风险", "人少夜路"],
+      tags: ["low_battery", "night_quiet_route"],
       pendingResult: { text: "完成", visibleChanges: [], visibleTags: [] }
     };
 
@@ -336,7 +342,7 @@ describe("game engine progression", () => {
       currentCardId: "C3-04",
       visibleStats: ["reputation", "money", "safety"],
       stats: { ...createInitialState().stats, safety: 2 },
-      tags: ["低电量风险", "人少夜路"],
+      tags: ["low_battery", "night_quiet_route"],
       triggeredInserts: ["I-C3-footsteps"],
       triggeredCrises: ["safety"],
       pendingResult: { text: "完成", visibleChanges: [], visibleTags: [] }
@@ -395,17 +401,17 @@ describe("game engine progression", () => {
     expect(next.phase).toBe("ending");
   });
 
-  it("reaches the tenth ending page after the ending intro", () => {
+  it("reaches the eleventh ending page after the ending intro", () => {
     const state = {
       ...createInitialState(),
       phase: "result",
-      currentCardId: "E-09",
+      currentCardId: "E-10",
       pendingResult: { text: "完成", visibleChanges: [], visibleTags: [] }
     };
 
     const next = advanceAfterResult(state);
 
-    expect(next.currentCardId).toBe("E-10");
+    expect(next.currentCardId).toBe("E-11");
     expect(next.phase).toBe("ending");
   });
 });
@@ -554,7 +560,7 @@ describe("settlements and ending statistics", () => {
     expect(resolveChapterOutcome("C6", state)).toEqual({
       id: "recognized",
       label: "问题被部分承认",
-      counters: { recognition: 1 }
+      counters: {}
     });
   });
 
@@ -568,13 +574,13 @@ describe("settlements and ending statistics", () => {
         self: 1
       },
       hidden: { ...createInitialState().hidden, evidence: -1 },
-      tags: ["公开表达"]
+      tags: ["public_post"]
     };
 
     expect(resolveChapterOutcome("C6", state)).toEqual({
       id: "backlash",
       label: "反噬",
-      counters: { explainedIntent: 3 }
+      counters: { explain: 3 }
     });
   });
 
@@ -583,21 +589,21 @@ describe("settlements and ending statistics", () => {
       ...createInitialState(),
       counters: {
         ...createInitialState().counters,
-        adjustedExpression: 2,
-        paidForSafety: 1,
-        gaveUpForProof: 1
+        detour: 2,
+        paidSafety: 1,
+        silence: 1
       }
     };
 
     expect(buildEndingStats(state)).toEqual([
-      ["修改表达方式", 2],
-      ["放弃近路", 0],
-      ["假装有人同行", 0],
+      ["放弃近路", 2],
+      ["解释自己", 0],
       ["保存证据", 0],
-      ["笑着跳过不适", 0],
-      ["解释自己没有恶意", 0],
-      ["为了安全额外付费", 1],
-      ["因为无法证明而放弃", 1]
+      ["把话收回去", 1],
+      ["为安全额外付费", 1],
+      ["暂时退让", 0],
+      ["让别人知道", 0],
+      ["明确拒绝", 0]
     ]);
   });
 
@@ -627,7 +633,24 @@ describe("settlements and ending statistics", () => {
       },
       counters: {
         ...createInitialState().counters,
-        avoidedShortcut: 5
+        detour: 5
+      }
+    };
+
+    expect(resolvePassStyle(state)).toMatchObject({
+      id: "high-alert",
+      label: "高警觉通关"
+    });
+  });
+
+  it("resolves high-alert pass style from repeated route strategies", () => {
+    const state = {
+      ...createInitialState(),
+      counters: {
+        ...createInitialState().counters,
+        detour: 2,
+        paidSafety: 2,
+        seekHelp: 2
       }
     };
 
@@ -649,9 +672,9 @@ describe("settlements and ending statistics", () => {
     };
 
     expect(buildCostLines(state)).toEqual([
-      "为了安全和退出，你支付了更多费用。",
-      "没有发生的事，也参与塑造了你。",
-      "很多次你选择让事情过去。"
+      "很多选择不是你不想选，而是在出现前就被余额拿走了。",
+      "你没有一直遇到危险，但你一直在为危险做准备。",
+      "你不是没有边界，只是边界每次都需要力气。"
     ]);
   });
 
@@ -665,13 +688,13 @@ describe("settlements and ending statistics", () => {
       },
       counters: {
         ...createInitialState().counters,
-        avoidedShortcut: 4,
-        savedEvidence: 2
+        detour: 4,
+        evidenceSaved: 2
       }
     };
 
     const status = getEndingDisplay({ id: "E-02", title: "状态总览" }, state);
-    const strategy = getEndingDisplay({ id: "E-03", title: "你学会的方式" }, state);
+    const strategy = getEndingDisplay({ id: "E-03", title: "生活策略" }, state);
     const passStyle = getEndingDisplay({ id: "E-04", title: "通关方式" }, state);
 
     expect(status.lines).toContain("安全感：危险。你没有一直遇到危险，但你一直在为危险做准备。");

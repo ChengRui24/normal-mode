@@ -18,15 +18,14 @@ export function createInitialState() {
     returnCardId: null,
     chapterOutcomes: {},
     counters: {
-      adjustedExpression: 0,
-      avoidedShortcut: 0,
-      pretendedAccompanied: 0,
-      savedEvidence: 0,
-      laughedOffDiscomfort: 0,
-      explainedIntent: 0,
-      paidForSafety: 0,
-      gaveUpForProof: 0,
-      recognition: 0
+      detour: 0,
+      seekHelp: 0,
+      explain: 0,
+      silence: 0,
+      concede: 0,
+      clearRefusal: 0,
+      evidenceSaved: 0,
+      paidSafety: 0
     },
     history: []
   };

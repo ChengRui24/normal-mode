@@ -13,14 +13,14 @@ describe("storage", () => {
     const state = {
       ...createInitialState(),
       currentCardId: "C3-04",
-      tags: ["低电量风险"]
+      tags: ["low_battery"]
     };
 
     saveState(state);
 
     expect(loadState()).toMatchObject({
       currentCardId: "C3-04",
-      tags: ["低电量风险"]
+      tags: ["low_battery"]
     });
   });
 
