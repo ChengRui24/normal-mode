@@ -5,6 +5,35 @@ import { createInitialState } from "../../src/core/initialState.js";
 import { renderGame } from "../../src/ui/render.js";
 
 describe("renderGame", () => {
+  it("renders chapter intro cards with theme variables and a single enter button", () => {
+    const root = document.createElement("main");
+    const onContinue = vi.fn();
+
+    renderGame(root, {
+      state: {
+        ...createInitialState(),
+        phase: "intro",
+        currentCardId: "C1-I"
+      },
+      onChoose: vi.fn(),
+      onContinue,
+      onRestart: vi.fn()
+    });
+
+    const card = root.querySelector(".chapter-intro-card");
+    expect(card).not.toBe(null);
+    expect(card?.getAttribute("style")).toContain("--chapter-primary: #7A6D5E");
+    expect(root.textContent).toContain("第一章");
+    expect(root.textContent).toContain("筛选");
+    expect(root.textContent).toContain("目标：获得一个位置。");
+    expect(root.textContent).not.toContain("记录：");
+
+    const button = root.querySelector("button.continue-button");
+    expect(button?.textContent).toBe("进入筛选");
+    button?.click();
+    expect(onContinue).toHaveBeenCalledTimes(1);
+  });
+
   it("renders a choice card with action buttons", () => {
     const root = document.createElement("main");
     const onChoose = vi.fn();
@@ -79,7 +108,11 @@ describe("renderGame", () => {
     const root = document.createElement("main");
 
     renderGame(root, {
-      state: createInitialState(),
+      state: {
+        ...createInitialState(),
+        phase: "choice",
+        currentCardId: "P-01"
+      },
       onChoose: vi.fn(),
       onContinue: vi.fn(),
       onRestart: vi.fn()

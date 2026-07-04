@@ -145,6 +145,13 @@ function findInsert(state) {
   return INSERT_CARDS.find((card) => matchesInsert(card, state));
 }
 
+function phaseForCard(card) {
+  if (card?.type === "chapterIntro") return "intro";
+  if (card?.type === "settlement") return "settlement";
+  if (card?.type === "ending") return "ending";
+  return "choice";
+}
+
 export function advanceAfterResult(state) {
   const currentCard = getCardById(state.currentCardId);
   const shouldCheckInsert = state.phase === "result" && !currentCard?.insert;
@@ -154,7 +161,7 @@ export function advanceAfterResult(state) {
 
   return {
     ...state,
-    phase: nextCard?.type === "settlement" ? "settlement" : nextCard?.type === "ending" ? "ending" : "choice",
+    phase: phaseForCard(nextCard),
     currentCardId: nextId,
     pendingResult: null,
     visibleStats: getVisibleStatsForCard(nextCard),

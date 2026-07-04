@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   ENDING_CARDS,
   INSERT_CARDS,
+  INTRO_CARDS,
   LEVEL_CARDS,
   SETTLEMENT_CARDS,
   getCardById,
@@ -11,13 +12,21 @@ import { HIDDEN_KEYS, STAT_KEYS } from "../../src/data/statConfig.js";
 import { createInitialState } from "../../src/core/initialState.js";
 
 const expectedOrderedIds = [
+  "P-I",
   "P-01", "P-02", "P-03", "P-04",
+  "C1-I",
   "C1-01", "C1-02", "C1-03", "C1-04", "C1-05", "C1-06", "C1-07", "C1-S",
+  "C2-I",
   "C2-01", "C2-02", "C2-03", "C2-04", "C2-05", "C2-06", "C2-07", "C2-S",
+  "C3-I",
   "C3-01", "C3-02", "C3-03", "C3-04", "C3-05", "C3-06", "C3-07", "C3-S",
+  "C4-I",
   "C4-01", "C4-02", "C4-03", "C4-04", "C4-05", "C4-06", "C4-07", "C4-S",
+  "C5-I",
   "C5-01", "C5-02", "C5-03", "C5-04", "C5-05", "C5-06", "C5-07", "C5-S",
+  "C6-I",
   "C6-01", "C6-02", "C6-03", "C6-04", "C6-05", "C6-06", "C6-07", "C6-08", "C6-S",
+  "E-I",
   "E-01", "E-02", "E-03", "E-04", "E-05", "E-06"
 ];
 
@@ -50,12 +59,36 @@ describe("level data", () => {
   });
 
   it("has chapter settlements and ending reveal cards", () => {
+    expect(INTRO_CARDS.map((card) => card.id)).toEqual([
+      "P-I", "C1-I", "C2-I", "C3-I", "C4-I", "C5-I", "C6-I", "E-I"
+    ]);
     expect(SETTLEMENT_CARDS.map((card) => card.id)).toEqual([
       "C1-S", "C2-S", "C3-S", "C4-S", "C5-S", "C6-S"
     ]);
     expect(ENDING_CARDS.map((card) => card.id)).toEqual([
       "E-01", "E-02", "E-03", "E-04", "E-05", "E-06"
     ]);
+  });
+
+  it("keeps approved chapter intro copy and theme tokens", () => {
+    expect(getCardById("C1-I")).toEqual({
+      id: "C1-I",
+      type: "chapterIntro",
+      chapterId: "C1",
+      chapterTitle: "第一章：筛选",
+      kicker: "第一章",
+      title: "筛选",
+      text: "你需要获得一个位置。这里的人会看你的资料、回答、语气、反应，也会看一些你以为不该重要的东西。你还不知道，很多评价会留下来。",
+      objective: "目标：获得一个位置。",
+      buttonLabel: "进入筛选",
+      theme: {
+        primary: "#7A6D5E",
+        surface: "#F2EDE6",
+        accent: "#4F463D"
+      }
+    });
+
+    expect(getCardById("E-I").buttonLabel).toBe("查看结果");
   });
 
   it("uses colder chapter settlement copy without mechanic explanations", () => {

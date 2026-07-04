@@ -126,6 +126,26 @@ describe("game engine visible stats", () => {
 });
 
 describe("game engine progression", () => {
+  it("starts at the prologue intro card", () => {
+    const state = createInitialState();
+
+    expect(state.phase).toBe("intro");
+    expect(state.currentCardId).toBe("P-I");
+  });
+
+  it("continues from an intro card to the first chapter card", () => {
+    const state = {
+      ...createInitialState(),
+      phase: "intro",
+      currentCardId: "P-I"
+    };
+
+    const next = advanceAfterResult(state);
+
+    expect(next.phase).toBe("choice");
+    expect(next.currentCardId).toBe("P-01");
+  });
+
   it("advances from a result card to the next ordered card", () => {
     const state = {
       ...createInitialState(),
@@ -151,8 +171,29 @@ describe("game engine progression", () => {
 
     const next = advanceAfterResult(state);
 
-    expect(next.currentCardId).toBe("C1-01");
+    expect(next.currentCardId).toBe("C1-I");
+    expect(next.phase).toBe("intro");
     expect(next.visibleStats).toEqual(["reputation"]);
+
+    const chapterStart = advanceAfterResult(next);
+
+    expect(chapterStart.currentCardId).toBe("C1-01");
+    expect(chapterStart.phase).toBe("choice");
+    expect(chapterStart.visibleStats).toEqual(["reputation"]);
+  });
+
+  it("uses intro phase between settlement and the next chapter", () => {
+    const state = {
+      ...createInitialState(),
+      phase: "settlement",
+      currentCardId: "C1-S"
+    };
+
+    const next = advanceAfterResult(state);
+
+    expect(next.currentCardId).toBe("C2-I");
+    expect(next.phase).toBe("intro");
+    expect(next.visibleStats).toEqual(["reputation", "money"]);
   });
 
   it("inserts an eligible risk card before the next mainline card", () => {
@@ -239,8 +280,13 @@ describe("game engine progression", () => {
 
     const next = advanceAfterResult(state);
 
-    expect(next.currentCardId).toBe("E-01");
-    expect(next.phase).toBe("ending");
+    expect(next.currentCardId).toBe("E-I");
+    expect(next.phase).toBe("intro");
+
+    const endingStart = advanceAfterResult(next);
+
+    expect(endingStart.currentCardId).toBe("E-01");
+    expect(endingStart.phase).toBe("ending");
   });
 
   it("keeps ending phase when advancing between ending cards", () => {

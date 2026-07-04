@@ -81,6 +81,27 @@ function renderResultCard(root, card, state, onContinue) {
   root.querySelector(".continue-button").addEventListener("click", onContinue);
 }
 
+function themeStyle(theme = {}) {
+  const primary = theme.primary ?? "#7A6D5E";
+  const surface = theme.surface ?? "#F7F4EF";
+  const accent = theme.accent ?? "#4F463D";
+  return `--chapter-primary: ${escapeText(primary)}; --chapter-surface: ${escapeText(surface)}; --chapter-accent: ${escapeText(accent)};`;
+}
+
+function renderIntroCard(root, card, onContinue) {
+  root.innerHTML = `
+    <section class="game-card chapter-intro-card" style="${themeStyle(card.theme)}">
+      <p class="intro-kicker">${escapeText(card.kicker)}</p>
+      <h1>${escapeText(card.title)}</h1>
+      <p class="scene-text">${escapeText(card.text)}</p>
+      <p class="intro-objective">${escapeText(card.objective)}</p>
+      <button class="continue-button intro-button" type="button">${escapeText(card.buttonLabel)}</button>
+    </section>
+  `;
+
+  root.querySelector(".continue-button").addEventListener("click", onContinue);
+}
+
 function renderStaticCard(root, card, state, onContinue) {
   const primaryText = card.text ?? card.scene ?? "";
   root.innerHTML = `
@@ -106,6 +127,8 @@ export function renderGame(root, { state, onChoose, onContinue, onRestart }) {
 
   if (state.phase === "result") {
     renderResultCard(root, card, state, onContinue);
+  } else if (card.type === "chapterIntro") {
+    renderIntroCard(root, card, onContinue);
   } else if (state.phase === "settlement" || state.phase === "ending") {
     renderStaticCard(root, card, state, onContinue);
   } else {

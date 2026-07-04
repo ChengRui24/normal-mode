@@ -1,3 +1,134 @@
+export const INTRO_CARDS = [
+  {
+    id: "P-I",
+    type: "chapterIntro",
+    chapterId: "P",
+    chapterTitle: "序章：出门",
+    kicker: "序章",
+    title: "出门",
+    text: "今天有一场重要见面。你需要出门，准时抵达。没有人告诉你这会很难，也没有人觉得这值得被特别记录。",
+    objective: "目标：准时抵达。",
+    buttonLabel: "出门",
+    theme: {
+      primary: "#9B8F80",
+      surface: "#F6F1EA",
+      accent: "#6F6256"
+    }
+  },
+  {
+    id: "C1-I",
+    type: "chapterIntro",
+    chapterId: "C1",
+    chapterTitle: "第一章：筛选",
+    kicker: "第一章",
+    title: "筛选",
+    text: "你需要获得一个位置。这里的人会看你的资料、回答、语气、反应，也会看一些你以为不该重要的东西。你还不知道，很多评价会留下来。",
+    objective: "目标：获得一个位置。",
+    buttonLabel: "进入筛选",
+    theme: {
+      primary: "#7A6D5E",
+      surface: "#F2EDE6",
+      accent: "#4F463D"
+    }
+  },
+  {
+    id: "C2-I",
+    type: "chapterIntro",
+    chapterId: "C2",
+    chapterTitle: "第二章：房间",
+    kicker: "第二章",
+    title: "房间",
+    text: "你需要一个可以关上门的地方。它要足够近，足够便宜，最好也足够安全。但这些条件很少同时出现。",
+    objective: "目标：找到能住下来的地方。",
+    buttonLabel: "去看房",
+    theme: {
+      primary: "#68705A",
+      surface: "#EEF1EA",
+      accent: "#3F4638"
+    }
+  },
+  {
+    id: "C3-I",
+    type: "chapterIntro",
+    chapterId: "C3",
+    chapterTitle: "第三章：路上",
+    kicker: "第三章",
+    title: "路上",
+    text: "城市看起来对所有人开放。路灯、车站、电梯、网约车、楼道，都只是普通设施。直到你开始计算时间、距离、出口和身后的人。",
+    objective: "目标：完成这一周的移动。",
+    buttonLabel: "出发",
+    theme: {
+      primary: "#65798A",
+      surface: "#ECF1F4",
+      accent: "#394957"
+    }
+  },
+  {
+    id: "C4-I",
+    type: "chapterIntro",
+    chapterId: "C4",
+    chapterTitle: "第四章：桌面",
+    kicker: "第四章",
+    title: "桌面",
+    text: "你已经有了一个位置。现在你需要证明自己值得留下。你做的事要被看见，你说的话要被接住，而这两件事并不总是一起发生。",
+    objective: "目标：完成项目，保住位置。",
+    buttonLabel: "开始工作",
+    theme: {
+      primary: "#9A7A4F",
+      surface: "#F4EFE5",
+      accent: "#5B4528"
+    }
+  },
+  {
+    id: "C5-I",
+    type: "chapterIntro",
+    chapterId: "C5",
+    chapterTitle: "第五章：靠近",
+    kicker: "第五章",
+    title: "靠近",
+    text: "有些关系会让生活轻一点，有些靠近也会带来新的判断。你需要分辨信任、礼貌、体贴和越界，但它们有时长得很像。",
+    objective: "目标：靠近别人，同时保留边界。",
+    buttonLabel: "继续靠近",
+    theme: {
+      primary: "#8A5F66",
+      surface: "#F3ECEE",
+      accent: "#56383E"
+    }
+  },
+  {
+    id: "C6-I",
+    type: "chapterIntro",
+    chapterId: "C6",
+    chapterTitle: "第六章：窗口",
+    kicker: "第六章",
+    title: "窗口",
+    text: "有些事如果只停在你身上，就会被叫作感受。你需要把它变成时间、地点、截图、录音、记录和可以被处理的问题。",
+    objective: "目标：让问题被记录。",
+    buttonLabel: "进入流程",
+    theme: {
+      primary: "#5F7180",
+      surface: "#EDF1F3",
+      accent: "#34424C"
+    }
+  },
+  {
+    id: "E-I",
+    type: "chapterIntro",
+    chapterId: "E",
+    chapterTitle: "终章：普通难度",
+    kicker: "终章",
+    title: "普通难度",
+    text: "系统开始整理你的记录。它不判断你勇敢、软弱、敏感或多疑，只统计你怎样通过了这段生活。",
+    objective: "目标：查看记录。",
+    buttonLabel: "查看结果",
+    theme: {
+      primary: "#25221E",
+      surface: "#F7F4EF",
+      accent: "#A89B8C"
+    }
+  }
+];
+
 export const LEVEL_CARDS = [
   {
     id: "P-01",
@@ -2033,18 +2164,26 @@ export const INSERT_CARDS = [
 ];
 
 export const orderedCardIds = [
+  "P-I",
   "P-01", "P-02", "P-03", "P-04",
+  "C1-I",
   "C1-01", "C1-02", "C1-03", "C1-04", "C1-05", "C1-06", "C1-07", "C1-S",
+  "C2-I",
   "C2-01", "C2-02", "C2-03", "C2-04", "C2-05", "C2-06", "C2-07", "C2-S",
+  "C3-I",
   "C3-01", "C3-02", "C3-03", "C3-04", "C3-05", "C3-06", "C3-07", "C3-S",
+  "C4-I",
   "C4-01", "C4-02", "C4-03", "C4-04", "C4-05", "C4-06", "C4-07", "C4-S",
+  "C5-I",
   "C5-01", "C5-02", "C5-03", "C5-04", "C5-05", "C5-06", "C5-07", "C5-S",
+  "C6-I",
   "C6-01", "C6-02", "C6-03", "C6-04", "C6-05", "C6-06", "C6-07", "C6-08", "C6-S",
+  "E-I",
   "E-01", "E-02", "E-03", "E-04", "E-05", "E-06"
 ];
 
 const cardsById = new Map(
-  [...LEVEL_CARDS, ...SETTLEMENT_CARDS, ...ENDING_CARDS, ...INSERT_CARDS].map((card) => [
+  [...INTRO_CARDS, ...LEVEL_CARDS, ...SETTLEMENT_CARDS, ...ENDING_CARDS, ...INSERT_CARDS].map((card) => [
     card.id,
     card
   ])
