@@ -44,7 +44,27 @@ function renderHeader(card, state) {
   `;
 }
 
-function renderChoiceCard(root, card, state, onChoose) {
+function resultPanelHtml(choice, resultText) {
+  return `
+    <div class="result-panel">
+      ${choice ? `<p class="selected-choice">${escapeText(choice.label)}</p>` : ""}
+      <p class="result-text">${escapeText(resultText)}</p>
+    </div>
+  `;
+}
+
+function revealInlineResult(root, choice, onContinue) {
+  const choiceList = root.querySelector(".choice-list");
+  if (!choiceList) return;
+
+  choiceList.outerHTML = `
+    ${resultPanelHtml(choice, choice.result)}
+    <button class="continue-button" type="button">继续</button>
+  `;
+  root.querySelector(".continue-button").addEventListener("click", onContinue);
+}
+
+function renderChoiceCard(root, card, state, onChoose, onContinue) {
   root.innerHTML = `
     <section class="game-card">
       ${renderHeader(card, state)}
@@ -68,7 +88,10 @@ function renderChoiceCard(root, card, state, onChoose) {
   for (const button of root.querySelectorAll(".choice-button")) {
     button.addEventListener("click", () => {
       const choice = card.choices.find((item) => item.id === button.dataset.choiceId);
-      if (choice) onChoose(choice);
+      if (choice) {
+        revealInlineResult(root, choice, onContinue);
+        onChoose(choice, { render: false });
+      }
     });
   }
 }
@@ -80,8 +103,7 @@ function renderResultCard(root, card, state, onContinue) {
     <section class="game-card">
       ${renderHeader(card, state)}
       <p class="scene-text">${escapeText(card.scene)}</p>
-      ${selectedChoice ? `<button class="selected-choice" type="button" disabled>${escapeText(selectedChoice.label)}</button>` : ""}
-      <p class="result-text">${escapeText(result.text)}</p>
+      ${resultPanelHtml(selectedChoice, result.text)}
       <button class="continue-button" type="button">继续</button>
     </section>
   `;
@@ -184,7 +206,7 @@ export function renderGame(root, { state, onChoose, onContinue, onRestart }) {
   } else if (state.phase === "settlement" || state.phase === "ending") {
     renderStaticCard(root, card, state, onContinue, onRestart);
   } else {
-    renderChoiceCard(root, card, state, onChoose);
+    renderChoiceCard(root, card, state, onChoose, onContinue);
   }
 
   root.querySelector(".restart-button")?.addEventListener("click", onRestart);

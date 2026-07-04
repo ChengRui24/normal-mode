@@ -59,7 +59,41 @@ describe("renderGame", () => {
     expect(root.querySelectorAll("button.choice-button").length).toBeGreaterThanOrEqual(2);
   });
 
-  it("renders result inline with the selected option kept as a disabled light button", () => {
+  it("reveals the result in place without replacing the current card", () => {
+    const root = document.createElement("main");
+    const onChoose = vi.fn();
+    const onContinue = vi.fn();
+
+    renderGame(root, {
+      state: {
+        ...createInitialState(),
+        phase: "choice",
+        currentCardId: "C6-08",
+        visibleStats: ["reputation", "money", "safety", "energy", "relationship", "self"]
+      },
+      onChoose,
+      onContinue,
+      onRestart: vi.fn()
+    });
+
+    const gameCard = root.querySelector(".game-card");
+    const appealButton = [...root.querySelectorAll("button.choice-button")].find((button) =>
+      button.textContent.includes("继续申诉")
+    );
+
+    appealButton?.click();
+
+    expect(root.querySelector(".game-card")).toBe(gameCard);
+    expect(onChoose).toHaveBeenCalledTimes(1);
+    expect(root.querySelectorAll("button.choice-button").length).toBe(0);
+    expect(root.querySelector(".selected-choice")?.textContent).toContain("继续申诉");
+    expect(root.textContent).toContain("你继续往下走。每多走一步，都要再支付一点生活。");
+
+    root.querySelector("button.continue-button")?.click();
+    expect(onContinue).toHaveBeenCalledTimes(1);
+  });
+
+  it("renders result inline with the selected option kept as plain text", () => {
     const root = document.createElement("main");
 
     renderGame(root, {
@@ -78,10 +112,14 @@ describe("renderGame", () => {
     });
 
     expect(root.textContent).toContain("系统给出结果：证据不足");
-    const selected = root.querySelector("button.selected-choice");
+    const resultPanel = root.querySelector(".result-panel");
+    expect(resultPanel).not.toBe(null);
+    const selected = root.querySelector(".selected-choice");
     expect(selected).not.toBe(null);
     expect(selected?.textContent).toContain("继续申诉");
-    expect(selected?.disabled).toBe(true);
+    expect(selected?.tagName).toBe("P");
+    expect(resultPanel?.contains(selected)).toBe(true);
+    expect(root.querySelector("button.selected-choice")).toBe(null);
     expect(root.querySelectorAll("button.choice-button").length).toBe(0);
     expect(root.textContent).toContain("你继续往下走。每多走一步，都要再支付一点生活。");
     expect(root.textContent).not.toContain("你选择了");

@@ -8,14 +8,16 @@ const root = document.querySelector("#app");
 
 let state = loadState() ?? createInitialState();
 
-function commitState(nextState) {
+function commitState(nextState, options = {}) {
   state = nextState;
   saveState(state);
-  render();
+  if (options.render !== false) {
+    render();
+  }
 }
 
-function handleChoose(choice) {
-  commitState(applyChoice(state, choice));
+function handleChoose(choice, options) {
+  commitState(applyChoice(state, choice), options);
 }
 
 function handleContinue() {
