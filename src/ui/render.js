@@ -15,7 +15,6 @@ function renderStatStrip(state) {
 
   return `
     <p class="stat-strip" aria-label="当前状态">
-      <span>记录：</span>
       ${visibleStats
         .map(
           (stat) => `

@@ -109,7 +109,7 @@ describe("renderGame", () => {
     expect(root.querySelectorAll(".ending-line").length).toBeGreaterThan(0);
   });
 
-  it("renders visible stats as a compact record line", () => {
+  it("renders visible stats as a compact line without a prefix", () => {
     const root = document.createElement("main");
 
     renderGame(root, {
@@ -124,8 +124,10 @@ describe("renderGame", () => {
       onRestart: vi.fn()
     });
 
-    expect(root.querySelector(".stat-strip")?.textContent).toContain("信誉：稳定");
-    expect(root.querySelector(".stat-strip")?.textContent).toContain("钱：稳定");
+    const statText = root.querySelector(".stat-strip")?.textContent;
+    expect(statText).not.toContain("记录：");
+    expect(statText).toContain("信誉：稳定");
+    expect(statText).toContain("钱：稳定");
     expect(root.querySelector(".stat-pill")).toBe(null);
   });
 
