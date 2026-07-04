@@ -1,7 +1,7 @@
 :root {
   color: #24211c;
   background: #f7f5f0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 16px;
   line-height: 1.5;
 }
@@ -14,7 +14,9 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  background: #f7f5f0;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 250, 0.85), rgba(247, 245, 240, 0.96)),
+    #f7f5f0;
 }
 
 button {
@@ -25,7 +27,7 @@ button {
   width: min(100%, 430px);
   min-height: 100vh;
   margin: 0 auto;
-  padding: 20px 16px 28px;
+  padding: 18px 14px 26px;
   display: flex;
   align-items: center;
 }
@@ -35,24 +37,139 @@ button {
   border: 1px solid #ded8ce;
   border-radius: 8px;
   background: #fffdfa;
-  padding: 22px;
+  padding: 20px;
   box-shadow: 0 18px 45px rgba(54, 45, 31, 0.08);
 }
 
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
 .eyebrow {
-  margin: 0 0 8px;
+  margin: 0 0 7px;
   color: #756c5d;
   font-size: 0.82rem;
 }
 
 h1 {
-  margin: 0 0 18px;
-  font-size: 1.5rem;
+  margin: 0;
+  font-size: 1.45rem;
   line-height: 1.25;
   letter-spacing: 0;
 }
 
-.scene-text {
+.restart-button {
+  flex: 0 0 auto;
+  border: 0;
+  border-bottom: 1px solid #9b9489;
+  border-radius: 0;
+  background: transparent;
+  color: #62594e;
+  padding: 2px 0;
+  font-size: 0.82rem;
+}
+
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(82px, 1fr));
+  gap: 8px;
+  margin: 0 0 18px;
+}
+
+.stat-pill {
+  border: 1px solid #e5ded3;
+  border-radius: 8px;
+  padding: 8px 9px;
+  background: #faf7f1;
+}
+
+.stat-pill dt {
+  color: #756c5d;
+  font-size: 0.75rem;
+}
+
+.stat-pill dd {
+  margin: 3px 0 0;
+  font-size: 0.92rem;
+}
+
+.scene-text,
+.result-text {
   margin: 0;
-  line-height: 1.85;
+  color: #2e2a24;
+  font-size: 1.04rem;
+  line-height: 1.9;
+}
+
+.choice-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.choice-button,
+.continue-button {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid #cfc6b8;
+  border-radius: 8px;
+  background: #26231f;
+  color: #fffdfa;
+  padding: 12px 14px;
+  text-align: left;
+}
+
+.choice-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.choice-button small {
+  color: #8a8277;
+  font-size: 0.78rem;
+}
+
+.choice-button:disabled {
+  background: #efebe3;
+  color: #8a8277;
+}
+
+.continue-button {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.change-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.change-line,
+.tag-line {
+  margin: 0;
+  border-left: 3px solid #b9ad9d;
+  padding: 8px 0 8px 12px;
+  color: #4d463d;
+  background: #faf7f1;
+}
+
+@media (max-width: 360px) {
+  .app-shell {
+    padding: 12px;
+  }
+
+  .game-card {
+    padding: 17px;
+  }
+
+  h1 {
+    font-size: 1.32rem;
+  }
 }
