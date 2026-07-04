@@ -1,6 +1,12 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createInitialState } from "../../src/core/initialState.js";
-import { advanceAfterResult, applyChoice, getVisibleStatsForCard } from "../../src/core/gameEngine.js";
+import {
+  advanceAfterResult,
+  applyChoice,
+  buildEndingStats,
+  getVisibleStatsForCard,
+  resolveChapterOutcome
+} from "../../src/core/gameEngine.js";
 
 describe("game engine choice application", () => {
   it("applies visible, hidden, tag, counter, and history changes", () => {
@@ -374,5 +380,71 @@ describe("game engine progression insert trigger rules", () => {
     });
 
     expect(next.currentCardId).toBe("T-02");
+  });
+});
+
+describe("settlements and ending statistics", () => {
+  it("resolves chapter 6 partial recognition", () => {
+    const state = {
+      ...createInitialState(),
+      stats: {
+        ...createInitialState().stats,
+        reputation: 3,
+        self: 3,
+        energy: 1,
+        relationship: 1
+      },
+      hidden: { ...createInitialState().hidden, evidence: 3 },
+      tags: ["正式记录"]
+    };
+
+    expect(resolveChapterOutcome("C6", state)).toEqual({
+      id: "recognized",
+      label: "问题被部分承认",
+      counters: { recognition: 1 }
+    });
+  });
+
+  it("resolves chapter 6 backlash before weak settlement", () => {
+    const state = {
+      ...createInitialState(),
+      stats: {
+        ...createInitialState().stats,
+        reputation: -3,
+        relationship: -3,
+        self: 1
+      },
+      hidden: { ...createInitialState().hidden, evidence: -1 },
+      tags: ["公开表达"]
+    };
+
+    expect(resolveChapterOutcome("C6", state)).toEqual({
+      id: "backlash",
+      label: "反噬",
+      counters: { explainedIntent: 3 }
+    });
+  });
+
+  it("builds ending statistics from counters", () => {
+    const state = {
+      ...createInitialState(),
+      counters: {
+        ...createInitialState().counters,
+        adjustedExpression: 2,
+        paidForSafety: 1,
+        gaveUpForProof: 1
+      }
+    };
+
+    expect(buildEndingStats(state)).toEqual([
+      ["修改表达方式", 2],
+      ["放弃近路", 0],
+      ["假装有人同行", 0],
+      ["保存证据", 0],
+      ["笑着跳过不适", 0],
+      ["解释自己没有恶意", 0],
+      ["为了安全额外付费", 1],
+      ["因为无法证明而放弃", 1]
+    ]);
   });
 });
