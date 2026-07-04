@@ -1,10 +1,14 @@
 // @vitest-environment jsdom
 
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { createInitialState } from "../../src/core/initialState.js";
 import { renderGame } from "../../src/ui/render.js";
 
 describe("renderGame", () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it("renders chapter intro cards with theme variables and a single enter button", () => {
     const root = document.createElement("main");
     const onContinue = vi.fn();
@@ -64,12 +68,7 @@ describe("renderGame", () => {
         phase: "result",
         currentCardId: "C6-08",
         pendingResult: {
-          text: "你继续往下走。每多走一步，都要再支付一点生活。",
-          visibleChanges: [
-            { key: "self", label: "自我", delta: 1 },
-            { key: "energy", label: "精力", delta: -2 }
-          ],
-          visibleTags: ["继续消耗"]
+          text: "你继续往下走。每多走一步，都要再支付一点生活。"
         }
       },
       onChoose: vi.fn(),
@@ -107,6 +106,92 @@ describe("renderGame", () => {
     expect(root.textContent).toContain("你没有一直遇到危险");
     expect(root.textContent).not.toContain("2/12");
     expect(root.querySelectorAll(".ending-line").length).toBeGreaterThan(0);
+  });
+
+  it("reveals the profile identity on the third ending page after a short pause", () => {
+    vi.useFakeTimers();
+    const root = document.createElement("main");
+    const onContinue = vi.fn();
+
+    renderGame(root, {
+      state: {
+        ...createInitialState(),
+        phase: "ending",
+        currentCardId: "E-03"
+      },
+      onChoose: vi.fn(),
+      onContinue,
+      onRestart: vi.fn()
+    });
+
+    expect(root.textContent).toContain("年龄：27");
+    expect(root.textContent).not.toContain("性别：女");
+
+    root.querySelector("button.continue-button")?.click();
+
+    expect(root.textContent).toContain("性别：女");
+    expect(root.textContent).toContain("难度：普通");
+    expect(root.textContent).not.toContain("查看通关报告");
+
+    vi.advanceTimersByTime(1600);
+
+    const reportButton = root.querySelector("button.continue-button");
+    expect(reportButton?.textContent).toBe("查看通关报告");
+    reportButton?.click();
+    expect(onContinue).toHaveBeenCalledTimes(1);
+  });
+
+  it("renders final report with only a restart action", () => {
+    const root = document.createElement("main");
+    const onRestart = vi.fn();
+
+    renderGame(root, {
+      state: {
+        ...createInitialState(),
+        phase: "ending",
+        currentCardId: "E-04",
+        stats: {
+          ...createInitialState().stats,
+          safety: 2
+        }
+      },
+      onChoose: vi.fn(),
+      onContinue: vi.fn(),
+      onRestart
+    });
+
+    expect(root.textContent).toContain("普通难度 · 通关记录");
+    expect(root.textContent).toContain("通关方式：高警觉通关");
+    expect(root.textContent).toContain("女性不是一种性格");
+    expect(root.textContent).not.toContain("复制文本");
+    expect(root.textContent).not.toContain("保存图片");
+
+    const buttons = [...root.querySelectorAll("button")].map((button) => button.textContent?.trim());
+    expect(buttons).toContain("重新开始");
+
+    root.querySelector("button.continue-button")?.click();
+    expect(onRestart).toHaveBeenCalledTimes(1);
+  });
+
+  it("renders chapter 6 settlement outcome when it has been resolved", () => {
+    const root = document.createElement("main");
+
+    renderGame(root, {
+      state: {
+        ...createInitialState(),
+        phase: "settlement",
+        currentCardId: "C6-S",
+        chapterOutcomes: {
+          C6: { id: "backlash", label: "反噬", counters: { explain: 3 } }
+        }
+      },
+      onChoose: vi.fn(),
+      onContinue: vi.fn(),
+      onRestart: vi.fn()
+    });
+
+    expect(root.textContent).toContain("处理结果：解释次数继续增加。");
+    expect(root.querySelectorAll(".ending-line").length).toBe(1);
   });
 
   it("renders visible stats as a compact line without a prefix", () => {

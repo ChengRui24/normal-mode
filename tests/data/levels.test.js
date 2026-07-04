@@ -28,7 +28,7 @@ const expectedOrderedIds = [
   "C6-I",
   "C6-01", "C6-02", "C6-03", "C6-04", "C6-05", "C6-06", "C6-07", "C6-08", "C6-S",
   "E-I",
-  "E-01", "E-02", "E-03", "E-04", "E-05", "E-06", "E-07", "E-08", "E-09", "E-10", "E-11"
+  "E-01", "E-02", "E-03", "E-04"
 ];
 
 const statKeySet = new Set(STAT_KEYS);
@@ -104,7 +104,7 @@ describe("level data", () => {
       "P-S", "C1-S", "C2-S", "C3-S", "C4-S", "C5-S", "C6-S"
     ]);
     expect(ENDING_CARDS.map((card) => card.id)).toEqual([
-      "E-01", "E-02", "E-03", "E-04", "E-05", "E-06", "E-07", "E-08", "E-09", "E-10", "E-11"
+      "E-01", "E-02", "E-03", "E-04"
     ]);
   });
 
@@ -209,10 +209,9 @@ describe("level data", () => {
   it("keeps ending titles away from RPG-style score screens", () => {
     expect(getCardById("E-01").title).toBe("记录完成");
     expect(getCardById("E-01").title).not.toBe("数值总览");
-    expect(getCardById("E-04").title).toBe("通关方式");
-    expect(getCardById("E-08").title).toBe("角色档案二");
-    expect(getCardById("E-10").title).toBe("主题揭示");
-    expect(getCardById("E-11").title).toBe("二周目入口");
+    expect(getCardById("E-03").title).toBe("角色档案生成中");
+    expect(getCardById("E-04").title).toBe("普通难度 · 通关记录");
+    expect(getCardById("E-04").buttonLabel).toBe("重新开始");
   });
 
   it("includes at least one conditional insert card", () => {
@@ -241,7 +240,7 @@ describe("level data", () => {
       ...SETTLEMENT_CARDS,
       ...CRISIS_CARDS,
       ...INSERT_CARDS,
-      ...ENDING_CARDS.filter((card) => ["E-01", "E-02", "E-03", "E-04", "E-05", "E-06", "E-07"].includes(card.id))
+      ...ENDING_CARDS.filter((card) => ["E-01", "E-02"].includes(card.id))
     ];
 
     for (const card of preRevealCards) {
@@ -267,13 +266,7 @@ describe("level data", () => {
           expect(counterKeySet.has(key), `${card.id}.${choice.id} track.${key}`).toBe(true);
         }
 
-        for (const key of choice.visibleChanges ?? []) {
-          expect(statKeySet.has(key), `${card.id}.${choice.id} visibleChanges.${key}`).toBe(true);
-
-          if (Object.hasOwn(choice.effects ?? {}, key)) {
-            expect(statKeySet.has(key), `${card.id}.${choice.id} visible effect ${key}`).toBe(true);
-          }
-        }
+        expect(choice, `${card.id}.${choice.id} should not expose visibleChanges`).not.toHaveProperty("visibleChanges");
 
         for (const key of Object.keys(choice.requirements?.minStats ?? {})) {
           expect(statKeySet.has(key), `${card.id}.${choice.id} requirements.minStats.${key}`).toBe(true);

@@ -38,6 +38,7 @@ describe("content table tooling", () => {
     ]);
     expect(cards.find((row) => row.id === "C3-04")?.scene).toContain("打车价格翻倍");
     expect(choices.find((row) => row.cardId === "C6-08" && row.id === "appeal")?.stat_energy).toBe("-2");
+    expect(choices[0]).not.toHaveProperty("visibleChanges");
     expect(triggers.find((row) => row.cardId === "I-C3-footsteps")?.tagsAll).toBe("low_battery|night_quiet_route");
     expect(config.find((row) => row.section === "stat" && row.key === "money")?.label).toBe("钱");
   });
@@ -70,6 +71,7 @@ describe("content table tooling", () => {
 
       const choices = await readFile(join(dir, "choices.csv"), "utf8");
       expect(choices).toContain("cardId,choiceOrder,id,label,result");
+      expect(choices.split("\n")[0]).not.toContain("visibleChanges");
       expect(choices).toContain("C6-08");
     } finally {
       await rm(dir, { recursive: true, force: true });

@@ -4,7 +4,9 @@ import {
   advanceAfterResult,
   applyChoice,
   buildCostLines,
+  buildChapterEchoLines,
   buildEndingStats,
+  buildBlockedChoiceLines,
   getEndingDisplay,
   getVisibleStatsForCard,
   resolvePassStyle,
@@ -25,7 +27,7 @@ describe("game engine choice application", () => {
     expect(createInitialState().returnCardId).toBe(null);
   });
 
-  it("applies visible, hidden, tag, counter, and history changes", () => {
+  it("applies visible, hidden, tag, counter, result, and history changes", () => {
     const state = {
       ...createInitialState(),
       currentCardId: "C3-04",
@@ -39,7 +41,6 @@ describe("game engine choice application", () => {
       effects: { money: -2, safety: 1 },
       hiddenEffects: { time: 1 },
       tagsAdded: ["platform_trip"],
-      visibleChanges: ["money", "safety"],
       track: { paidSafety: 1 }
     });
 
@@ -49,37 +50,15 @@ describe("game engine choice application", () => {
     expect(next.hidden.time).toBe(1);
     expect(next.tags).toContain("platform_trip");
     expect(next.counters.paidSafety).toBe(1);
-    expect(next.pendingResult.visibleChanges).toEqual([
-      { key: "money", label: "钱", delta: -2 },
-      { key: "safety", label: "安全感", delta: 1 }
-    ]);
+    expect(next.pendingResult).toEqual({
+      cardId: "C3-04",
+      choiceId: "taxi",
+      text: "你不用走夜路了，但余额又少了一截。"
+    });
     expect(next.history[0]).toMatchObject({
       cardId: "C3-04",
       choiceId: "taxi"
     });
-  });
-
-  it("hides unrevealed stat changes from result cards", () => {
-    const state = {
-      ...createInitialState(),
-      currentCardId: "P-01",
-      visibleStats: []
-    };
-
-    const next = applyChoice(state, {
-      id: "formal",
-      label: "更正式",
-      result: "你看起来更像该被认真对待的人，也更容易被看见。",
-      effects: { reputation: 1, energy: -1 },
-      hiddenEffects: { exposure: 1 },
-      tagsAdded: ["被注意"],
-      visibleChanges: ["reputation", "energy"],
-      track: {}
-    });
-
-    expect(next.pendingResult.visibleChanges).toEqual([]);
-    expect(next.stats.reputation).toBe(7);
-    expect(next.stats.energy).toBe(6);
   });
 
   it("clamps long-term stats to the 0-12 range", () => {
@@ -105,30 +84,6 @@ describe("game engine choice application", () => {
 
     expect(next.stats.money).toBe(0);
     expect(next.stats.self).toBe(12);
-  });
-
-  it("limits result display to two visible changes", () => {
-    const state = {
-      ...createInitialState(),
-      currentCardId: "C6-08",
-      visibleStats: ["reputation", "money", "safety", "energy", "relationship", "self"]
-    };
-
-    const next = applyChoice(state, {
-      id: "appeal",
-      label: "继续申诉",
-      result: "流程延长，代价继续增加。",
-      effects: { self: 1, energy: -2, money: -1 },
-      hiddenEffects: {},
-      tagsAdded: ["继续消耗"],
-      visibleChanges: ["self", "energy", "money"],
-      track: { explain: 1 }
-    });
-
-    expect(next.pendingResult.visibleChanges).toEqual([
-      { key: "self", label: "自我", delta: 1 },
-      { key: "energy", label: "精力", delta: -2 }
-    ]);
   });
 
   it("dedupes added tags without mutating original tags or history", () => {
@@ -192,7 +147,7 @@ describe("game engine progression", () => {
       ...createInitialState(),
       phase: "result",
       currentCardId: "P-01",
-      pendingResult: { text: "完成", visibleChanges: [], visibleTags: [] }
+      pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
@@ -207,7 +162,7 @@ describe("game engine progression", () => {
       ...createInitialState(),
       phase: "result",
       currentCardId: "P-04",
-      pendingResult: { text: "完成", visibleChanges: [], visibleTags: [] }
+      pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
@@ -251,7 +206,7 @@ describe("game engine progression", () => {
       visibleStats: ["reputation", "money", "safety"],
       stats: { ...createInitialState().stats, safety: 2 },
       tags: ["low_battery", "night_quiet_route"],
-      pendingResult: { text: "完成", visibleChanges: [], visibleTags: [] }
+      pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
@@ -266,7 +221,7 @@ describe("game engine progression", () => {
       phase: "result",
       currentCardId: "C2-01",
       stats: { ...createInitialState().stats, money: 2 },
-      pendingResult: { text: "完成", visibleChanges: [], visibleTags: [] }
+      pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
@@ -284,7 +239,7 @@ describe("game engine progression", () => {
       currentCardId: "CR-money",
       returnCardId: "C2-02",
       triggeredCrises: ["money"],
-      pendingResult: { text: "完成", visibleChanges: [], visibleTags: [] }
+      pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
@@ -301,7 +256,7 @@ describe("game engine progression", () => {
       currentCardId: "C2-01",
       stats: { ...createInitialState().stats, money: 2 },
       triggeredCrises: ["money"],
-      pendingResult: { text: "完成", visibleChanges: [], visibleTags: [] }
+      pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
@@ -317,7 +272,7 @@ describe("game engine progression", () => {
       currentCardId: "I-C3-footsteps",
       visibleStats: ["reputation", "money", "safety"],
       triggeredInserts: ["I-C3-footsteps"],
-      pendingResult: { text: "完成", visibleChanges: [], visibleTags: [] }
+      pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
@@ -345,7 +300,7 @@ describe("game engine progression", () => {
       tags: ["low_battery", "night_quiet_route"],
       triggeredInserts: ["I-C3-footsteps"],
       triggeredCrises: ["safety"],
-      pendingResult: { text: "完成", visibleChanges: [], visibleTags: [] }
+      pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
@@ -359,7 +314,7 @@ describe("game engine progression", () => {
       ...createInitialState(),
       phase: "result",
       currentCardId: "C1-07",
-      pendingResult: { text: "完成", visibleChanges: [], visibleTags: [] }
+      pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
@@ -368,12 +323,60 @@ describe("game engine progression", () => {
     expect(next.phase).toBe("settlement");
   });
 
+  it("records chapter 6 outcome and applies its counters when entering the settlement", () => {
+    const state = {
+      ...createInitialState(),
+      phase: "result",
+      currentCardId: "C6-08",
+      stats: {
+        ...createInitialState().stats,
+        reputation: 6,
+        relationship: 2,
+        self: 6
+      },
+      hidden: { ...createInitialState().hidden, evidence: -1 },
+      tags: ["public_post"],
+      triggeredCrises: ["relationship"],
+      counters: { ...createInitialState().counters, explain: 2 },
+      pendingResult: { text: "完成" }
+    };
+
+    const next = advanceAfterResult(state);
+
+    expect(next.currentCardId).toBe("C6-S");
+    expect(next.phase).toBe("settlement");
+    expect(next.chapterOutcomes.C6).toEqual({
+      id: "backlash",
+      label: "反噬",
+      counters: { explain: 3 }
+    });
+    expect(next.counters.explain).toBe(5);
+  });
+
+  it("does not resolve chapter 6 outcome more than once", () => {
+    const state = {
+      ...createInitialState(),
+      phase: "settlement",
+      currentCardId: "C6-S",
+      chapterOutcomes: {
+        C6: { id: "backlash", label: "反噬", counters: { explain: 3 } }
+      },
+      counters: { ...createInitialState().counters, explain: 5 }
+    };
+
+    const next = advanceAfterResult(state);
+
+    expect(next.currentCardId).toBe("E-I");
+    expect(next.counters.explain).toBe(5);
+    expect(next.chapterOutcomes.C6).toEqual(state.chapterOutcomes.C6);
+  });
+
   it("uses ending phase when advancing from the final settlement", () => {
     const state = {
       ...createInitialState(),
       phase: "result",
       currentCardId: "C6-S",
-      pendingResult: { text: "完成", visibleChanges: [], visibleTags: [] }
+      pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
@@ -392,7 +395,7 @@ describe("game engine progression", () => {
       ...createInitialState(),
       phase: "result",
       currentCardId: "E-01",
-      pendingResult: { text: "完成", visibleChanges: [], visibleTags: [] }
+      pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
@@ -401,17 +404,17 @@ describe("game engine progression", () => {
     expect(next.phase).toBe("ending");
   });
 
-  it("reaches the eleventh ending page after the ending intro", () => {
+  it("reaches the final fourth ending page after the ending intro", () => {
     const state = {
       ...createInitialState(),
       phase: "result",
-      currentCardId: "E-10",
-      pendingResult: { text: "完成", visibleChanges: [], visibleTags: [] }
+      currentCardId: "E-03",
+      pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
 
-    expect(next.currentCardId).toBe("E-11");
+    expect(next.currentCardId).toBe("E-04");
     expect(next.phase).toBe("ending");
   });
 });
@@ -441,7 +444,7 @@ async function advanceWithMockedLevels({ currentCardId = "T-01", stats = {}, hid
     currentCardId,
     stats: { ...createInitialState().stats, ...stats },
     hidden: { ...createInitialState().hidden, ...hidden },
-    pendingResult: { text: "完成", visibleChanges: [], visibleTags: [] }
+    pendingResult: { text: "完成" }
   });
 }
 
@@ -607,6 +610,42 @@ describe("settlements and ending statistics", () => {
     ]);
   });
 
+  it("builds chapter echo lines from recorded tags and chapter 6 outcome", () => {
+    const state = {
+      ...createInitialState(),
+      tags: ["low_salary", "remote_home", "night_quiet_route", "visible_work", "support_network"],
+      chapterOutcomes: {
+        C6: { id: "backlash", label: "反噬", counters: { explain: 3 } }
+      }
+    };
+
+    expect(buildChapterEchoLines(state)).toEqual([
+      "筛选：你获得了一个位置。它可以让你留下来，只是价格比你预想的低。",
+      "房间：你保住了钱。代价是以后每次回家，都要多经过一段路。",
+      "路上：没有发生什么明确的事。只是你已经开始自动确认身后、车牌、楼层和出口。",
+      "桌面：项目结束了。至少这一次，你做过的事没有完全消失在流程里。",
+      "靠近：有几个人知道发生过什么。事情没有因此简单，但你不再完全独自拿着它。",
+      "窗口：事情被更多人知道以后，你开始解释自己为什么值得被相信。"
+    ]);
+  });
+
+  it("builds blocked choice lines from current constraints", () => {
+    const state = {
+      ...createInitialState(),
+      stats: {
+        ...createInitialState().stats,
+        money: 2,
+        energy: 2,
+        self: 2
+      }
+    };
+
+    expect(buildBlockedChoiceLines(state)).toEqual([
+      "有几次，你不是不想选择更安全的路，只是余额不允许。",
+      "有几次，事情还没结束，你已经说不下去了。"
+    ]);
+  });
+
   it("resolves pass style by danger and strategy priority", () => {
     const state = {
       ...createInitialState(),
@@ -648,9 +687,9 @@ describe("settlements and ending statistics", () => {
       ...createInitialState(),
       counters: {
         ...createInitialState().counters,
-        detour: 2,
-        paidSafety: 2,
-        seekHelp: 2
+        detour: 4,
+        paidSafety: 3,
+        seekHelp: 3
       }
     };
 
@@ -660,25 +699,34 @@ describe("settlements and ending statistics", () => {
     });
   });
 
-  it("builds cost lines from visible losses", () => {
+  it("builds report cost lines from the sharpest losses and counters", () => {
     const state = {
       ...createInitialState(),
       stats: {
         ...createInitialState().stats,
         money: 3,
         safety: 2,
-        self: 3
+        self: 8,
+        energy: 3
+      },
+      hidden: {
+        ...createInitialState().hidden,
+        evidence: 4
+      },
+      counters: {
+        ...createInitialState().counters,
+        silence: 3
       }
     };
 
     expect(buildCostLines(state)).toEqual([
-      "很多选择不是你不想选，而是在出现前就被余额拿走了。",
       "你没有一直遇到危险，但你一直在为危险做准备。",
-      "你不是没有边界，只是边界每次都需要力气。"
+      "你保住了一些安全，代价是余额越来越薄。",
+      "你完成了很多处理，也失去了解释更多的力气。"
     ]);
   });
 
-  it("builds dynamic ending displays without raw numeric scores", () => {
+  it("builds four dynamic ending displays without raw numeric scores", () => {
     const state = {
       ...createInitialState(),
       stats: {
@@ -690,17 +738,25 @@ describe("settlements and ending statistics", () => {
         ...createInitialState().counters,
         detour: 4,
         evidenceSaved: 2
+      },
+      tags: ["remote_home", "night_quiet_route"],
+      chapterOutcomes: {
+        C6: { id: "limited", label: "问题未闭合", counters: {} }
       }
     };
 
+    const record = getEndingDisplay({ id: "E-01", title: "记录完成" }, state);
     const status = getEndingDisplay({ id: "E-02", title: "状态总览" }, state);
-    const strategy = getEndingDisplay({ id: "E-03", title: "生活策略" }, state);
-    const passStyle = getEndingDisplay({ id: "E-04", title: "通关方式" }, state);
+    const profile = getEndingDisplay({ id: "E-03", title: "角色档案生成中" }, state);
+    const report = getEndingDisplay({ id: "E-04", title: "普通难度 · 通关记录" }, state);
 
+    expect(record.lines).toHaveLength(6);
     expect(status.lines).toContain("安全感：危险。你没有一直遇到危险，但你一直在为危险做准备。");
     expect(status.lines.join("\n")).not.toContain("2/12");
-    expect(strategy.lines).toContain("放弃近路：4 次。");
-    expect(strategy.lines).toContain("保存证据：2 次。");
-    expect(passStyle.lines).toContain("通关方式：高警觉通关。");
+    expect(status.lines).toContain("放弃近路：4 次");
+    expect(profile.lines).toContain("年龄：27");
+    expect(report.lines).toContain("通关方式：高警觉通关");
+    expect(report.lines).toContain("难度：普通");
+    expect(report.lines).toContain("本次代价：");
   });
 });

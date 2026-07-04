@@ -31,7 +31,6 @@ npm test
 - `stat_*`
 - `hidden_*`
 - `tagsAdded`
-- `visibleChanges`
 - `track_*`
 - `require_*`
 - `requirementReason`

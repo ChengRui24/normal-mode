@@ -1,5 +1,5 @@
 import { getDisabledReason } from "../core/choiceRules.js";
-import { getEndingDisplay } from "../core/gameEngine.js";
+import { getEndingDisplay, getSettlementDisplay } from "../core/gameEngine.js";
 import { getVisibleStats } from "../core/stateWords.js";
 import { getCardById } from "../data/levels.js";
 
@@ -107,8 +107,45 @@ function renderIntroCard(root, card, onContinue) {
   root.querySelector(".continue-button").addEventListener("click", onContinue);
 }
 
-function renderStaticCard(root, card, state, onContinue) {
-  const display = card.type === "ending" ? getEndingDisplay(card, state) : card;
+function renderProfileCard(root, card, state, onContinue) {
+  const display = getEndingDisplay(card, state);
+  root.innerHTML = `
+    <section class="game-card">
+      ${renderHeader(display, state)}
+      <p class="scene-text">${escapeText(display.text ?? "")}</p>
+      ${(display.lines ?? []).length > 0
+        ? `<ul class="ending-list">${display.lines.map((line) => `<li class="ending-line">${escapeText(line)}</li>`).join("")}</ul>`
+        : ""}
+      <div class="profile-reveal" aria-live="polite"></div>
+      <button class="continue-button" type="button">${escapeText(display.buttonLabel ?? "继续生成")}</button>
+    </section>
+  `;
+
+  root.querySelector(".continue-button").addEventListener("click", (event) => {
+    event.currentTarget.remove();
+    const reveal = root.querySelector(".profile-reveal");
+    reveal.innerHTML = `
+      <ul class="ending-list">
+        <li class="ending-line">性别：女</li>
+        <li class="ending-line">难度：普通</li>
+      </ul>
+      <div class="profile-afterword"></div>
+    `;
+
+    window.setTimeout(() => {
+      const afterword = root.querySelector(".profile-afterword");
+      afterword.innerHTML = `
+        <p class="content-text">你刚才经历的，不是战场，不是末日，不是传奇，也不是一段特别糟糕的人生。</p>
+        <p class="content-text">它只是一次普通难度。</p>
+        <button class="continue-button" type="button">查看通关报告</button>
+      `;
+      afterword.querySelector(".continue-button").addEventListener("click", onContinue);
+    }, 1500);
+  });
+}
+
+function renderStaticCard(root, card, state, onContinue, onRestart) {
+  const display = card.type === "ending" ? getEndingDisplay(card, state) : getSettlementDisplay(card, state);
   const primaryText = display.text ?? display.scene ?? "";
   root.innerHTML = `
     <section class="game-card">
@@ -123,7 +160,8 @@ function renderStaticCard(root, card, state, onContinue) {
     </section>
   `;
 
-  root.querySelector(".continue-button").addEventListener("click", onContinue);
+  const action = card.id === "E-04" ? onRestart : onContinue;
+  root.querySelector(".continue-button").addEventListener("click", action);
 }
 
 export function renderGame(root, { state, onChoose, onContinue, onRestart }) {
@@ -138,8 +176,10 @@ export function renderGame(root, { state, onChoose, onContinue, onRestart }) {
     renderResultCard(root, card, state, onContinue);
   } else if (card.type === "chapterIntro") {
     renderIntroCard(root, card, onContinue);
+  } else if (card.id === "E-03") {
+    renderProfileCard(root, card, state, onContinue);
   } else if (state.phase === "settlement" || state.phase === "ending") {
-    renderStaticCard(root, card, state, onContinue);
+    renderStaticCard(root, card, state, onContinue, onRestart);
   } else {
     renderChoiceCard(root, card, state, onChoose);
   }

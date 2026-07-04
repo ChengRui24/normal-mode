@@ -151,10 +151,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "noticed"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "energy"
         ]
       },
       {
@@ -167,10 +163,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "low_presence"
-        ],
-        "visibleChanges": [
-          "safety",
-          "self"
         ]
       },
       {
@@ -183,10 +175,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "self_first"
-        ],
-        "visibleChanges": [
-          "energy",
-          "self"
         ]
       }
     ]
@@ -209,10 +197,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "prepared"
-        ],
-        "visibleChanges": [
-          "energy",
-          "safety"
         ]
       },
       {
@@ -225,10 +209,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "low_battery"
-        ],
-        "visibleChanges": [
-          "energy",
-          "safety"
         ]
       },
       {
@@ -241,10 +221,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "delayed_chance"
-        ],
-        "visibleChanges": [
-          "safety",
-          "reputation"
         ]
       }
     ]
@@ -269,9 +245,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "closed_space"
-        ],
-        "visibleChanges": [
-          "safety"
         ]
       },
       {
@@ -286,9 +259,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "waited"
-        ],
-        "visibleChanges": [
-          "safety"
         ]
       },
       {
@@ -301,10 +271,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "someone_knows"
-        ],
-        "visibleChanges": [
-          "safety",
-          "relationship"
         ],
         "track": {
           "seekHelp": 1
@@ -333,9 +299,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "quiet_route"
-        ],
-        "visibleChanges": [
-          "safety"
         ]
       },
       {
@@ -351,10 +314,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "detour"
-        ],
-        "visibleChanges": [
-          "energy",
-          "safety"
         ],
         "track": {
           "detour": 1
@@ -373,10 +332,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "platform_trip"
-        ],
-        "visibleChanges": [
-          "money",
-          "safety"
         ],
         "track": {
           "paidSafety": 1
@@ -404,9 +359,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "image_recorded"
-        ],
-        "visibleChanges": [
-          "reputation"
         ]
       },
       {
@@ -418,9 +370,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "plain_file"
-        ],
-        "visibleChanges": [
-          "safety"
         ]
       },
       {
@@ -432,9 +381,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "file_blocked"
-        ],
-        "visibleChanges": [
-          "reputation"
         ]
       }
     ]
@@ -460,10 +406,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "early_fit"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "energy"
         ]
       },
       {
@@ -476,10 +418,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "distant"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "energy"
         ]
       },
       {
@@ -513,9 +451,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "career_driven"
-        ],
-        "visibleChanges": [
-          "reputation"
         ]
       },
       {
@@ -528,10 +463,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "stable_discount"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "money"
         ]
       },
       {
@@ -547,9 +478,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "reverse_question"
-        ],
-        "visibleChanges": [
-          "self"
         ]
       }
     ]
@@ -573,11 +501,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "low_salary"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "money",
-          "self"
         ]
       },
       {
@@ -591,11 +514,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "pending_offer"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "money",
-          "self"
         ]
       },
       {
@@ -611,10 +529,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "contract_awareness"
-        ],
-        "visibleChanges": [
-          "self",
-          "reputation"
         ]
       }
     ]
@@ -639,11 +553,6 @@ export const LEVEL_CARDS = [
         "tagsAdded": [
           "default_filler"
         ],
-        "visibleChanges": [
-          "reputation",
-          "energy",
-          "self"
-        ],
         "track": {
           "concede": 1
         }
@@ -658,10 +567,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "priority_check"
-        ],
-        "visibleChanges": [
-          "energy",
-          "self"
         ]
       },
       {
@@ -675,11 +580,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "low_cooperation"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "energy",
-          "self"
         ]
       }
     ]
@@ -704,12 +604,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "dinner_joined"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "energy",
-          "relationship",
-          "safety"
         ]
       },
       {
@@ -722,10 +616,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "limited_presence"
-        ],
-        "visibleChanges": [
-          "energy",
-          "relationship"
         ]
       },
       {
@@ -739,11 +629,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "not_grouped"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "energy",
-          "self"
         ]
       }
     ]
@@ -768,11 +653,6 @@ export const LEVEL_CARDS = [
         "tagsAdded": [
           "joke_accepted"
         ],
-        "visibleChanges": [
-          "reputation",
-          "self",
-          "energy"
-        ],
         "track": {
           "silence": 1
         }
@@ -786,9 +666,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "low_conflict"
-        ],
-        "visibleChanges": [
-          "energy"
         ]
       },
       {
@@ -802,11 +679,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "too_sensitive_flag"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "self",
-          "relationship"
         ]
       }
     ]
@@ -830,11 +702,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "high_rent"
-        ],
-        "visibleChanges": [
-          "money",
-          "safety",
-          "energy"
         ]
       },
       {
@@ -848,11 +715,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "remote_home"
-        ],
-        "visibleChanges": [
-          "money",
-          "safety",
-          "energy"
         ]
       },
       {
@@ -864,9 +726,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "search_fatigue"
-        ],
-        "visibleChanges": [
-          "energy"
         ]
       }
     ]
@@ -889,10 +748,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "unchecked_home"
-        ],
-        "visibleChanges": [
-          "money",
-          "safety"
         ]
       },
       {
@@ -906,11 +761,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "checked_building"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "safety",
-          "self"
         ]
       },
       {
@@ -923,10 +773,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "viewed_with_friend"
-        ],
-        "visibleChanges": [
-          "relationship",
-          "safety"
         ],
         "track": {
           "seekHelp": 1
@@ -955,10 +801,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "contract_risk"
-        ],
-        "visibleChanges": [
-          "money",
-          "energy"
         ]
       },
       {
@@ -974,10 +816,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "asked_terms"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "energy"
         ]
       },
       {
@@ -993,9 +831,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "external_check"
-        ],
-        "visibleChanges": [
-          "relationship"
         ]
       }
     ]
@@ -1018,10 +853,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "last_minute_fee"
-        ],
-        "visibleChanges": [
-          "money",
-          "energy"
         ]
       },
       {
@@ -1035,11 +866,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "goods_controlled"
-        ],
-        "visibleChanges": [
-          "energy",
-          "self",
-          "safety"
         ]
       },
       {
@@ -1054,9 +880,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "platform_ticket"
-        ],
-        "visibleChanges": [
-          "energy"
         ]
       }
     ]
@@ -1078,9 +901,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "address_seen"
-        ],
-        "visibleChanges": [
-          "safety"
         ]
       },
       {
@@ -1094,11 +914,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "leave_request_risk"
-        ],
-        "visibleChanges": [
-          "safety",
-          "energy",
-          "reputation"
         ]
       },
       {
@@ -1111,10 +926,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "call_witness"
-        ],
-        "visibleChanges": [
-          "relationship",
-          "safety"
         ],
         "track": {
           "seekHelp": 1
@@ -1140,10 +951,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "door_opened"
-        ],
-        "visibleChanges": [
-          "energy",
-          "safety"
         ]
       },
       {
@@ -1156,10 +963,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "delayed_door"
-        ],
-        "visibleChanges": [
-          "safety",
-          "energy"
         ]
       },
       {
@@ -1195,11 +998,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "neighbor_knows_alone"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "safety",
-          "relationship"
         ]
       },
       {
@@ -1212,10 +1010,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "vague_info"
-        ],
-        "visibleChanges": [
-          "energy",
-          "safety"
         ]
       },
       {
@@ -1228,10 +1022,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "imagined_roommate"
-        ],
-        "visibleChanges": [
-          "safety",
-          "self"
         ]
       }
     ]
@@ -1255,11 +1045,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "crowded_commute"
-        ],
-        "visibleChanges": [
-          "safety",
-          "reputation",
-          "energy"
         ]
       },
       {
@@ -1272,10 +1057,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "late_risk"
-        ],
-        "visibleChanges": [
-          "safety",
-          "reputation"
         ]
       },
       {
@@ -1291,10 +1072,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "reroute"
-        ],
-        "visibleChanges": [
-          "money",
-          "safety"
         ]
       }
     ]
@@ -1320,10 +1097,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "look_back"
-        ],
-        "visibleChanges": [
-          "safety",
-          "self"
         ]
       },
       {
@@ -1336,10 +1109,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "near_staff"
-        ],
-        "visibleChanges": [
-          "safety",
-          "energy"
         ]
       },
       {
@@ -1352,10 +1121,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "watchful"
-        ],
-        "visibleChanges": [
-          "safety",
-          "energy"
         ],
         "track": {
           "silence": 1
@@ -1382,10 +1147,6 @@ export const LEVEL_CARDS = [
         "tagsAdded": [
           "charged"
         ],
-        "visibleChanges": [
-          "money",
-          "safety"
-        ],
         "track": {
           "paidSafety": 1
         }
@@ -1399,9 +1160,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "low_battery"
-        ],
-        "visibleChanges": [
-          "safety"
         ]
       },
       {
@@ -1417,10 +1175,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "late_leave"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "relationship"
         ]
       }
     ]
@@ -1446,9 +1200,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "night_quiet_route"
-        ],
-        "visibleChanges": [
-          "safety"
         ]
       },
       {
@@ -1461,10 +1212,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "habit_detour"
-        ],
-        "visibleChanges": [
-          "safety",
-          "energy"
         ],
         "track": {
           "detour": 1
@@ -1480,10 +1227,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "platform_trip"
-        ],
-        "visibleChanges": [
-          "money",
-          "safety"
         ],
         "track": {
           "paidSafety": 1
@@ -1512,10 +1255,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "route_confirmed"
-        ],
-        "visibleChanges": [
-          "safety",
-          "self"
         ]
       },
       {
@@ -1528,10 +1267,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "silent_monitor"
-        ],
-        "visibleChanges": [
-          "safety",
-          "energy"
         ]
       },
       {
@@ -1544,10 +1279,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "someone_knows"
-        ],
-        "visibleChanges": [
-          "safety",
-          "relationship"
         ],
         "track": {
           "seekHelp": 1
@@ -1575,9 +1306,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "shared_elevator"
-        ],
-        "visibleChanges": [
-          "safety"
         ]
       },
       {
@@ -1590,10 +1318,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "avoid_closed_space"
-        ],
-        "visibleChanges": [
-          "safety",
-          "energy"
         ]
       },
       {
@@ -1607,11 +1331,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "pretend_route"
-        ],
-        "visibleChanges": [
-          "safety",
-          "energy",
-          "self"
         ],
         "track": {
           "detour": 1
@@ -1636,9 +1355,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "polite_reply"
-        ],
-        "visibleChanges": [
-          "reputation"
         ]
       },
       {
@@ -1651,10 +1367,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "no_reply"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "safety"
         ]
       },
       {
@@ -1666,9 +1378,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "public_reply"
-        ],
-        "visibleChanges": [
-          "safety"
         ]
       }
     ]
@@ -1694,10 +1403,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "front_seat"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "energy"
         ]
       },
       {
@@ -1710,10 +1415,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "low_visibility"
-        ],
-        "visibleChanges": [
-          "energy",
-          "reputation"
         ]
       },
       {
@@ -1725,9 +1426,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "sat_with_ally"
-        ],
-        "visibleChanges": [
-          "relationship"
         ]
       }
     ]
@@ -1753,10 +1451,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "corrected_live"
-        ],
-        "visibleChanges": [
-          "energy",
-          "self"
         ]
       },
       {
@@ -1771,9 +1465,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "partial_distortion"
-        ],
-        "visibleChanges": [
-          "energy"
         ]
       },
       {
@@ -1789,9 +1480,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "written_trace"
-        ],
-        "visibleChanges": [
-          "energy"
         ],
         "track": {
           "evidenceSaved": 1
@@ -1817,10 +1505,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "claimed_credit"
-        ],
-        "visibleChanges": [
-          "self",
-          "relationship"
         ]
       },
       {
@@ -1835,9 +1519,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "private_talk"
-        ],
-        "visibleChanges": [
-          "energy"
         ]
       },
       {
@@ -1854,11 +1535,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "unclear_credit"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "energy",
-          "self"
         ],
         "track": {
           "concede": 1
@@ -1885,10 +1561,6 @@ export const LEVEL_CARDS = [
         "tagsAdded": [
           "invisible_labor"
         ],
-        "visibleChanges": [
-          "reputation",
-          "energy"
-        ],
         "track": {
           "concede": 1
         }
@@ -1903,10 +1575,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "task_shared"
-        ],
-        "visibleChanges": [
-          "energy",
-          "self"
         ]
       },
       {
@@ -1920,11 +1588,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "not_warm_flag"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "energy",
-          "self"
         ]
       }
     ]
@@ -1948,11 +1611,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "dinner_useful"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "energy",
-          "safety"
         ]
       },
       {
@@ -1966,11 +1624,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "kept_distance"
-        ],
-        "visibleChanges": [
-          "energy",
-          "reputation",
-          "self"
         ]
       },
       {
@@ -1983,10 +1636,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "left_early"
-        ],
-        "visibleChanges": [
-          "energy",
-          "reputation"
         ]
       }
     ]
@@ -2011,11 +1660,6 @@ export const LEVEL_CARDS = [
         "tagsAdded": [
           "tone_control"
         ],
-        "visibleChanges": [
-          "energy",
-          "reputation",
-          "self"
-        ],
         "track": {
           "concede": 1
         }
@@ -2033,10 +1677,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "opinion_disappeared"
-        ],
-        "visibleChanges": [
-          "energy",
-          "self"
         ],
         "track": {
           "silence": 1
@@ -2056,11 +1696,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "reaction_flag"
-        ],
-        "visibleChanges": [
-          "reputation",
-          "energy",
-          "self"
         ]
       }
     ]
@@ -2086,9 +1721,6 @@ export const LEVEL_CARDS = [
         "tagsAdded": [
           "visible_work"
         ],
-        "visibleChanges": [
-          "energy"
-        ],
         "track": {
           "evidenceSaved": 1
         }
@@ -2103,10 +1735,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "ally_statement"
-        ],
-        "visibleChanges": [
-          "relationship",
-          "reputation"
         ],
         "track": {
           "seekHelp": 1
@@ -2144,10 +1772,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "friend_maintained"
-        ],
-        "visibleChanges": [
-          "relationship",
-          "energy"
         ]
       },
       {
@@ -2160,10 +1784,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "friend_drift"
-        ],
-        "visibleChanges": [
-          "energy",
-          "relationship"
         ]
       },
       {
@@ -2195,10 +1815,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "private_place"
-        ],
-        "visibleChanges": [
-          "relationship",
-          "safety"
         ]
       },
       {
@@ -2211,10 +1827,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "public_place"
-        ],
-        "visibleChanges": [
-          "safety",
-          "relationship"
         ]
       },
       {
@@ -2227,10 +1839,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "seen_by_friend"
-        ],
-        "visibleChanges": [
-          "relationship",
-          "safety"
         ],
         "track": {
           "seekHelp": 1
@@ -2256,10 +1864,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "home_known"
-        ],
-        "visibleChanges": [
-          "relationship",
-          "safety"
         ]
       },
       {
@@ -2271,9 +1875,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "area_only"
-        ],
-        "visibleChanges": [
-          "safety"
         ]
       },
       {
@@ -2287,11 +1888,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "defensive_comment"
-        ],
-        "visibleChanges": [
-          "relationship",
-          "safety",
-          "self"
         ]
       }
     ]
@@ -2315,11 +1911,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "judgement_lower"
-        ],
-        "visibleChanges": [
-          "relationship",
-          "safety",
-          "energy"
         ]
       },
       {
@@ -2333,11 +1924,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "clear_no"
-        ],
-        "visibleChanges": [
-          "relationship",
-          "safety",
-          "self"
         ]
       },
       {
@@ -2349,9 +1935,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "soft_no"
-        ],
-        "visibleChanges": [
-          "energy"
         ]
       }
     ]
@@ -2376,11 +1959,6 @@ export const LEVEL_CARDS = [
         "tagsAdded": [
           "distance_clear"
         ],
-        "visibleChanges": [
-          "safety",
-          "relationship",
-          "self"
-        ],
         "track": {
           "clearRefusal": 1
         }
@@ -2394,9 +1972,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "distance_blurry"
-        ],
-        "visibleChanges": [
-          "energy"
         ]
       },
       {
@@ -2410,11 +1985,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "distance_retreat"
-        ],
-        "visibleChanges": [
-          "relationship",
-          "safety",
-          "self"
         ],
         "track": {
           "concede": 1
@@ -2442,11 +2012,6 @@ export const LEVEL_CARDS = [
         "tagsAdded": [
           "explain_cost"
         ],
-        "visibleChanges": [
-          "relationship",
-          "energy",
-          "self"
-        ],
         "track": {
           "explain": 1
         }
@@ -2461,10 +2026,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "alone_with_it"
-        ],
-        "visibleChanges": [
-          "relationship",
-          "energy"
         ]
       },
       {
@@ -2476,9 +2037,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "support_network"
-        ],
-        "visibleChanges": [
-          "energy"
         ],
         "track": {
           "seekHelp": 1
@@ -2505,10 +2063,6 @@ export const LEVEL_CARDS = [
         "tagsAdded": [
           "explain_loop"
         ],
-        "visibleChanges": [
-          "energy",
-          "relationship"
-        ],
         "track": {
           "explain": 1
         }
@@ -2523,10 +2077,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "unclosed_relation"
-        ],
-        "visibleChanges": [
-          "energy",
-          "safety"
         ]
       },
       {
@@ -2543,11 +2093,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "record_saved"
-        ],
-        "visibleChanges": [
-          "relationship",
-          "safety",
-          "self"
         ],
         "track": {
           "evidenceSaved": 1
@@ -2573,10 +2118,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "process_started"
-        ],
-        "visibleChanges": [
-          "self",
-          "energy"
         ]
       },
       {
@@ -2589,10 +2130,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "issue_reserved"
-        ],
-        "visibleChanges": [
-          "energy",
-          "self"
         ]
       },
       {
@@ -2605,10 +2142,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "external_confirm"
-        ],
-        "visibleChanges": [
-          "relationship",
-          "self"
         ],
         "track": {
           "seekHelp": 1
@@ -2638,10 +2171,6 @@ export const LEVEL_CARDS = [
         "tagsAdded": [
           "evidence_complete"
         ],
-        "visibleChanges": [
-          "energy",
-          "self"
-        ],
         "track": {
           "evidenceSaved": 1
         }
@@ -2658,9 +2187,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "evidence_limited"
-        ],
-        "visibleChanges": [
-          "energy"
         ]
       },
       {
@@ -2675,9 +2201,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "statement_risk"
-        ],
-        "visibleChanges": [
-          "self"
         ]
       }
     ]
@@ -2699,9 +2222,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "structured_statement"
-        ],
-        "visibleChanges": [
-          "energy"
         ]
       },
       {
@@ -2714,10 +2234,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "detail_followup"
-        ],
-        "visibleChanges": [
-          "self",
-          "energy"
         ]
       },
       {
@@ -2732,9 +2248,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "formal_record"
-        ],
-        "visibleChanges": [
-          "self"
         ]
       }
     ]
@@ -2758,10 +2271,6 @@ export const LEVEL_CARDS = [
         "tagsAdded": [
           "repeat_explain"
         ],
-        "visibleChanges": [
-          "energy",
-          "reputation"
-        ],
         "track": {
           "explain": 1
         }
@@ -2775,9 +2284,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "feeling_framed"
-        ],
-        "visibleChanges": [
-          "self"
         ]
       },
       {
@@ -2792,9 +2298,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "fact_frame"
-        ],
-        "visibleChanges": [
-          "self"
         ],
         "track": {
           "clearRefusal": 1
@@ -2820,10 +2323,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "mediated"
-        ],
-        "visibleChanges": [
-          "energy",
-          "safety"
         ]
       },
       {
@@ -2836,10 +2335,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "process_insisted"
-        ],
-        "visibleChanges": [
-          "self",
-          "energy"
         ]
       },
       {
@@ -2852,10 +2347,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "accompanied"
-        ],
-        "visibleChanges": [
-          "relationship",
-          "safety"
         ],
         "track": {
           "seekHelp": 1
@@ -2881,10 +2372,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "public_post"
-        ],
-        "visibleChanges": [
-          "self",
-          "energy"
         ]
       },
       {
@@ -2897,10 +2384,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "small_circle"
-        ],
-        "visibleChanges": [
-          "relationship",
-          "energy"
         ],
         "track": {
           "seekHelp": 1
@@ -2916,10 +2399,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "kept_private"
-        ],
-        "visibleChanges": [
-          "safety",
-          "self"
         ],
         "track": {
           "silence": 1
@@ -2945,9 +2424,6 @@ export const LEVEL_CARDS = [
         "tagsAdded": [
           "question_loop"
         ],
-        "visibleChanges": [
-          "energy"
-        ],
         "track": {
           "explain": 1
         }
@@ -2962,10 +2438,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "narrative_boundary"
-        ],
-        "visibleChanges": [
-          "self",
-          "energy"
         ]
       },
       {
@@ -2978,10 +2450,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "stop_explain"
-        ],
-        "visibleChanges": [
-          "energy",
-          "reputation"
         ],
         "track": {
           "silence": 1
@@ -3007,10 +2475,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "unclosed_issue"
-        ],
-        "visibleChanges": [
-          "energy",
-          "self"
         ]
       },
       {
@@ -3024,11 +2488,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "appeal_continue"
-        ],
-        "visibleChanges": [
-          "self",
-          "energy",
-          "money"
         ],
         "requirements": {
           "minStats": {
@@ -3049,11 +2508,6 @@ export const LEVEL_CARDS = [
         },
         "tagsAdded": [
           "exit_cost"
-        ],
-        "visibleChanges": [
-          "safety",
-          "money",
-          "reputation"
         ],
         "requirements": {
           "minStats": {
@@ -3139,8 +2593,8 @@ export const ENDING_CARDS = [
     "chapterId": "E",
     "chapterTitle": "终章：普通难度",
     "title": "记录完成",
-    "text": "你通过了这一段生活。系统没有判断你勇敢、软弱、敏感或多疑，只记录你怎样继续走到了这里。",
-    "buttonLabel": "查看记录"
+    "text": "你通过了这一段生活。\n\n系统没有判断你勇敢、软弱、敏感或多疑。\n它只记录你怎样继续走到了这里。",
+    "buttonLabel": "查看状态"
   },
   {
     "id": "E-02",
@@ -3148,85 +2602,25 @@ export const ENDING_CARDS = [
     "chapterId": "E",
     "chapterTitle": "终章：普通难度",
     "title": "状态总览",
-    "text": "系统第一次把所有状态摆在一起。你看到的不是能力表，而是这一路上你被迫管理过的东西。"
+    "text": "系统第一次把所有状态摆在一起。\n\n你看到的不是能力表。\n它们是这一路上你反复管理过的东西。"
   },
   {
     "id": "E-03",
     "type": "ending",
     "chapterId": "E",
     "chapterTitle": "终章：普通难度",
-    "title": "生活策略",
-    "text": "你以为自己在做选择。现在它们被整理成记录。"
+    "title": "角色档案生成中",
+    "text": "系统开始补全你的身份。\n没有任何一项看起来像特殊命运。",
+    "buttonLabel": "继续生成"
   },
   {
     "id": "E-04",
     "type": "ending",
     "chapterId": "E",
     "chapterTitle": "终章：普通难度",
-    "title": "通关方式",
-    "text": "系统没有给你胜利。它只记录你采用了哪一种方式继续生活。"
-  },
-  {
-    "id": "E-05",
-    "type": "ending",
-    "chapterId": "E",
-    "chapterTitle": "终章：普通难度",
-    "title": "代价清单",
-    "text": "你保住了一些东西，也把另一些东西留在路上。"
-  },
-  {
-    "id": "E-06",
-    "type": "ending",
-    "chapterId": "E",
-    "chapterTitle": "终章：普通难度",
-    "title": "没有发生",
-    "text": "很多事情没有发生。你没有在面试中彻底失败，没有在路上出事，没有让投诉完全反噬。系统把它们记为安全通过。",
-    "content": "但为了这些“没有发生”，你已经绕路、沉默、解释、付费、留证、提前道歉。"
-  },
-  {
-    "id": "E-07",
-    "type": "ending",
-    "chapterId": "E",
-    "chapterTitle": "终章：普通难度",
-    "title": "角色档案一",
-    "text": "系统开始补全你的身份。没有任何一项看起来像特殊命运。",
-    "content": "年龄：27；职业：普通职员；城市：普通城市；收入：普通；家庭：普通；关系状态：普通。"
-  },
-  {
-    "id": "E-08",
-    "type": "ending",
-    "chapterId": "E",
-    "chapterTitle": "终章：普通难度",
-    "title": "角色档案二",
-    "text": "最后一项信息被补上。",
-    "content": "性别：女。难度：普通。"
-  },
-  {
-    "id": "E-09",
-    "type": "ending",
-    "chapterId": "E",
-    "chapterTitle": "终章：普通难度",
-    "title": "回看",
-    "text": "你刚才经历的，不是战场，不是末日，不是传奇，也不是一段特别糟糕的人生。它只是一次普通难度。",
-    "content": "那些看起来像性格的东西，谨慎、敏感、会解释、怕麻烦别人、总想先准备好，也可能是处境留下的形状。"
-  },
-  {
-    "id": "E-10",
-    "type": "ending",
-    "chapterId": "E",
-    "chapterTitle": "终章：普通难度",
-    "title": "主题揭示",
-    "text": "女性不是一种性格。女性是一种处境。当一个人长期处在需要被评价、被相信、被允许、被保护、被解释的位置，他就会学会谨慎、计算、讨好、沉默、留证和提前道歉。",
-    "content": "这不是因为她天生如此。是因为世界经常这样要求她。"
-  },
-  {
-    "id": "E-11",
-    "type": "ending",
-    "chapterId": "E",
-    "chapterTitle": "终章：普通难度",
-    "title": "二周目入口",
-    "text": "同一套规则，也可能落在别的人身上：租客、实习生、病人、老人、外地人、未成年人。处境不是身份本身，而是一个人被放在什么位置。",
-    "buttonLabel": "结束"
+    "title": "普通难度 · 通关记录",
+    "text": "",
+    "buttonLabel": "重新开始"
   }
 ];
 
@@ -3248,11 +2642,7 @@ export const CRISIS_CARDS = [
         "effects": {
           "reputation": 1,
           "self": -1
-        },
-        "visibleChanges": [
-          "reputation",
-          "self"
-        ]
+        }
       },
       {
         "id": "ask-witness",
@@ -3261,11 +2651,7 @@ export const CRISIS_CARDS = [
         "effects": {
           "reputation": 1,
           "relationship": -1
-        },
-        "visibleChanges": [
-          "reputation",
-          "relationship"
-        ]
+        }
       },
       {
         "id": "silent-forward",
@@ -3276,10 +2662,7 @@ export const CRISIS_CARDS = [
         },
         "hiddenEffects": {
           "credit": -1
-        },
-        "visibleChanges": [
-          "energy"
-        ]
+        }
       }
     ]
   },
@@ -3300,11 +2683,7 @@ export const CRISIS_CARDS = [
         "effects": {
           "money": 1,
           "safety": -1
-        },
-        "visibleChanges": [
-          "money",
-          "safety"
-        ]
+        }
       },
       {
         "id": "borrow",
@@ -3313,11 +2692,7 @@ export const CRISIS_CARDS = [
         "effects": {
           "money": 2,
           "relationship": -1
-        },
-        "visibleChanges": [
-          "money",
-          "relationship"
-        ]
+        }
       },
       {
         "id": "drop-processing",
@@ -3326,11 +2701,7 @@ export const CRISIS_CARDS = [
         "effects": {
           "energy": 1,
           "self": -1
-        },
-        "visibleChanges": [
-          "energy",
-          "self"
-        ]
+        }
       }
     ]
   },
@@ -3351,11 +2722,7 @@ export const CRISIS_CARDS = [
         "effects": {
           "safety": 1,
           "energy": -1
-        },
-        "visibleChanges": [
-          "safety",
-          "energy"
-        ]
+        }
       },
       {
         "id": "contact-someone",
@@ -3364,11 +2731,7 @@ export const CRISIS_CARDS = [
         "effects": {
           "safety": 1,
           "relationship": -1
-        },
-        "visibleChanges": [
-          "safety",
-          "relationship"
-        ]
+        }
       },
       {
         "id": "push-through",
@@ -3379,10 +2742,7 @@ export const CRISIS_CARDS = [
         },
         "hiddenEffects": {
           "exposure": 1
-        },
-        "visibleChanges": [
-          "energy"
-        ]
+        }
       }
     ]
   },
@@ -3403,11 +2763,7 @@ export const CRISIS_CARDS = [
         "effects": {
           "reputation": -1,
           "energy": 2
-        },
-        "visibleChanges": [
-          "energy",
-          "reputation"
-        ]
+        }
       },
       {
         "id": "simplify",
@@ -3418,10 +2774,7 @@ export const CRISIS_CARDS = [
         },
         "hiddenEffects": {
           "evidence": -1
-        },
-        "visibleChanges": [
-          "energy"
-        ]
+        }
       },
       {
         "id": "ask-help",
@@ -3430,11 +2783,7 @@ export const CRISIS_CARDS = [
         "effects": {
           "energy": 1,
           "relationship": -1
-        },
-        "visibleChanges": [
-          "energy",
-          "relationship"
-        ]
+        }
       }
     ]
   },
@@ -3455,11 +2804,7 @@ export const CRISIS_CARDS = [
         "effects": {
           "energy": -1,
           "self": 1
-        },
-        "visibleChanges": [
-          "self",
-          "energy"
-        ]
+        }
       },
       {
         "id": "repair",
@@ -3468,11 +2813,7 @@ export const CRISIS_CARDS = [
         "effects": {
           "energy": -1,
           "relationship": 1
-        },
-        "visibleChanges": [
-          "relationship",
-          "energy"
-        ]
+        }
       },
       {
         "id": "stop-asking",
@@ -3481,11 +2822,7 @@ export const CRISIS_CARDS = [
         "effects": {
           "safety": -1,
           "energy": 1
-        },
-        "visibleChanges": [
-          "safety",
-          "energy"
-        ]
+        }
       }
     ]
   },
@@ -3506,11 +2843,7 @@ export const CRISIS_CARDS = [
         "effects": {
           "energy": 1,
           "self": -1
-        },
-        "visibleChanges": [
-          "energy",
-          "self"
-        ]
+        }
       },
       {
         "id": "write-down",
@@ -3522,11 +2855,7 @@ export const CRISIS_CARDS = [
         },
         "hiddenEffects": {
           "evidence": 1
-        },
-        "visibleChanges": [
-          "self",
-          "energy"
-        ]
+        }
       },
       {
         "id": "confirm-help",
@@ -3535,11 +2864,7 @@ export const CRISIS_CARDS = [
         "effects": {
           "relationship": -1,
           "self": 1
-        },
-        "visibleChanges": [
-          "self",
-          "relationship"
-        ]
+        }
       }
     ]
   }
@@ -3566,10 +2891,6 @@ export const INSERT_CARDS = [
         "tagsAdded": [
           "someone_knows"
         ],
-        "visibleChanges": [
-          "safety",
-          "energy"
-        ],
         "track": {
           "seekHelp": 1
         }
@@ -3587,10 +2908,6 @@ export const INSERT_CARDS = [
         },
         "tagsAdded": [
           "detour"
-        ],
-        "visibleChanges": [
-          "safety",
-          "energy"
         ],
         "track": {
           "detour": 1
@@ -3676,14 +2993,7 @@ export const orderedCardIds = [
   "E-01",
   "E-02",
   "E-03",
-  "E-04",
-  "E-05",
-  "E-06",
-  "E-07",
-  "E-08",
-  "E-09",
-  "E-10",
-  "E-11"
+  "E-04"
 ];
 
 const cardsById = new Map(

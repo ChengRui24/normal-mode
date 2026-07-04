@@ -1,4 +1,4 @@
-const SAVE_KEY = "ordinary-life-save-v2";
+const SAVE_KEY = "ordinary-life-save-v3";
 
 export function saveState(state) {
   localStorage.setItem(SAVE_KEY, JSON.stringify(state));

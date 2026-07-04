@@ -199,7 +199,6 @@ function choiceRowsFor(cards, config) {
         label: choice.label,
         result: choice.result,
         tagsAdded: listValue(choice.tagsAdded),
-        visibleChanges: listValue(choice.visibleChanges),
         requirementReason: choice.requirements?.reason
       };
 
@@ -314,7 +313,6 @@ export function buildContentTables({ levels, statConfig }) {
     ...config.statKeys.map((key) => `stat_${key}`),
     ...config.hiddenKeys.map((key) => `hidden_${key}`),
     "tagsAdded",
-    "visibleChanges",
     ...COUNTER_KEYS.map((key) => `track_${key}`),
     ...config.statKeys.map((key) => `require_${key}`),
     "requirementReason"
@@ -361,7 +359,6 @@ function buildChoice(row, config) {
 
   if (Object.keys(hiddenEffects).length > 0) choice.hiddenEffects = hiddenEffects;
   if (!empty(row.tagsAdded)) choice.tagsAdded = parseList(row.tagsAdded);
-  if (!empty(row.visibleChanges)) choice.visibleChanges = parseList(row.visibleChanges);
   if (Object.keys(track).length > 0) choice.track = track;
   if (Object.keys(minStats).length > 0 || !empty(row.requirementReason)) {
     choice.requirements = compactObject({

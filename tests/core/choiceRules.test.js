@@ -1,23 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { createInitialState } from "../../src/core/initialState.js";
-import { getDisabledReason, selectVisibleChanges } from "../../src/core/choiceRules.js";
+import { getDisabledReason } from "../../src/core/choiceRules.js";
 
 describe("choice rules", () => {
-  it("skips unknown visible change keys before limiting displayed changes", () => {
-    const changes = selectVisibleChanges(
-      {
-        effects: { unknown: 1, money: -2, safety: 1 },
-        visibleChanges: ["unknown", "money", "safety"]
-      },
-      ["unknown", "money", "safety"]
-    );
-
-    expect(changes).toEqual([
-      { key: "money", label: "钱", delta: -2 },
-      { key: "safety", label: "安全感", delta: 1 }
-    ]);
-  });
-
   it("returns custom reason when min stat requirements are unmet", () => {
     const state = {
       ...createInitialState(),
