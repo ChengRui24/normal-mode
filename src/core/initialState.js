@@ -6,8 +6,8 @@ function zeroRecord(keys) {
 
 export function createInitialState() {
   return {
-    phase: "intro",
-    currentCardId: "P-I",
+    phase: "home",
+    currentCardId: "HOME",
     pendingResult: null,
     stats: { ...INITIAL_STATS },
     hidden: zeroRecord(HIDDEN_KEYS),

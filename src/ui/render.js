@@ -1,7 +1,7 @@
 import { getDisabledReason } from "../core/choiceRules.js";
 import { getEndingDisplay, getSettlementDisplay } from "../core/gameEngine.js";
 import { getVisibleStats } from "../core/stateWords.js";
-import { getCardById } from "../data/levels.js";
+import { INTRO_CARDS, LEVEL_CARDS, getCardById } from "../data/levels.js";
 
 function escapeText(value) {
   const span = document.createElement("span");
@@ -26,21 +26,58 @@ function renderStatStrip(state) {
   `;
 }
 
+function getChapterTheme(card) {
+  return INTRO_CARDS.find((intro) => intro.chapterId === card?.chapterId)?.theme;
+}
+
+function getChapterProgress(card) {
+  if (card?.type !== "level" || card.insert || card.crisis) return null;
+
+  const chapterCards = LEVEL_CARDS.filter((item) => item.chapterId === card.chapterId);
+  const index = chapterCards.findIndex((item) => item.id === card.id);
+  if (index === -1) return null;
+
+  return {
+    current: index + 1,
+    total: chapterCards.length
+  };
+}
+
+function progressDotsHtml(progress) {
+  if (!progress) return "";
+
+  return `
+    <div class="progress-dots" aria-label="当前关卡 ${progress.current}/${progress.total}">
+      ${Array.from({ length: progress.total }, (_, index) =>
+        `<span class="progress-dot${index + 1 === progress.current ? " is-current" : ""}"></span>`
+      ).join("")}
+    </div>
+  `;
+}
+
 function renderHeader(card, state) {
+  const progress = getChapterProgress(card);
+  const chapterLine = progress
+    ? `${card.chapterTitle ?? "普通难度"} · ${progress.current}/${progress.total}`
+    : card.chapterTitle ?? "普通难度";
+
   return `
     <header class="card-header">
       <div>
-        <p class="eyebrow">${escapeText(card.chapterTitle ?? "普通难度")}</p>
+        <p class="eyebrow">${escapeText(chapterLine)}</p>
         <h1>${escapeText(card.title ?? "普通生活")}</h1>
       </div>
-      <button class="restart-button" type="button" aria-label="重新开始" title="重新开始">
-        <svg class="restart-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-          <path d="M3 12a9 9 0 1 0 3-6.7" />
-          <path d="M3 4v6h6" />
-        </svg>
-      </button>
     </header>
+    ${progressDotsHtml(progress)}
     ${renderStatStrip(state)}
+  `;
+}
+
+function restartFooterHtml() {
+  return `
+    <div class="restart-footer">
+      <button class="restart-text-button" type="button">重新开始</button>
+    </div>
   `;
 }
 
@@ -66,7 +103,7 @@ function revealInlineResult(root, choice, onContinue) {
 
 function renderChoiceCard(root, card, state, onChoose, onContinue) {
   root.innerHTML = `
-    <section class="game-card">
+    <section class="game-card themed-card" style="${cardStyle(card)}">
       ${renderHeader(card, state)}
       <p class="scene-text">${escapeText(card.scene)}</p>
       <div class="choice-list">
@@ -82,6 +119,7 @@ function renderChoiceCard(root, card, state, onChoose, onContinue) {
           })
           .join("")}
       </div>
+      ${restartFooterHtml()}
     </section>
   `;
 
@@ -100,11 +138,12 @@ function renderResultCard(root, card, state, onContinue) {
   const result = state.pendingResult;
   const selectedChoice = card.choices?.find((choice) => choice.id === result.choiceId);
   root.innerHTML = `
-    <section class="game-card">
+    <section class="game-card themed-card" style="${cardStyle(card)}">
       ${renderHeader(card, state)}
       <p class="scene-text">${escapeText(card.scene)}</p>
       ${resultPanelHtml(selectedChoice, result.text)}
       <button class="continue-button" type="button">继续</button>
+      ${restartFooterHtml()}
     </section>
   `;
 
@@ -118,14 +157,40 @@ function themeStyle(theme = {}) {
   return `--chapter-primary: ${escapeText(primary)}; --chapter-surface: ${escapeText(surface)}; --chapter-accent: ${escapeText(accent)};`;
 }
 
+function cardStyle(card) {
+  return themeStyle(getChapterTheme(card));
+}
+
 function renderIntroCard(root, card, onContinue) {
   root.innerHTML = `
-    <section class="game-card chapter-intro-card" style="${themeStyle(card.theme)}">
+    <section class="game-card themed-card chapter-intro-card" style="${themeStyle(card.theme)}">
       <p class="intro-kicker">${escapeText(card.kicker)}</p>
       <h1>${escapeText(card.title)}</h1>
       <p class="scene-text">${escapeText(card.text)}</p>
       <p class="intro-objective">${escapeText(card.objective)}</p>
       <button class="continue-button intro-button" type="button">${escapeText(card.buttonLabel)}</button>
+      ${restartFooterHtml()}
+    </section>
+  `;
+
+  root.querySelector(".continue-button").addEventListener("click", onContinue);
+}
+
+function renderHomeCard(root, onContinue) {
+  root.innerHTML = `
+    <section class="game-card home-card" aria-labelledby="home-title">
+      <p class="home-kicker">一段普通生活记录</p>
+      <h1 id="home-title">普通难度</h1>
+      <div class="home-lines">
+        <p>做出你的选择</p>
+        <p>没有标准答案</p>
+        <p>只有后续的结果</p>
+      </div>
+      <div class="home-notes" aria-label="提示">
+        <span>无需登录</span>
+        <span>建议竖屏</span>
+      </div>
+      <button class="continue-button home-start-button" type="button">开始</button>
     </section>
   `;
 
@@ -135,7 +200,7 @@ function renderIntroCard(root, card, onContinue) {
 function renderProfileCard(root, card, state, onContinue) {
   const display = getEndingDisplay(card, state);
   root.innerHTML = `
-    <section class="game-card">
+    <section class="game-card themed-card" style="${cardStyle(display)}">
       ${renderHeader(display, state)}
       <p class="scene-text">${escapeText(display.text ?? "")}</p>
       ${(display.lines ?? []).length > 0
@@ -143,6 +208,7 @@ function renderProfileCard(root, card, state, onContinue) {
         : ""}
       <div class="profile-reveal" aria-live="polite"></div>
       <button class="continue-button" type="button">${escapeText(display.buttonLabel ?? "继续生成")}</button>
+      ${restartFooterHtml()}
     </section>
   `;
 
@@ -173,7 +239,7 @@ function renderStaticCard(root, card, state, onContinue, onRestart) {
   const display = card.type === "ending" ? getEndingDisplay(card, state) : getSettlementDisplay(card, state);
   const primaryText = display.text ?? display.scene ?? "";
   root.innerHTML = `
-    <section class="game-card">
+    <section class="game-card themed-card" style="${cardStyle(display)}">
       ${renderHeader(display, state)}
       <p class="scene-text">${escapeText(primaryText)}</p>
       ${display.content ? `<p class="content-text">${escapeText(display.content)}</p>` : ""}
@@ -181,15 +247,21 @@ function renderStaticCard(root, card, state, onContinue, onRestart) {
         ? `<ul class="ending-list">${display.lines.map((line) => `<li class="ending-line">${escapeText(line)}</li>`).join("")}</ul>`
         : ""}
       ${display.reveal ? `<p class="tag-line">${escapeText(display.reveal)}</p>` : ""}
-      <button class="continue-button" type="button">${escapeText(display.buttonLabel ?? "继续")}</button>
+      ${card.id === "E-04" ? "" : `<button class="continue-button" type="button">${escapeText(display.buttonLabel ?? "继续")}</button>`}
+      ${restartFooterHtml()}
     </section>
   `;
 
   const action = card.id === "E-04" ? onRestart : onContinue;
-  root.querySelector(".continue-button").addEventListener("click", action);
+  root.querySelector(".continue-button")?.addEventListener("click", action);
 }
 
 export function renderGame(root, { state, onChoose, onContinue, onRestart }) {
+  if (state.phase === "home") {
+    renderHomeCard(root, onContinue);
+    return;
+  }
+
   const card = getCardById(state.currentCardId);
 
   if (!card) {
@@ -209,5 +281,5 @@ export function renderGame(root, { state, onChoose, onContinue, onRestart }) {
     renderChoiceCard(root, card, state, onChoose, onContinue);
   }
 
-  root.querySelector(".restart-button")?.addEventListener("click", onRestart);
+  root.querySelector(".restart-text-button")?.addEventListener("click", onRestart);
 }

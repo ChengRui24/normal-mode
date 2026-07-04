@@ -9,6 +9,35 @@ describe("renderGame", () => {
     vi.useRealTimers();
   });
 
+  it("renders the home screen before the first chapter intro", () => {
+    const root = document.createElement("main");
+    const onContinue = vi.fn();
+
+    renderGame(root, {
+      state: createInitialState(),
+      onChoose: vi.fn(),
+      onContinue,
+      onRestart: vi.fn()
+    });
+
+    expect(root.querySelector(".home-card")).not.toBe(null);
+    expect(root.textContent).toContain("普通难度");
+    expect(root.textContent).toContain("一段普通生活记录");
+    expect(root.textContent).toContain("做出你的选择");
+    expect(root.textContent).toContain("没有标准答案");
+    expect(root.textContent).toContain("只有后续的结果");
+    expect(root.textContent).toContain("无需登录");
+    expect(root.textContent).toContain("建议竖屏");
+    expect(root.querySelector(".restart-button")).toBe(null);
+    expect(root.querySelector(".restart-text-button")).toBe(null);
+    expect(root.querySelector(".stat-strip")).toBe(null);
+
+    const button = root.querySelector("button.continue-button");
+    expect(button?.textContent).toBe("开始");
+    button?.click();
+    expect(onContinue).toHaveBeenCalledTimes(1);
+  });
+
   it("renders chapter intro cards with theme variables and a single enter button", () => {
     const root = document.createElement("main");
     const onContinue = vi.fn();
@@ -55,7 +84,11 @@ describe("renderGame", () => {
     });
 
     expect(root.textContent).toContain("第三章");
+    expect(root.textContent).toContain("第三章：路上 · 4/7");
     expect(root.textContent).toContain("加班后的路线");
+    expect(root.querySelector(".game-card")?.getAttribute("style")).toContain("--chapter-primary: #65798A");
+    expect(root.querySelectorAll(".progress-dot")).toHaveLength(7);
+    expect(root.querySelectorAll(".progress-dot.is-current")).toHaveLength(1);
     expect(root.querySelectorAll("button.choice-button").length).toBeGreaterThanOrEqual(2);
   });
 
@@ -212,10 +245,11 @@ describe("renderGame", () => {
     expect(root.textContent).not.toContain("复制文本");
     expect(root.textContent).not.toContain("保存图片");
 
-    const buttons = [...root.querySelectorAll("button")].map((button) => button.textContent?.trim());
-    expect(buttons).toContain("重新开始");
+    expect(root.querySelector("button.continue-button")).toBe(null);
 
-    root.querySelector("button.continue-button")?.click();
+    const restart = root.querySelector("button.restart-text-button");
+    expect(restart?.textContent).toBe("重新开始");
+    restart?.click();
     expect(onRestart).toHaveBeenCalledTimes(1);
   });
 
@@ -262,8 +296,9 @@ describe("renderGame", () => {
     expect(root.querySelector(".stat-pill")).toBe(null);
   });
 
-  it("renders restart as a quiet icon control", () => {
+  it("renders restart as small text at the bottom of non-home cards", () => {
     const root = document.createElement("main");
+    const onRestart = vi.fn();
 
     renderGame(root, {
       state: {
@@ -273,15 +308,18 @@ describe("renderGame", () => {
       },
       onChoose: vi.fn(),
       onContinue: vi.fn(),
-      onRestart: vi.fn()
+      onRestart
     });
 
-    const restart = root.querySelector("button.restart-button");
+    const restart = root.querySelector("button.restart-text-button");
     expect(restart).not.toBe(null);
-    expect(restart?.getAttribute("aria-label")).toBe("重新开始");
-    expect(restart?.getAttribute("title")).toBe("重新开始");
-    expect(restart?.querySelector("svg.restart-icon")).not.toBe(null);
-    expect(restart?.textContent).not.toContain("重新开始");
-    expect(restart?.textContent).not.toContain("...");
+    expect(restart?.textContent).toBe("重新开始");
+    expect(root.querySelector(".restart-footer")?.lastElementChild).toBe(restart);
+    expect(root.querySelector(".card-header .restart-text-button")).toBe(null);
+    expect(root.querySelector(".restart-button")).toBe(null);
+    expect(root.querySelector(".restart-confirm")).toBe(null);
+
+    restart?.click();
+    expect(onRestart).toHaveBeenCalledTimes(1);
   });
 });

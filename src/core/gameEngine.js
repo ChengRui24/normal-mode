@@ -414,6 +414,16 @@ export function getSettlementDisplay(card, state) {
   };
 }
 
+export function startGame(state) {
+  return {
+    ...state,
+    phase: "intro",
+    currentCardId: "P-I",
+    pendingResult: null,
+    visibleStats: []
+  };
+}
+
 export function applyChoice(state, choice) {
   const card = getCardById(state.currentCardId);
 

@@ -1,5 +1,5 @@
 import "./styles.css";
-import { advanceAfterResult, applyChoice } from "./core/gameEngine.js";
+import { advanceAfterResult, applyChoice, startGame } from "./core/gameEngine.js";
 import { createInitialState } from "./core/initialState.js";
 import { clearSavedState, loadState, saveState } from "./core/storage.js";
 import { renderGame } from "./ui/render.js";
@@ -21,7 +21,7 @@ function handleChoose(choice, options) {
 }
 
 function handleContinue() {
-  commitState(advanceAfterResult(state));
+  commitState(state.phase === "home" ? startGame(state) : advanceAfterResult(state));
 }
 
 function handleRestart() {

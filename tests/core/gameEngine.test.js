@@ -10,7 +10,8 @@ import {
   getEndingDisplay,
   getVisibleStatsForCard,
   resolvePassStyle,
-  resolveChapterOutcome
+  resolveChapterOutcome,
+  startGame
 } from "../../src/core/gameEngine.js";
 
 describe("game engine choice application", () => {
@@ -122,11 +123,21 @@ describe("game engine visible stats", () => {
 });
 
 describe("game engine progression", () => {
-  it("starts at the prologue intro card", () => {
+  it("starts at the home screen", () => {
     const state = createInitialState();
 
-    expect(state.phase).toBe("intro");
-    expect(state.currentCardId).toBe("P-I");
+    expect(state.phase).toBe("home");
+    expect(state.currentCardId).toBe("HOME");
+  });
+
+  it("starts the game from the home screen into the prologue intro card", () => {
+    const state = createInitialState();
+    const next = startGame(state);
+
+    expect(next.phase).toBe("intro");
+    expect(next.currentCardId).toBe("P-I");
+    expect(next.pendingResult).toBe(null);
+    expect(next.visibleStats).toEqual([]);
   });
 
   it("continues from an intro card to the first chapter card", () => {
