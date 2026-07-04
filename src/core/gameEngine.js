@@ -23,7 +23,7 @@ function addUniqueTags(tags, additions = []) {
 }
 
 export function getVisibleStatsForCard(card) {
-  return CHAPTER_VISIBLE_STATS[card.chapterId] ?? [];
+  return CHAPTER_VISIBLE_STATS[card?.chapterId] ?? [];
 }
 
 export function applyChoice(state, choice) {

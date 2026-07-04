@@ -6,6 +6,7 @@ export function selectVisibleChanges(choice, visibleStats) {
 
   return preferred
     .filter((key) => visibleStats.includes(key))
+    .filter((key) => Object.hasOwn(STAT_LABELS, key))
     .filter((key) => Number.isFinite(effects[key]) && effects[key] !== 0)
     .slice(0, 2)
     .map((key) => ({

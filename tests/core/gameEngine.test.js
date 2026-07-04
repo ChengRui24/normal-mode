@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createInitialState } from "../../src/core/initialState.js";
-import { applyChoice } from "../../src/core/gameEngine.js";
+import { applyChoice, getVisibleStatsForCard } from "../../src/core/gameEngine.js";
 
 describe("game engine choice application", () => {
   it("applies visible, hidden, tag, counter, and history changes", () => {
@@ -82,5 +82,39 @@ describe("game engine choice application", () => {
       { key: "self", label: "自我", delta: 1 },
       { key: "energy", label: "精力", delta: -2 }
     ]);
+  });
+
+  it("dedupes added tags without mutating original tags or history", () => {
+    const state = {
+      ...createInitialState(),
+      currentCardId: "C3-04",
+      tags: ["平台行程"],
+      history: [{ cardId: "P-01", choiceId: "formal", chapterId: "P" }]
+    };
+    const originalTags = state.tags;
+    const originalHistory = state.history;
+
+    const next = applyChoice(state, {
+      id: "taxi",
+      label: "打车",
+      result: "你不用走夜路了，但余额又少了一截。",
+      effects: {},
+      hiddenEffects: {},
+      tagsAdded: ["平台行程", "夜间出行"],
+      track: {}
+    });
+
+    expect(next.tags).toEqual(["平台行程", "夜间出行"]);
+    expect(state.tags).toBe(originalTags);
+    expect(state.tags).toEqual(["平台行程"]);
+    expect(state.history).toBe(originalHistory);
+    expect(state.history).toEqual([{ cardId: "P-01", choiceId: "formal", chapterId: "P" }]);
+    expect(next.history).toHaveLength(2);
+  });
+});
+
+describe("game engine visible stats", () => {
+  it("returns no visible stats for absent cards", () => {
+    expect(getVisibleStatsForCard(undefined)).toEqual([]);
   });
 });
