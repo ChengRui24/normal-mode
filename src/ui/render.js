@@ -33,7 +33,12 @@ function renderHeader(card, state) {
         <p class="eyebrow">${escapeText(card.chapterTitle ?? "普通难度")}</p>
         <h1>${escapeText(card.title ?? "普通生活")}</h1>
       </div>
-      <button class="restart-button" type="button" aria-label="重新开始">...</button>
+      <button class="restart-button" type="button" aria-label="重新开始" title="重新开始">
+        <svg class="restart-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+          <path d="M3 12a9 9 0 1 0 3-6.7" />
+          <path d="M3 4v6h6" />
+        </svg>
+      </button>
     </header>
     ${renderStatStrip(state)}
   `;

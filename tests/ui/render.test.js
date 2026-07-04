@@ -148,6 +148,9 @@ describe("renderGame", () => {
     const restart = root.querySelector("button.restart-button");
     expect(restart).not.toBe(null);
     expect(restart?.getAttribute("aria-label")).toBe("重新开始");
+    expect(restart?.getAttribute("title")).toBe("重新开始");
+    expect(restart?.querySelector("svg.restart-icon")).not.toBe(null);
     expect(restart?.textContent).not.toContain("重新开始");
+    expect(restart?.textContent).not.toContain("...");
   });
 });
