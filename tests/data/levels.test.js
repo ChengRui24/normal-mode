@@ -7,6 +7,8 @@ import {
   getCardById,
   orderedCardIds
 } from "../../src/data/levels.js";
+import { HIDDEN_KEYS, STAT_KEYS } from "../../src/data/statConfig.js";
+import { createInitialState } from "../../src/core/initialState.js";
 
 const expectedOrderedIds = [
   "P-01", "P-02", "P-03", "P-04",
@@ -18,6 +20,10 @@ const expectedOrderedIds = [
   "C6-01", "C6-02", "C6-03", "C6-04", "C6-05", "C6-06", "C6-07", "C6-08", "C6-S",
   "E-01", "E-02", "E-03", "E-04"
 ];
+
+const statKeySet = new Set(STAT_KEYS);
+const hiddenKeySet = new Set(HIDDEN_KEYS);
+const counterKeySet = new Set(Object.keys(createInitialState().counters));
 
 describe("level data", () => {
   it("keeps the approved one-playthrough order", () => {
@@ -53,6 +59,59 @@ describe("level data", () => {
   it("includes at least one conditional insert card", () => {
     expect(INSERT_CARDS.length).toBeGreaterThanOrEqual(1);
     expect(INSERT_CARDS[0].trigger.tagsAll).toContain("低电量风险");
+  });
+
+  it("uses only approved schema keys in ordinary and insert cards", () => {
+    for (const card of [...LEVEL_CARDS, ...INSERT_CARDS]) {
+      for (const choice of card.choices) {
+        for (const key of Object.keys(choice.effects ?? {})) {
+          expect(statKeySet.has(key), `${card.id}.${choice.id} effects.${key}`).toBe(true);
+        }
+
+        for (const key of Object.keys(choice.hiddenEffects ?? {})) {
+          expect(hiddenKeySet.has(key), `${card.id}.${choice.id} hiddenEffects.${key}`).toBe(true);
+        }
+
+        for (const key of Object.keys(choice.track ?? {})) {
+          expect(counterKeySet.has(key), `${card.id}.${choice.id} track.${key}`).toBe(true);
+        }
+
+        for (const key of choice.visibleChanges ?? []) {
+          expect(statKeySet.has(key), `${card.id}.${choice.id} visibleChanges.${key}`).toBe(true);
+
+          if (Object.hasOwn(choice.effects ?? {}, key)) {
+            expect(statKeySet.has(key), `${card.id}.${choice.id} visible effect ${key}`).toBe(true);
+          }
+        }
+
+        for (const key of Object.keys(choice.requirements?.minStats ?? {})) {
+          expect(statKeySet.has(key), `${card.id}.${choice.id} requirements.minStats.${key}`).toBe(true);
+        }
+      }
+    }
+  });
+
+  it("keeps approved insert triggers and disabled-choice requirements", () => {
+    expect(getCardById("I-C3-footsteps").trigger).toEqual({
+      afterCardId: "C3-04",
+      tagsAll: ["低电量风险", "人少夜路"],
+      hiddenMax: {},
+      statMax: { safety: -2 }
+    });
+
+    const c608ChoicesByLabel = Object.fromEntries(
+      getCardById("C6-08").choices.map((choice) => [choice.label, choice])
+    );
+
+    expect(c608ChoicesByLabel["接受结果"].requirements).toBeUndefined();
+    expect(c608ChoicesByLabel["继续申诉"].requirements).toEqual({
+      minStats: { energy: -1, self: 0 },
+      reason: "无法继续消耗"
+    });
+    expect(c608ChoicesByLabel["离开环境"].requirements).toEqual({
+      minStats: { money: -1, self: 0 },
+      reason: "退出成本不足"
+    });
   });
 
   it("can retrieve cards by id", () => {

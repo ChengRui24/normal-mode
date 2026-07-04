@@ -1865,6 +1865,7 @@ export const LEVEL_CARDS = [
         hiddenEffects: {},
         tagsAdded: ["继续消耗"],
         visibleChanges: ["self", "energy", "money"],
+        requirements: { minStats: { energy: -1, self: 0 }, reason: "无法继续消耗" },
         track: { recognition: 1 }
       },
       {
@@ -1875,6 +1876,7 @@ export const LEVEL_CARDS = [
         hiddenEffects: {},
         tagsAdded: ["退出成本", "信誉转移"],
         visibleChanges: ["safety", "money"],
+        requirements: { minStats: { money: -1, self: 0 }, reason: "退出成本不足" },
         track: { paidForSafety: 1 }
       }
     ]
