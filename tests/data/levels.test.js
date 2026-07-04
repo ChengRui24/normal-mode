@@ -186,6 +186,26 @@ describe("level data", () => {
     );
   });
 
+  it("uses v0.5 expanded scene copy without changing choice configuration", () => {
+    expect(getCardById("P-01").scene).toBe(
+      "今天有一场重要见面。你站在镜子前，灯光把衣服上的褶皱照得很清楚。你想起有人曾说你“不够认真”，也有人说你“太用力”。时间不多了，你需要决定以什么样子出门。"
+    );
+    expect(getCardById("C3-04").scene).toBe(
+      "晚上十点，地铁口到家有两条路。近路人少，大路绕远。打车价格翻倍。地图把它们标成三个普通选项，没有标出路灯、店铺和途中会不会遇到谁。"
+    );
+    expect(getCardById("C6-08").scene).toBe(
+      "系统给出结果：证据不足，但会提醒相关人员注意。你不能说它完全没用，也不能说它解决了什么。页面上显示“已处理”。这个词很短，短到装不下你花掉的时间。"
+    );
+    expect(getCardById("CR-self").scene).toBe(
+      "你知道自己不愿意，但拒绝这件事本身也需要力气。你能感觉到边界在哪里，只是要把它说出来，还要再多撑一下。"
+    );
+    expect(getCardById("C6-08").choices.map((choice) => choice.id)).toEqual([
+      "accept",
+      "appeal",
+      "leave"
+    ]);
+  });
+
   it("keeps ending titles away from RPG-style score screens", () => {
     expect(getCardById("E-01").title).toBe("记录完成");
     expect(getCardById("E-01").title).not.toBe("数值总览");
