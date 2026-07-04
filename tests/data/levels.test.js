@@ -18,7 +18,7 @@ const expectedOrderedIds = [
   "C4-01", "C4-02", "C4-03", "C4-04", "C4-05", "C4-06", "C4-07", "C4-S",
   "C5-01", "C5-02", "C5-03", "C5-04", "C5-05", "C5-06", "C5-07", "C5-S",
   "C6-01", "C6-02", "C6-03", "C6-04", "C6-05", "C6-06", "C6-07", "C6-08", "C6-S",
-  "E-01", "E-02", "E-03", "E-04"
+  "E-01", "E-02", "E-03", "E-04", "E-05", "E-06"
 ];
 
 const statKeySet = new Set(STAT_KEYS);
@@ -53,19 +53,54 @@ describe("level data", () => {
     expect(SETTLEMENT_CARDS.map((card) => card.id)).toEqual([
       "C1-S", "C2-S", "C3-S", "C4-S", "C5-S", "C6-S"
     ]);
-    expect(ENDING_CARDS.map((card) => card.id)).toEqual(["E-01", "E-02", "E-03", "E-04"]);
+    expect(ENDING_CARDS.map((card) => card.id)).toEqual([
+      "E-01", "E-02", "E-03", "E-04", "E-05", "E-06"
+    ]);
   });
 
-  it("keeps the chapter 6 settlement copy exact", () => {
+  it("uses colder chapter settlement copy without mechanic explanations", () => {
+    expect(getCardById("C1-S")).toEqual({
+      id: "C1-S",
+      type: "settlement",
+      chapterId: "C1",
+      chapterTitle: "第一章：筛选",
+      title: "记录更新",
+      text: "你获得了一个位置。它暂时接收你，也开始要求你用之后的表现继续证明自己。",
+      reveal: "记录更新：信誉。"
+    });
+
     expect(getCardById("C6-S")).toEqual({
       id: "C6-S",
       type: "settlement",
       chapterId: "C6",
       chapterTitle: "第六章：窗口",
-      title: "第六章结束：窗口",
-      text: "你开始意识到：坚持不是一种态度。它需要钱、精力、关系、证据和被相信的机会。",
-      reveal: "本章显化：自我。"
+      title: "记录更新",
+      text: "这件事被记录了。它没有完全解决，但至少没有只留在你一个人的记忆里。",
+      reveal: "记录更新：自我。"
     });
+  });
+
+  it("uses natural-language result feedback from the approved copy library", () => {
+    const c201ChoicesByLabel = Object.fromEntries(
+      getCardById("C2-01").choices.map((choice) => [choice.label, choice])
+    );
+    const c608ChoicesByLabel = Object.fromEntries(
+      getCardById("C6-08").choices.map((choice) => [choice.label, choice])
+    );
+
+    expect(c201ChoicesByLabel["远且便宜"].result).toBe(
+      "你保住了现金。地图上回家的那段路，也被拉得更长、更暗。"
+    );
+    expect(c608ChoicesByLabel["继续申诉"].result).toBe(
+      "你继续往下走。每多走一步，都要再支付一点生活。"
+    );
+  });
+
+  it("keeps ending titles away from RPG-style score screens", () => {
+    expect(getCardById("E-01").title).toBe("记录汇总");
+    expect(getCardById("E-01").title).not.toBe("数值总览");
+    expect(getCardById("E-04").title).toBe("最后一项");
+    expect(getCardById("E-06").title).toBe("结束页");
   });
 
   it("includes at least one conditional insert card", () => {

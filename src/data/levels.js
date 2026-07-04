@@ -10,7 +10,7 @@ export const LEVEL_CARDS = [
       {
         id: "formal",
         label: "更正式",
-        result: "你看起来更像该被认真对待的人，也更容易被看见。",
+        result: "你整理好领口，镜子里的人看起来更像“应该出现的人”。只是你也更清楚，今天会有人先看见你的样子，再听你说话。",
         effects: { reputation: 1, energy: -1 },
         hiddenEffects: { exposure: 1 },
         tagsAdded: ["被注意"],
@@ -20,7 +20,7 @@ export const LEVEL_CARDS = [
       {
         id: "low-key",
         label: "更低调",
-        result: "你让自己不那么显眼，心里也松了一点。",
+        result: "你把容易被注意的部分收起来。出门时轻了一点，也像是把自己的一部分先放回了柜子里。",
         effects: { safety: 1, self: -1 },
         hiddenEffects: { exposure: -1 },
         tagsAdded: ["低存在感"],
@@ -30,7 +30,7 @@ export const LEVEL_CARDS = [
       {
         id: "comfortable",
         label: "穿得舒服",
-        result: "你选择让身体先好过一点，评价会留到之后再来。",
+        result: "你选择了一套行动方便的衣服。身体先松下来，但你还不知道它能不能被今天的场合接住。",
         effects: { energy: 1, self: 1 },
         hiddenEffects: {},
         tagsAdded: ["自我优先", "信誉波动"],
@@ -50,7 +50,7 @@ export const LEVEL_CARDS = [
       {
         id: "packed",
         label: "带上所有东西",
-        result: "你把充电宝和伞都塞进包里，肩上的重量换来一点确定感。",
+        result: "包比预想中重。你离开得慢了一点，但某些可能发生的麻烦，被你提前装进了包里。",
         effects: { energy: -1, safety: 1 },
         hiddenEffects: {},
         tagsAdded: ["准备充分"],
@@ -60,7 +60,7 @@ export const LEVEL_CARDS = [
       {
         id: "light",
         label: "轻装出门",
-        result: "你走得轻快一些，也把晚上的不确定留给了之后。",
+        result: "你关上门时很轻松。只是手机电量和天气提醒还停在脑子里，像两个没有处理完的小提示。",
         effects: { energy: 1, safety: -1 },
         hiddenEffects: {},
         tagsAdded: ["低电量风险"],
@@ -70,7 +70,7 @@ export const LEVEL_CARDS = [
       {
         id: "daytime",
         label: "改约白天",
-        result: "你把风险往后推，也让这次机会显得没那么坚定。",
+        result: "你发出改约消息。风险被推远了，机会也一起被推远了一点。",
         effects: { safety: 1, reputation: -1 },
         hiddenEffects: {},
         tagsAdded: ["机会延后"],
@@ -90,7 +90,7 @@ export const LEVEL_CARDS = [
       {
         id: "enter",
         label: "进去",
-        result: "你按住电梯门走进去，节省了时间，也把不适压了下去。",
+        result: "你走进电梯，和那个人并排站了一小段时间。什么都没有发生，但你记住了自己的站位。",
         effects: { safety: -1 },
         hiddenEffects: { time: 1 },
         tagsAdded: ["同乘电梯"],
@@ -100,7 +100,7 @@ export const LEVEL_CARDS = [
       {
         id: "wait",
         label: "等下一趟",
-        result: "你站在门外等下一部电梯，时间变少，但呼吸稳定下来。",
+        result: "你让电梯门合上。下一趟来得不慢，只是时间被安静地扣掉了一点。",
         effects: { safety: 1 },
         hiddenEffects: { time: -1 },
         tagsAdded: ["迟到解释"],
@@ -110,7 +110,7 @@ export const LEVEL_CARDS = [
       {
         id: "phone",
         label: "假装接电话",
-        result: "你抬起手机说了几句，给自己制造了一个被人知道的位置。",
+        result: "你拿起手机，像有人正在和你同行。电梯上升时，你听见自己说出并不重要的话。",
         effects: { safety: 1, relationship: -1 },
         hiddenEffects: {},
         tagsAdded: ["有人知道"],
@@ -130,7 +130,7 @@ export const LEVEL_CARDS = [
       {
         id: "shortcut",
         label: "走近路",
-        result: "你选了最近的路，脚步变快，周围也安静下来。",
+        result: "你走进那段更短的路。脚步快了些，周围的声音也变得更清楚。",
         effects: { safety: -1 },
         hiddenEffects: { time: 1, exposure: 1 },
         tagsAdded: ["人少路线"],
@@ -140,7 +140,7 @@ export const LEVEL_CARDS = [
       {
         id: "main-road",
         label: "走大路",
-        result: "你绕到更亮的路上，多花了时间和力气。",
+        result: "路灯一直在。你多走了十分钟，抵达时比预想中更累。",
         effects: { safety: 1, energy: -1 },
         hiddenEffects: { time: -1 },
         tagsAdded: ["绕路"],
@@ -150,7 +150,7 @@ export const LEVEL_CARDS = [
       {
         id: "taxi",
         label: "打车",
-        result: "你叫了车，把路上的风险换成账单和封闭空间的不确定。",
+        result: "你坐进车里，车窗把雨和人行道隔在外面。余额提醒在屏幕上亮了一下。",
         effects: { money: -1 },
         hiddenEffects: { time: 1, enclosed: 1 },
         tagsAdded: ["平台行程"],
@@ -170,7 +170,7 @@ export const LEVEL_CARDS = [
       {
         id: "polished-photo",
         label: "上传更精神的照片",
-        result: "你换上更有精神的照片，资料看起来完整，也被系统记住得更清楚。",
+        result: "资料很快提交成功。页面上的你看起来足够清楚，也更容易被记住。",
         effects: { reputation: 1 },
         hiddenEffects: { exposure: 1 },
         tagsAdded: ["形象被记录"],
@@ -180,7 +180,7 @@ export const LEVEL_CARDS = [
       {
         id: "id-photo",
         label: "上传普通证件照",
-        result: "你让照片保持普通，其他材料需要承担更多说明工作。",
+        result: "资料顺利提交。它没有替你多说什么，也没有把你推到更前面。",
         effects: { safety: 1 },
         hiddenEffects: {},
         tagsAdded: ["能力材料权重上升"],
@@ -190,7 +190,7 @@ export const LEVEL_CARDS = [
       {
         id: "skip-photo",
         label: "不上传",
-        result: "页面继续提醒资料不完整，流程开始变慢。",
+        result: "系统停在未完成状态。你没有违反规则，只是流程多了一道门槛。",
         effects: { reputation: -1 },
         hiddenEffects: {},
         tagsAdded: ["流程阻滞"],
@@ -210,7 +210,7 @@ export const LEVEL_CARDS = [
       {
         id: "join-chat",
         label: "加入聊天",
-        result: "你接上他们的话题，气氛松动了一点，你也消耗了一点力气。",
+        result: "你接上了几句话，等待区的空气松了一点。轮到你时，你已经少了一些力气。",
         effects: { reputation: 1, energy: -1 },
         hiddenEffects: { exposure: 1 },
         tagsAdded: ["轻松玩笑"],
@@ -220,7 +220,7 @@ export const LEVEL_CARDS = [
       {
         id: "stay-quiet",
         label: "保持安静",
-        result: "你保留精力，但在等待区里显得有些远。",
+        result: "你把注意力留给自己。别人没有打扰你，也没有多记住你。",
         effects: { reputation: -1, energy: 1 },
         hiddenEffects: {},
         tagsAdded: ["距离感"],
@@ -230,7 +230,7 @@ export const LEVEL_CARDS = [
       {
         id: "organize",
         label: "整理材料",
-        result: "你把材料顺好，至少能让下一轮问题更有凭据。",
+        result: "你把纸张重新排好，几处细节被你提前找到了。等待没有变短，但手里更稳。",
         effects: {},
         hiddenEffects: { evidence: 1 },
         tagsAdded: ["材料完整"],
@@ -250,7 +250,7 @@ export const LEVEL_CARDS = [
       {
         id: "career",
         label: "强调事业",
-        result: "你把目标说得清楚，可靠感上升，也被标记成更需要管理的人。",
+        result: "对方点头，记下你的主动性。你也感觉到，这个答案让他们开始评估你是否好放进团队。",
         effects: { reputation: 1 },
         hiddenEffects: {},
         tagsAdded: ["事业心强", "管理风险"],
@@ -260,7 +260,7 @@ export const LEVEL_CARDS = [
       {
         id: "stable",
         label: "强调稳定",
-        result: "你给出让人放心的答案，也让对方看见了压价空间。",
+        result: "对方明显放松了一些。稳定听起来像优点，也像一个可以被定价的理由。",
         effects: { reputation: 1 },
         hiddenEffects: {},
         tagsAdded: ["稳定但可压价", "议价权降低"],
@@ -270,7 +270,7 @@ export const LEVEL_CARDS = [
       {
         id: "ask-back",
         label: "反问岗位发展",
-        result: "你把问题推回岗位本身，能力被看见，风险也被看见。",
+        result: "对方停顿后开始介绍岗位。你拿回了一点提问权，也让气氛正式了些。",
         effects: { self: 1 },
         hiddenEffects: {},
         tagsAdded: ["反向提问", "能力呈现", "管理风险", "信誉波动"],
@@ -290,7 +290,7 @@ export const LEVEL_CARDS = [
       {
         id: "accept",
         label: "接受",
-        result: "你让流程继续推进，也把试用期的差价吞了下去。",
+        result: "流程顺利往前走。那串数字没有再被讨论，但它会跟着你进入下一个月。",
         effects: { reputation: 1, money: -1, self: -1 },
         hiddenEffects: {},
         tagsAdded: ["低薪倾向"],
@@ -300,7 +300,7 @@ export const LEVEL_CARDS = [
       {
         id: "negotiate",
         label: "争取招聘页数字",
-        result: "你把招聘页的数字摆回桌面，位置变得不那么稳，但边界清楚了。",
+        result: "对方说可以再申请一下。房间里没有冲突，只是你变成了需要被重新考虑的人。",
         effects: { reputation: -1, money: 1, self: 1 },
         hiddenEffects: {},
         tagsAdded: ["备选候选人"],
@@ -310,7 +310,7 @@ export const LEVEL_CARDS = [
       {
         id: "contract",
         label: "要求写进合同",
-        result: "你没有只听口头承诺，而是把数字留进可追溯的材料。",
+        result: "气氛从聊天变成了确认条款。你留下了依据，也让对方意识到你不只是点头。",
         effects: { reputation: -1, self: 1 },
         hiddenEffects: { evidence: 1 },
         tagsAdded: ["合同意识", "信誉波动"],
@@ -330,7 +330,7 @@ export const LEVEL_CARDS = [
       {
         id: "take-it",
         label: "接下",
-        result: "你接住额外任务，试用期评价更稳，精力和边界被扣掉一块。",
+        result: "任务被你接住了。大家的安排没有被打乱，只有你的晚上被往后推了一点。",
         effects: { reputation: 1, energy: -2, self: -1 },
         hiddenEffects: {},
         tagsAdded: ["默认补位"],
@@ -340,7 +340,7 @@ export const LEVEL_CARDS = [
       {
         id: "priority",
         label: "询问优先级",
-        result: "你没有拒绝，只是要求排序，边界被轻轻放到台面上。",
+        result: "领导重新排了一下任务。你没有拒绝，只是提醒这不是无限的时间。",
         effects: { energy: -1, self: 1 },
         hiddenEffects: {},
         tagsAdded: ["边界试探"],
@@ -350,7 +350,7 @@ export const LEVEL_CARDS = [
       {
         id: "refuse",
         label: "拒绝",
-        result: "你保住了今晚的力气，也让“不配合”的风险开始出现。",
+        result: "对方说“那我再看看”。事情没有当场坏掉，但你听见自己被放进了另一种评价里。",
         effects: { reputation: -2, energy: 1, self: 1 },
         hiddenEffects: {},
         tagsAdded: ["不配合风险"],
@@ -370,7 +370,7 @@ export const LEVEL_CARDS = [
       {
         id: "stay-full",
         label: "参加到结束",
-        result: "你留到饭局结束，关系热了一点，身体和安全感都更薄了。",
+        result: "你留下来，笑了几次，也记住了几个人。回去的路上，你已经不想再说话。",
         effects: { reputation: 1, energy: -2, relationship: 1, safety: -1 },
         hiddenEffects: {},
         tagsAdded: ["参加饭局"],
@@ -380,7 +380,7 @@ export const LEVEL_CARDS = [
       {
         id: "brief",
         label: "短暂露面",
-        result: "你完成了新人该出现的部分，没有把整晚都交出去。",
+        result: "你出现过，也离开了。这个选择没有完全得罪谁，但也没有完全安抚谁。",
         effects: { energy: -1, relationship: 1 },
         hiddenEffects: {},
         tagsAdded: ["有限配合"],
@@ -390,7 +390,7 @@ export const LEVEL_CARDS = [
       {
         id: "decline",
         label: "拒绝",
-        result: "你把今晚留给自己，也让不合群的解释有了入口。",
+        result: "群里很快换了话题。没人明说什么，但你知道自己缺席了一次集体确认。",
         effects: { reputation: -1, energy: 1, self: 1 },
         hiddenEffects: {},
         tagsAdded: ["不合群风险"],
@@ -410,7 +410,7 @@ export const LEVEL_CARDS = [
       {
         id: "laugh",
         label: "笑一下",
-        result: "你让气氛顺着他们走，不舒服被暂时收好。",
+        result: "笑声顺利过去。你也一起过去了，只是那句话还留在身体里。",
         effects: { reputation: 1, self: -1, energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["会接玩笑"],
@@ -420,7 +420,7 @@ export const LEVEL_CARDS = [
       {
         id: "redirect",
         label: "用玩笑转移",
-        result: "你把话题带走了，没有正面冲突，也没有真正说出不适。",
+        result: "话题被带走了。你没有正面处理它，也没有让场面停下来。",
         effects: { energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["低冲突处理"],
@@ -430,7 +430,7 @@ export const LEVEL_CARDS = [
       {
         id: "name-it",
         label: "认真指出",
-        result: "你把边界说出来，桌上的空气立刻变硬。",
+        result: "有人说只是玩笑。你说出了不舒服，也看见了这句话能让空气变硬。",
         effects: { reputation: -1, self: 1, relationship: -1 },
         hiddenEffects: {},
         tagsAdded: ["敏感风险"],
@@ -450,7 +450,7 @@ export const LEVEL_CARDS = [
       {
         id: "near-expensive",
         label: "近且贵",
-        result: "你选择离公司近的房间，通勤和门禁好一点，预算立刻收紧。",
+        result: "房子离公司很近，门禁也亮。转账成功后，余额变得很薄。",
         effects: { money: -2, safety: 1, energy: 1 },
         hiddenEffects: {},
         tagsAdded: ["高租金压力"],
@@ -460,7 +460,7 @@ export const LEVEL_CARDS = [
       {
         id: "far-cheap",
         label: "远且便宜",
-        result: "你保住了现金，代价是更远的路和更暗的公共区域。",
+        result: "你保住了现金。地图上回家的那段路，也被拉得更长、更暗。",
         effects: { money: 1, safety: -1, energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["偏远住处"],
@@ -470,7 +470,7 @@ export const LEVEL_CARDS = [
       {
         id: "keep-searching",
         label: "继续找",
-        result: "你继续刷列表，预算暂时没变，判断力被一点点消耗。",
+        result: "你刷到更晚，收藏夹变长了，合适的房子没有变多。",
         effects: { energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["筛选疲劳"],
@@ -490,7 +490,7 @@ export const LEVEL_CARDS = [
       {
         id: "book-now",
         label: "当场定下",
-        result: "你把房子先定下来，没看的部分也一起变成风险。",
+        result: "中介很快收起钥匙，说你眼光不错。楼道的灯没有再被提起。",
         effects: { money: -1, safety: -1 },
         hiddenEffects: {},
         tagsAdded: ["未充分检查"],
@@ -500,7 +500,7 @@ export const LEVEL_CARDS = [
       {
         id: "inspect-area",
         label: "再看公共区域",
-        result: "你要求多看一圈，中介不耐烦，但楼道和门禁终于被看见。",
+        result: "你又走了一遍楼道和门禁。中介催了两次，你也看清了几处细节。",
         effects: { reputation: -1, safety: 1, self: 1 },
         hiddenEffects: {},
         tagsAdded: ["检查环境"],
@@ -510,7 +510,7 @@ export const LEVEL_CARDS = [
       {
         id: "bring-friend",
         label: "找朋友一起看",
-        result: "你把朋友也拉进这次判断，欠下一点关系成本。",
+        result: "朋友来了以后，中介说话慢了一些。你多欠下一次人情，也少了一点不确定。",
         effects: { relationship: -1, safety: 1 },
         hiddenEffects: {},
         tagsAdded: ["有人陪同"],
@@ -530,7 +530,7 @@ export const LEVEL_CARDS = [
       {
         id: "sign",
         label: "直接签",
-        result: "你结束了这场疲惫的流程，也把不清楚的条款留到了之后。",
+        result: "合同签完，房子终于定下来。几行没看懂的字，也一起被你签了进去。",
         effects: { money: -1, energy: 1 },
         hiddenEffects: { evidence: -1 },
         tagsAdded: ["合同风险"],
@@ -540,7 +540,7 @@ export const LEVEL_CARDS = [
       {
         id: "ask-lines",
         label: "逐条问",
-        result: "你逐条确认，消耗了体力，也留下了更清楚的合同理解。",
+        result: "中介解释得很快，语气越来越短。你不一定完全懂，但知道哪里以后可能会出问题。",
         effects: { reputation: -1, energy: -1 },
         hiddenEffects: { evidence: 1 },
         tagsAdded: ["合同意识"],
@@ -550,7 +550,7 @@ export const LEVEL_CARDS = [
       {
         id: "photo-review",
         label: "拍下找人看",
-        result: "你把合同带出现场确认，时间和关系都被占用一点。",
+        result: "你把合同拍给别人。房子被保留到晚上，压力没有消失，只是多了一个人帮你看。",
         effects: { relationship: -1 },
         hiddenEffects: { evidence: 1, time: -1 },
         tagsAdded: ["外部确认"],
@@ -570,7 +570,7 @@ export const LEVEL_CARDS = [
       {
         id: "pay",
         label: "加钱",
-        result: "你把钱补上，东西顺利上楼，预算又少了一截。",
+        result: "东西顺利搬上楼。钱少了一截，今天也终于可以结束。",
         effects: { money: -2, energy: 1 },
         hiddenEffects: {},
         tagsAdded: ["被临时加价"],
@@ -580,7 +580,7 @@ export const LEVEL_CARDS = [
       {
         id: "argue",
         label: "争执",
-        result: "你守住了这笔钱，现场气氛却变得紧绷。",
+        result: "时间被拉长，对方的语气变硬。你的东西还在车上，你很清楚谁更着急。",
         effects: { energy: -2, self: 1, safety: -1 },
         hiddenEffects: {},
         tagsAdded: ["物品扣留"],
@@ -590,7 +590,7 @@ export const LEVEL_CARDS = [
       {
         id: "platform",
         label: "平台投诉",
-        result: "你把争议转到平台记录里，处理不快，但有了工单。",
+        result: "客服说会记录。车还停在楼下，记录先比结果更快到来。",
         effects: { money: -1, energy: -1 },
         hiddenEffects: { evidence: 1 },
         tagsAdded: ["工单中"],
@@ -610,7 +610,7 @@ export const LEVEL_CARDS = [
       {
         id: "let-in",
         label: "让他进来",
-        result: "维修终于开始，住址和夜晚的房间也一起暴露给陌生人。",
+        result: "水管修好了。门关上以后，房间恢复安静，只是你知道这里又被一个陌生人记住了。",
         effects: { safety: -1 },
         hiddenEffects: {},
         tagsAdded: ["住址暴露", "生活稳定"],
@@ -620,7 +620,7 @@ export const LEVEL_CARDS = [
       {
         id: "daytime",
         label: "改约白天",
-        result: "你把风险推到白天，也给工作日程增加了新的隐患。",
+        result: "你把维修推到明天。今晚的问题还在，明天的请假理由也提前出现了。",
         effects: { safety: 1, energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["请假隐患", "工作风险"],
@@ -630,7 +630,7 @@ export const LEVEL_CARDS = [
       {
         id: "phone-company",
         label: "开电话陪同",
-        result: "你让电话保持接通，安全感多了一点，关系成本少不了。",
+        result: "电话那头一直有人。维修过程很快，对方也没有多聊。",
         effects: { relationship: -1, safety: 1 },
         hiddenEffects: {},
         tagsAdded: ["有人知道"],
@@ -650,7 +650,7 @@ export const LEVEL_CARDS = [
       {
         id: "open-door",
         label: "立刻开门",
-        result: "你很快拿到晚饭，也让门牌和人在家的事实对上了。",
+        result: "你拿到了还热的外卖。门合上后，你又听了一会儿外面的脚步声。",
         effects: { energy: 1, safety: -1 },
         hiddenEffects: {},
         tagsAdded: ["门牌暴露"],
@@ -660,7 +660,7 @@ export const LEVEL_CARDS = [
       {
         id: "wait-steps",
         label: "等脚步声走远",
-        result: "你晚一点吃上饭，至少确认门外重新安静。",
+        result: "外卖还在门口，只是有点凉。你吃得慢了一些，像是在确认刚才的选择是否必要。",
         effects: { safety: 1, energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["延迟确认"],
@@ -670,7 +670,7 @@ export const LEVEL_CARDS = [
       {
         id: "leave-outside",
         label: "放门口",
-        result: "你隔着门完成交接，配送信息依然留在平台和门口。",
+        result: "照片发了过来，外卖在门边，门牌也在画面里。",
         effects: {},
         hiddenEffects: { exposure: 1 },
         tagsAdded: ["信息留存"],
@@ -690,7 +690,7 @@ export const LEVEL_CARDS = [
       {
         id: "truth",
         label: "如实回答",
-        result: "你保持自然和友好，也把独居信息交了出去。",
+        result: "对方笑着说以后互相照应。你得到了一点邻里关系，也交出了一点信息。",
         effects: { reputation: 1, safety: -1, relationship: 1 },
         hiddenEffects: {},
         tagsAdded: ["邻居知道独居"],
@@ -700,7 +700,7 @@ export const LEVEL_CARDS = [
       {
         id: "vague",
         label: "含糊带过",
-        result: "你没有回答清楚，谈话变得费力但信息被保护下来。",
+        result: "对方没有追问。对话结束得很自然，你却花了力气维持这个自然。",
         effects: { energy: -1, safety: 1 },
         hiddenEffects: {},
         tagsAdded: ["信息模糊"],
@@ -710,7 +710,7 @@ export const LEVEL_CARDS = [
       {
         id: "roommate",
         label: "说有人一起住",
-        result: "你临时编出一个同住者，安全感上来了，自我感受却有一点退让。",
+        result: "对方点头说这样安全些。你关上门时，房间里还是只有你一个人。",
         effects: { safety: 1, self: -1 },
         hiddenEffects: {},
         tagsAdded: ["虚构同住者"],
@@ -730,7 +730,7 @@ export const LEVEL_CARDS = [
       {
         id: "squeeze",
         label: "挤进去",
-        result: "你挤进车厢准时前进，身体边界被一路压缩。",
+        result: "你准时挤上车。门关上时，身体被挤到一个没有余地的位置。",
         effects: { safety: -1, reputation: 1, energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["拥挤通勤", "身体边界风险"],
@@ -740,7 +740,7 @@ export const LEVEL_CARDS = [
       {
         id: "next-train",
         label: "等下一班",
-        result: "你退到站台边缘，安全感回来了，迟到风险也跟着出现。",
+        result: "你让这班车开走。站台空了一点，时间也跟着少了一点。",
         effects: { safety: 1, reputation: -1 },
         hiddenEffects: {},
         tagsAdded: ["迟到风险"],
@@ -750,7 +750,7 @@ export const LEVEL_CARDS = [
       {
         id: "reroute",
         label: "换路线",
-        result: "你改走另一条线，用钱和时间换一个没那么挤的空间。",
+        result: "你绕开最挤的一段。路费多了一点，呼吸顺了一些。",
         effects: { money: -1, safety: 1 },
         hiddenEffects: { time: -1 },
         tagsAdded: ["绕行成本"],
@@ -770,7 +770,7 @@ export const LEVEL_CARDS = [
       {
         id: "look-back",
         label: "看回去",
-        result: "你正面回应那道目光，边界清楚了，冲突也更近了。",
+        result: "对方移开了视线。你赢回一点空间，也让心跳快了很久。",
         effects: { safety: -1, self: 1 },
         hiddenEffects: { conflict: 1 },
         tagsAdded: ["正面回应"],
@@ -780,7 +780,7 @@ export const LEVEL_CARDS = [
       {
         id: "crowd",
         label: "走向人多处",
-        result: "你靠近更多目击者，消耗一点力气换来更可见的位置。",
+        result: "你站到工作人员附近。没有人问发生了什么，但你知道自己更容易被看见了。",
         effects: { safety: 1, energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["靠近目击者"],
@@ -790,7 +790,7 @@ export const LEVEL_CARDS = [
       {
         id: "ignore",
         label: "假装没发现",
-        result: "你让表面保持平静，警觉却一直占着身体。",
+        result: "你顺利上车。一路上，你都在用余光确认那个人的位置。",
         effects: { safety: -1, energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["持续警觉"],
@@ -810,7 +810,7 @@ export const LEVEL_CARDS = [
       {
         id: "buy-powerbank",
         label: "买充电宝",
-        result: "你买下充电宝，电量风险解除，钱包又薄一点。",
+        result: "电量重新变得安全。余额少了一点，但手机不再像一个倒计时。",
         effects: { money: -1, safety: 1 },
         hiddenEffects: {},
         tagsAdded: ["电量充足"],
@@ -820,7 +820,7 @@ export const LEVEL_CARDS = [
       {
         id: "save-money",
         label: "省钱不买",
-        result: "你保住了这笔钱，也把晚归时的低电量留在身上。",
+        result: "你把手机扣上，决定快点回去。屏幕变暗时，路好像也跟着变长了。",
         effects: { safety: -1 },
         hiddenEffects: {},
         tagsAdded: ["低电量风险"],
@@ -830,7 +830,7 @@ export const LEVEL_CARDS = [
       {
         id: "borrow-charge",
         label: "借同事充电",
-        result: "你借到一点电量，关系和信誉被短暂调动，回去也更晚了。",
+        result: "同事借你充了一会儿。你晚走了半小时，也多留下一段寒暄。",
         effects: { reputation: 1, relationship: 1 },
         hiddenEffects: { time: -1 },
         tagsAdded: ["晚归"],
@@ -850,7 +850,7 @@ export const LEVEL_CARDS = [
       {
         id: "shortcut",
         label: "走近路",
-        result: "你选了更快的近路，时间被保住，周围的人也越来越少。",
+        result: "你走进更短的路。导航显示快了几分钟，周围却安静得太清楚。",
         effects: { safety: -1 },
         hiddenEffects: { exposure: 1, time: 1 },
         tagsAdded: ["人少夜路"],
@@ -860,7 +860,7 @@ export const LEVEL_CARDS = [
       {
         id: "main-road",
         label: "走大路",
-        result: "你绕到更亮的路上，安全感上升，身体更累。",
+        result: "路灯和店铺一直在。你绕远了，脚步也越来越慢。",
         effects: { safety: 1, energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["习惯绕路"],
@@ -870,7 +870,7 @@ export const LEVEL_CARDS = [
       {
         id: "taxi",
         label: "打车",
-        result: "你叫了翻倍价格的车，把路上的不确定换成账单。",
+        result: "你坐进车里，不用经过那段路。价格比白天更像一张提醒。",
         effects: { money: -2, safety: 1 },
         hiddenEffects: {},
         tagsAdded: ["平台行程"],
@@ -890,7 +890,7 @@ export const LEVEL_CARDS = [
       {
         id: "navigation",
         label: "要求按导航走",
-        result: "你要求回到导航路线，掌控感回来了，车里的气氛也硬了。",
+        result: "司机照做了，车里安静下来。路线回来了，气氛也硬了一点。",
         effects: { safety: 1, self: 1 },
         hiddenEffects: { conflict: 1 },
         tagsAdded: ["路线确认"],
@@ -900,7 +900,7 @@ export const LEVEL_CARDS = [
       {
         id: "silent",
         label: "不说话",
-        result: "你继续盯着路线，沉默让精力和安全感一起下降。",
+        result: "车继续往前开。你盯着地图，手指停在通话界面旁边。",
         effects: { safety: -1, energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["沉默观察"],
@@ -910,7 +910,7 @@ export const LEVEL_CARDS = [
       {
         id: "call",
         label: "打电话说快到了",
-        result: "你把目的地说给电话那边听，车里的不确定感少了一点。",
+        result: "你对着电话说快到了。车里没有人再问你去哪儿。",
         effects: { safety: 1, relationship: -1 },
         hiddenEffects: {},
         tagsAdded: ["有人知道"],
@@ -930,7 +930,7 @@ export const LEVEL_CARDS = [
       {
         id: "same-elevator",
         label: "一起进电梯",
-        result: "你走进电梯，省下等待时间，也进入了更封闭的空间。",
+        result: "你们一起进了电梯。数字一层层往上跳，你记住了对方按下的楼层。",
         effects: { safety: -1 },
         hiddenEffects: { time: 1, enclosed: 1 },
         tagsAdded: ["一起进电梯", "门口停留"],
@@ -940,7 +940,7 @@ export const LEVEL_CARDS = [
       {
         id: "next-elevator",
         label: "等下一趟",
-        result: "你退后等下一趟，避开了封闭空间，也多消耗了力气。",
+        result: "你让电梯先走。大厅里空了一会儿，你也多站了一会儿。",
         effects: { safety: 1, energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["回避封闭空间"],
@@ -950,7 +950,7 @@ export const LEVEL_CARDS = [
       {
         id: "pickup",
         label: "假装取快递",
-        result: "你绕去快递柜，路线合理了，身体却更累也更紧。",
+        result: "你转身去快递架前停了一下。对方先上楼，你才重新走回电梯口。",
         effects: { safety: 1, energy: -1, self: -1 },
         hiddenEffects: {},
         tagsAdded: ["伪装路线"],
@@ -970,7 +970,7 @@ export const LEVEL_CARDS = [
       {
         id: "reply-private",
         label: "回复“到了，谢谢”",
-        result: "你礼貌回应了私聊，关系保持顺滑，边界也变得不清楚一点。",
+        result: "对话很快结束。你回得礼貌，也没有给后面的含义留下太多空间。",
         effects: { reputation: 1 },
         hiddenEffects: {},
         tagsAdded: ["礼貌回应", "边界模糊"],
@@ -980,7 +980,7 @@ export const LEVEL_CARDS = [
       {
         id: "no-reply",
         label: "不回复",
-        result: "你没有继续对话，安全感回来了，工作里的可靠感掉了一点。",
+        result: "你把手机扣下。夜晚安静了一点，明天也多了一点需要解释的可能。",
         effects: { reputation: -1, safety: 1 },
         hiddenEffects: {},
         tagsAdded: ["不回应"],
@@ -990,7 +990,7 @@ export const LEVEL_CARDS = [
       {
         id: "group-only",
         label: "只在群里回复",
-        result: "你把到家信息放在公开位置，回应存在，私下边界也保住了。",
+        result: "你只在群里回复。信息公开地落下，私聊没有继续往前。",
         effects: { safety: 1 },
         hiddenEffects: {},
         tagsAdded: ["公开回应"],
@@ -1010,7 +1010,7 @@ export const LEVEL_CARDS = [
       {
         id: "front",
         label: "坐前面",
-        result: "你坐到更容易被看见的位置，汇报机会更清楚，消耗也更直接。",
+        result: "你坐到更容易被看见的位置。发言机会近了一些，目光也近了一些。",
         effects: { reputation: 1, energy: -1 },
         hiddenEffects: { exposure: 1 },
         tagsAdded: ["主动呈现"],
@@ -1020,7 +1020,7 @@ export const LEVEL_CARDS = [
       {
         id: "corner",
         label: "坐角落",
-        result: "你保住一点精力，也让自己的存在感往后退了一步。",
+        result: "角落让你轻松一点。轮到你时，话题已经往前走了一段。",
         effects: { energy: 1, reputation: -1 },
         hiddenEffects: {},
         tagsAdded: ["存在感不足"],
@@ -1030,7 +1030,7 @@ export const LEVEL_CARDS = [
       {
         id: "familiar",
         label: "跟熟人坐",
-        result: "你靠近熟人获得支撑，独立评价被稀释一点。",
+        result: "你坐到熟人旁边。有人接住了你的紧张，也让你看起来不像独自站出来。",
         effects: { relationship: 1 },
         hiddenEffects: {},
         tagsAdded: ["依附熟人", "独立评价降低"],
@@ -1050,7 +1050,7 @@ export const LEVEL_CARDS = [
       {
         id: "correct-now",
         label: "立刻纠正",
-        result: "你当场把版本拉回来，力气少了，冲突风险上升。",
+        result: "你把话题拉回原处。事实更清楚了，房间也更安静了。",
         effects: { energy: -1, self: 1 },
         hiddenEffects: { conflict: 1 },
         tagsAdded: ["当场纠正", "信誉波动"],
@@ -1060,7 +1060,7 @@ export const LEVEL_CARDS = [
       {
         id: "supplement-later",
         label: "等他说完补充",
-        result: "你等到他说完再补，气氛平稳，内容也已经有一部分失真。",
+        result: "你等他说完再补充。错误没有扩大，但重点也不再完全属于你。",
         effects: { energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["部分失真"],
@@ -1070,7 +1070,7 @@ export const LEVEL_CARDS = [
       {
         id: "written",
         label: "会后书面说明",
-        result: "你把更准确的版本写下来，精力成本更高，但材料留住了。",
+        result: "你没有在现场争。会后那封说明写了很久，也终于留下了痕迹。",
         effects: { energy: -2 },
         hiddenEffects: { evidence: 1, credit: 1 },
         tagsAdded: ["书面留痕"],
@@ -1090,7 +1090,7 @@ export const LEVEL_CARDS = [
       {
         id: "claim-source",
         label: "当场说明来源",
-        result: "你把来源放回桌上，署名更清楚，关系承受压力。",
+        result: "领导听见了来源。同事也听见了你在意来源。",
         effects: { self: 1, relationship: -1 },
         hiddenEffects: {},
         tagsAdded: ["争取署名", "信誉按证据波动"],
@@ -1100,7 +1100,7 @@ export const LEVEL_CARDS = [
       {
         id: "private-talk",
         label: "私下沟通",
-        result: "你把问题留到会后谈，冲突较低，归属仍然模糊。",
+        result: "对方说团队成果不用分这么细。你们没有吵起来，事情也没有变清楚。",
         effects: { energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["私下协商", "功劳不清"],
@@ -1110,7 +1110,7 @@ export const LEVEL_CARDS = [
       {
         id: "keep-going",
         label: "继续推进",
-        result: "你继续把项目做下去，团队评价上升，你自己的署名更模糊。",
+        result: "项目顺利推进。你做的部分越来越多，名字却没有更清楚。",
         effects: { reputation: 1, energy: -1, self: -1 },
         hiddenEffects: {},
         tagsAdded: ["功劳不清"],
@@ -1130,7 +1130,7 @@ export const LEVEL_CARDS = [
       {
         id: "take-all",
         label: "接下",
-        result: "你把杂事接住，团队运转顺了，你的精力继续下沉。",
+        result: "事情顺利运转。会议纪要发出时，没有人问这是谁的工作。",
         effects: { reputation: 1, energy: -2 },
         hiddenEffects: {},
         tagsAdded: ["默认补位", "隐形劳动"],
@@ -1140,7 +1140,7 @@ export const LEVEL_CARDS = [
       {
         id: "divide",
         label: "分派给大家",
-        result: "你把任务拆回团队里，边界更清楚，关系反应不确定。",
+        result: "你把任务拆给大家。有人接了，有人没回，你还要再跟一次。",
         effects: { energy: -1, self: 1 },
         hiddenEffects: {},
         tagsAdded: ["任务分摊", "关系波动"],
@@ -1150,7 +1150,7 @@ export const LEVEL_CARDS = [
       {
         id: "refuse",
         label: "拒绝",
-        result: "你不再自动补位，精力回来一点，热心评价掉下去。",
+        result: "场面停了一下。没人指责你，只是后来有些消息没有再艾特你。",
         effects: { reputation: -1, energy: 1, self: 1 },
         hiddenEffects: {},
         tagsAdded: ["不热心风险"],
@@ -1170,7 +1170,7 @@ export const LEVEL_CARDS = [
       {
         id: "socialize",
         label: "活跃气氛",
-        result: "你把气氛撑起来，项目评价更顺，自己更累也更不安。",
+        result: "客户笑得更多，项目也往前走。回家路上，你感觉自己像把另一个人留在了饭桌上。",
         effects: { reputation: 1, energy: -2, safety: -1 },
         hiddenEffects: {},
         tagsAdded: ["饭局可用"],
@@ -1180,7 +1180,7 @@ export const LEVEL_CARDS = [
       {
         id: "distance",
         label: "保持距离",
-        result: "你守住社交距离，力气仍被消耗，项目评价降了一点。",
+        result: "你守住了距离。饭局没有出问题，也没有变得更顺利。",
         effects: { energy: -1, reputation: -1, self: 1 },
         hiddenEffects: {},
         tagsAdded: ["距离感"],
@@ -1190,7 +1190,7 @@ export const LEVEL_CARDS = [
       {
         id: "leave-early",
         label: "提前离开",
-        result: "你离开饭局保住今晚，项目配合的评价变差。",
+        result: "你提前走了。第二天早上，群里已经有了新的默契。",
         effects: { energy: 1, reputation: -2 },
         hiddenEffects: {},
         tagsAdded: ["项目配合不足"],
@@ -1210,7 +1210,7 @@ export const LEVEL_CARDS = [
       {
         id: "lower-voice",
         label: "压低语气继续说",
-        result: "你把语气压低，观点得以继续，自我感受被压下去。",
+        result: "你把声音放慢。讨论继续了，只是你要先证明自己足够平静。",
         effects: { energy: -2, reputation: 1, self: -1 },
         hiddenEffects: {},
         tagsAdded: ["控制语气"],
@@ -1220,7 +1220,7 @@ export const LEVEL_CARDS = [
       {
         id: "stop",
         label: "停止争论",
-        result: "你停下来保存一点力气，意见也从记录里淡了出去。",
+        result: "你停了下来。会议继续推进，记录里没有留下你的那部分。",
         effects: { energy: 1, self: -1 },
         hiddenEffects: { evidence: -1 },
         tagsAdded: ["意见消失"],
@@ -1230,7 +1230,7 @@ export const LEVEL_CARDS = [
       {
         id: "name-phrase",
         label: "指出这句话的问题",
-        result: "你点出话术本身的问题，边界清楚了，情绪化风险也被贴上。",
+        result: "对方说你把事情复杂化了。问题从决定本身，转向了你的反应。",
         effects: { reputation: -1, energy: -1, self: 1 },
         hiddenEffects: { conflict: 1 },
         tagsAdded: ["情绪化风险"],
@@ -1250,7 +1250,7 @@ export const LEVEL_CARDS = [
       {
         id: "rebuild-records",
         label: "补材料",
-        result: "你花力气把贡献重新整理出来，证据终于变得可见。",
+        result: "你熬夜把贡献整理出来。文件夹变完整了，身体变空了一点。",
         effects: { energy: -2 },
         hiddenEffects: { evidence: 2 },
         tagsAdded: ["贡献可见"],
@@ -1260,7 +1260,7 @@ export const LEVEL_CARDS = [
       {
         id: "colleague-proof",
         label: "找同事作证",
-        result: "你请同事帮忙证明，关系被动用，可信度上来一点。",
+        result: "有人愿意替你说一句。你记下了这份帮助，也知道它不能每次都有。",
         effects: { relationship: -1, reputation: 1 },
         hiddenEffects: {},
         tagsAdded: ["同盟证言"],
@@ -1270,7 +1270,7 @@ export const LEVEL_CARDS = [
       {
         id: "core-only",
         label: "只写核心成果",
-        result: "你只写最确定的成果，材料简洁，也留下贡献缺口。",
+        result: "材料很简洁。那些被你顺手接住的工作，也像从来没有发生过。",
         effects: {},
         hiddenEffects: {},
         tagsAdded: ["贡献缺口", "证据不足"],
@@ -1290,7 +1290,7 @@ export const LEVEL_CARDS = [
       {
         id: "go",
         label: "去",
-        result: "你赴约维持朋友关系，周末的精力被再分走一块。",
+        result: "你去了。笑声和消息把你重新接回人群，回家时疲惫也一起回来。",
         effects: { relationship: 1, energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["维持朋友"],
@@ -1300,7 +1300,7 @@ export const LEVEL_CARDS = [
       {
         id: "decline",
         label: "拒绝",
-        result: "你把周末还给自己，关系的距离也被拉开一点。",
+        result: "你睡了更久。醒来时群聊已经翻过几页，话题没有等你。",
         effects: { energy: 1, relationship: -1 },
         hiddenEffects: {},
         tagsAdded: ["关系疏远"],
@@ -1310,7 +1310,7 @@ export const LEVEL_CARDS = [
       {
         id: "brief",
         label: "短暂见面",
-        result: "你出现了一小会儿，让关系不至于断掉，也没有继续消耗。",
+        result: "你出现了一会儿。关系被轻轻碰了一下，没有真正靠近，也没有断开。",
         effects: {},
         hiddenEffects: {},
         tagsAdded: ["有限出现"],
@@ -1330,7 +1330,7 @@ export const LEVEL_CARDS = [
       {
         id: "private-place",
         label: "接受",
-        result: "你接受了安静地点，关系推进更顺，空间风险也更高。",
+        result: "你接受了那个安静的地方。对方显得高兴，你开始留意出口在哪里。",
         effects: { relationship: 1, safety: -1 },
         hiddenEffects: {},
         tagsAdded: ["私密场所"],
@@ -1340,7 +1340,7 @@ export const LEVEL_CARDS = [
       {
         id: "public-place",
         label: "改公共场所",
-        result: "你把见面地点改到人多处，安全感上升，亲近速度慢了下来。",
+        result: "你把地点改到人多的地方。对方说你很谨慎，像在评价，也像在开玩笑。",
         effects: { safety: 1, relationship: -1 },
         hiddenEffects: {},
         tagsAdded: ["公共场所"],
@@ -1350,7 +1350,7 @@ export const LEVEL_CARDS = [
       {
         id: "bring-friend",
         label: "带朋友短暂出现",
-        result: "你让朋友短暂露面，安全性提高，关系和朋友成本都被扣掉。",
+        result: "朋友短暂出现。气氛有些别扭，但这个晚上多了一个知道你在哪的人。",
         effects: { relationship: -1, safety: 1 },
         hiddenEffects: {},
         tagsAdded: ["有人见过", "朋友关系下降"],
@@ -1370,7 +1370,7 @@ export const LEVEL_CARDS = [
       {
         id: "name-compound",
         label: "说小区名",
-        result: "你接受了体贴的推进，关系更近，住址信息也更具体。",
+        result: "对方自然地记住了小区名。被送回去听起来体贴，也让回家的路被别人画进了地图。",
         effects: { relationship: 1, safety: -1 },
         hiddenEffects: {},
         tagsAdded: ["住址暴露"],
@@ -1380,7 +1380,7 @@ export const LEVEL_CARDS = [
       {
         id: "area-only",
         label: "只说区域",
-        result: "你给出模糊位置，聊天继续，安全感更稳。",
+        result: "你只说了大概区域。话题顺利滑过去，信息没有完全交出去。",
         effects: { safety: 1 },
         hiddenEffects: {},
         tagsAdded: ["信息模糊"],
@@ -1390,7 +1390,7 @@ export const LEVEL_CARDS = [
       {
         id: "no-ride",
         label: "拒绝接送",
-        result: "你拒绝让对方知道住址，关系降温，自我边界更清楚。",
+        result: "对方笑你防备心强。你没有解释太多，只把回家的路线留给自己。",
         effects: { relationship: -1, safety: 1, self: 1 },
         hiddenEffects: {},
         tagsAdded: ["防备心评价"],
@@ -1410,7 +1410,7 @@ export const LEVEL_CARDS = [
       {
         id: "drink",
         label: "喝一点",
-        result: "你配合喝了一点，关系不冷场，判断和安全感都下降。",
+        result: "气氛轻松了一些。杯子放下后，你开始更频繁地确认时间。",
         effects: { relationship: 1, safety: -1, energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["判断下降"],
@@ -1420,7 +1420,7 @@ export const LEVEL_CARDS = [
       {
         id: "refuse",
         label: "不喝",
-        result: "你直接拒绝酒精，安全和自我都更稳，关系气氛变冷。",
+        result: "对方说好吧。空气短了一下，你的判断还在自己手里。",
         effects: { relationship: -1, safety: 1, self: 1 },
         hiddenEffects: {},
         tagsAdded: ["明确拒绝"],
@@ -1430,7 +1430,7 @@ export const LEVEL_CARDS = [
       {
         id: "non-alcohol",
         label: "换无酒精饮料",
-        result: "你换成无酒精饮料，避免正面拒绝，也花了一点力气维持气氛。",
+        result: "你换了一杯别的。拒绝没有被说出口，但你绕了一小段路才到达它。",
         effects: { energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["柔性拒绝"],
@@ -1450,7 +1450,7 @@ export const LEVEL_CARDS = [
       {
         id: "say-no",
         label: "明确说“不”",
-        result: "你把拒绝说清楚，安全和自我都站稳，关系后退。",
+        result: "边界被说清楚了。对方停下来，气氛也一起停了一下。",
         effects: { safety: 1, relationship: -1, self: 1 },
         hiddenEffects: {},
         tagsAdded: ["边界清楚"],
@@ -1460,7 +1460,7 @@ export const LEVEL_CARDS = [
       {
         id: "joke",
         label: "用玩笑带过",
-        result: "你用玩笑把距离拉开，表面不僵，精力被耗掉。",
+        result: "你用笑把距离拉开一点。对方也笑了，但你不确定他听懂了多少。",
         effects: { energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["边界模糊"],
@@ -1470,7 +1470,7 @@ export const LEVEL_CARDS = [
       {
         id: "endure",
         label: "暂时忍一下",
-        result: "你没有立刻后退，关系看似顺利，边界往后退了一步。",
+        result: "事情没有立刻变糟。只是你把不舒服先放到了自己身上。",
         effects: { relationship: 1, safety: -1, self: -1 },
         hiddenEffects: {},
         tagsAdded: ["边界后退"],
@@ -1490,7 +1490,7 @@ export const LEVEL_CARDS = [
       {
         id: "explain",
         label: "继续解释",
-        result: "你继续说明为什么不舒服，关系暂时维持，自我和精力都被消耗。",
+        result: "朋友理解了一点。为了让对方理解，你又把事情从头讲了一遍。",
         effects: { relationship: 1, energy: -1, self: -1 },
         hiddenEffects: {},
         tagsAdded: ["解释成本"],
@@ -1500,7 +1500,7 @@ export const LEVEL_CARDS = [
       {
         id: "stop",
         label: "停止讲述",
-        result: "你停下不再证明自己，力气回来一点，孤立感也更清楚。",
+        result: "你没有继续说。谈话轻了，孤独也更清楚了。",
         effects: { relationship: -1, energy: 1 },
         hiddenEffects: {},
         tagsAdded: ["孤立感"],
@@ -1510,7 +1510,7 @@ export const LEVEL_CARDS = [
       {
         id: "ask-another",
         label: "找另一个人说",
-        result: "你换一个人求证，支持网络扩大，但讲述仍然消耗精力。",
+        result: "另一个人给了你不同的反应。你得到支持，也多消耗了一次求助。",
         effects: { energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["支持网络"],
@@ -1530,7 +1530,7 @@ export const LEVEL_CARDS = [
       {
         id: "explain",
         label: "解释清楚",
-        result: "你试图把结束说清楚，消息循环继续消耗你。",
+        result: "你发了很长的消息。对方继续追问，像是只有你说到他满意，事情才算结束。",
         effects: { energy: -2, relationship: -1 },
         hiddenEffects: {},
         tagsAdded: ["解释循环"],
@@ -1540,7 +1540,7 @@ export const LEVEL_CARDS = [
       {
         id: "stop-replying",
         label: "不再回复",
-        result: "你不再回应，精力保存下来，未闭合的不安还在。",
+        result: "手机安静了一会儿。你没有继续喂给这段关系新的理由。",
         effects: { energy: 1, safety: -1 },
         hiddenEffects: {},
         tagsAdded: ["未闭合关系"],
@@ -1550,7 +1550,7 @@ export const LEVEL_CARDS = [
       {
         id: "block-save",
         label: "拉黑并保存记录",
-        result: "你停止入口并保留记录，关系断开，证据和边界更稳。",
+        result: "消息停了，记录留下。你没有解决所有风险，只是把门关紧了一些。",
         effects: { relationship: -1, safety: 1, self: 1 },
         hiddenEffects: { evidence: 1 },
         tagsAdded: ["证据保留"],
@@ -1570,7 +1570,7 @@ export const LEVEL_CARDS = [
       {
         id: "formal",
         label: "正式处理",
-        result: "你启动流程，把事情放进系统语言里，精力开始被流程占用。",
+        result: "你点开流程入口。事情从感受变成表格，从此需要被填写、提交和等待。",
         effects: { self: 1, energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["启动流程"],
@@ -1580,7 +1580,7 @@ export const LEVEL_CARDS = [
       {
         id: "observe",
         label: "先观察",
-        result: "你暂时不处理，今天轻一点，问题也被继续留下。",
+        result: "你把事情先放下。生活恢复了一点表面的秩序，问题也仍在原地。",
         effects: { energy: 1, self: -1 },
         hiddenEffects: {},
         tagsAdded: ["问题保留"],
@@ -1590,7 +1590,7 @@ export const LEVEL_CARDS = [
       {
         id: "consult",
         label: "找人商量",
-        result: "你先向外确认，关系被动用，自我判断更站得住。",
+        result: "你把经过讲给另一个人听。对方的判断让事情稍微有了轮廓。",
         effects: { relationship: -1, self: 1 },
         hiddenEffects: {},
         tagsAdded: ["外部确认"],
@@ -1610,7 +1610,7 @@ export const LEVEL_CARDS = [
       {
         id: "all",
         label: "全部整理",
-        result: "你把碎片整理成线索，证据更完整，精力也被抽走很多。",
+        result: "文件夹一点点完整起来。你把经历拆成时间、地点、截图和编号，也把自己拆得很累。",
         effects: { energy: -2, self: 1 },
         hiddenEffects: { evidence: 2 },
         tagsAdded: ["证据完整"],
@@ -1620,7 +1620,7 @@ export const LEVEL_CARDS = [
       {
         id: "key-only",
         label: "只整理关键",
-        result: "你抓住最关键的材料，保留一点力气，也承认证据有限。",
+        result: "你留下最关键的几项。材料能说明一些东西，也留下了一些会被追问的空白。",
         effects: { energy: -1 },
         hiddenEffects: { evidence: 1 },
         tagsAdded: ["证据有限"],
@@ -1630,7 +1630,7 @@ export const LEVEL_CARDS = [
       {
         id: "direct",
         label: "直接说",
-        result: "你决定先讲出来，不再为材料拖延，但陈述风险更高。",
+        result: "你保留了事情最原本的样子。只是流程更习惯接收材料，而不是接收一段混乱的经历。",
         effects: { self: 1 },
         hiddenEffects: { evidence: -1 },
         tagsAdded: ["陈述风险"],
@@ -1650,7 +1650,7 @@ export const LEVEL_CARDS = [
       {
         id: "timeline",
         label: "按时间线说",
-        result: "你把事情按时间摊开，讲述更有结构，也更消耗精力。",
+        result: "你按时间线说完。对方能记录下来，你也像重新经历了一遍。",
         effects: { energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["结构化陈述", "证据完整时信誉上升"],
@@ -1660,7 +1660,7 @@ export const LEVEL_CARDS = [
       {
         id: "conclusion",
         label: "先说结论",
-        result: "你先说核心结论，边界更清楚，也会引来细节追问。",
+        result: "你先说出结论。对方很快把你带回细节，像把入口重新关小。",
         effects: { self: 1, energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["细节追问"],
@@ -1670,7 +1670,7 @@ export const LEVEL_CARDS = [
       {
         id: "record",
         label: "请求逐条记录",
-        result: "你要求记录逐条落下，正式程度上升，过程也更慢。",
+        result: "你要求逐条记录。笔停顿了一下，流程变正式，语气也变正式。",
         effects: { self: 1 },
         hiddenEffects: {},
         tagsAdded: ["正式记录", "信誉波动"],
@@ -1690,7 +1690,7 @@ export const LEVEL_CARDS = [
       {
         id: "details",
         label: "补充细节",
-        result: "你重新解释那些细节，可信度被争取回来一点，力气明显下降。",
+        result: "你补充更多细节。对方的表情有一点变化，你的力气少了很多。",
         effects: { energy: -2, reputation: 1 },
         hiddenEffects: {},
         tagsAdded: ["反复解释"],
@@ -1700,7 +1700,7 @@ export const LEVEL_CARDS = [
       {
         id: "feeling",
         label: "强调感受",
-        result: "你把感受说清楚，自我更站稳，事实承认却可能变弱。",
+        result: "对方说理解你的心情。你听见“心情”这个词时，知道事情正在变轻。",
         effects: { self: 1 },
         hiddenEffects: {},
         tagsAdded: ["被情绪化处理", "事实承认不足"],
@@ -1710,7 +1710,7 @@ export const LEVEL_CARDS = [
       {
         id: "facts",
         label: "要求按事实处理",
-        result: "你把问题拉回事实框架，能否被承认取决于材料强度。",
+        result: "你把话拉回事实。对方没有再安慰你，也不得不继续记下去。",
         effects: { self: 1 },
         hiddenEffects: {},
         tagsAdded: ["事实框架", "信誉按证据波动"],
@@ -1730,7 +1730,7 @@ export const LEVEL_CARDS = [
       {
         id: "accept",
         label: "接受调解",
-        result: "你进入调解场景，流程看似变轻，安全和精力都被消耗。",
+        result: "流程变短了。你也被要求和那个问题重新坐到同一张桌子前。",
         effects: { energy: -1, safety: -1 },
         hiddenEffects: {},
         tagsAdded: ["被调解"],
@@ -1740,7 +1740,7 @@ export const LEVEL_CARDS = [
       {
         id: "refuse",
         label: "拒绝调解",
-        result: "你拒绝把问题私下化，坚持流程，自己也继续承受消耗。",
+        result: "你拒绝调解。路变长了，但至少这一次不是你去缓和气氛。",
         effects: { self: 1, energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["坚持流程"],
@@ -1750,7 +1750,7 @@ export const LEVEL_CARDS = [
       {
         id: "third-party",
         label: "要求第三人在场",
-        result: "你要求有人在场，安全感上升，陪同关系被动用。",
+        result: "有人陪你进去。房间里的力量没有完全改变，但你不再是一个人坐在那里。",
         effects: { relationship: -1, safety: 1 },
         hiddenEffects: {},
         tagsAdded: ["陪同处理"],
@@ -1770,7 +1770,7 @@ export const LEVEL_CARDS = [
       {
         id: "public",
         label: "公开发布",
-        result: "你把经历公开，表达获得出口，审视和消耗也一起涌来。",
+        result: "事情被更多人看见。支持和审视一起到来，它们都需要你继续承受。",
         effects: { self: 1, energy: -2 },
         hiddenEffects: {},
         tagsAdded: ["公开表达", "信誉波动"],
@@ -1780,7 +1780,7 @@ export const LEVEL_CARDS = [
       {
         id: "trusted",
         label: "只发给信任的人",
-        result: "你把经历放进小范围求助里，支持更具体，精力仍被占用。",
+        result: "你把它发给少数人。回声不大，但有几个人确实听见了。",
         effects: { relationship: 1, energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["小范围求助"],
@@ -1790,7 +1790,7 @@ export const LEVEL_CARDS = [
       {
         id: "save",
         label: "保存不发",
-        result: "你先把内容留在自己手里，反噬风险低了，表达也被收回。",
+        result: "你保存下来，没有发送。事情还在你手里，也还压在你这里。",
         effects: { safety: 1, self: -1 },
         hiddenEffects: {},
         tagsAdded: ["沉默保留"],
@@ -1810,7 +1810,7 @@ export const LEVEL_CARDS = [
       {
         id: "answer-all",
         label: "逐条回应",
-        result: "你逐条回答反问，可信度可能被争取回来，精力快速耗尽。",
+        result: "你回答了很多问题。问题没有减少，只是换了角度继续回来。",
         effects: { energy: -2, reputation: 1 },
         hiddenEffects: {},
         tagsAdded: ["解释循环"],
@@ -1820,7 +1820,7 @@ export const LEVEL_CARDS = [
       {
         id: "core-only",
         label: "只回应核心事实",
-        result: "你只守住核心事实，不把自己交给每一个反问。",
+        result: "你只回应核心事实。有人说你回避，你知道自己是在保住叙述。",
         effects: { self: 1, energy: -1 },
         hiddenEffects: {},
         tagsAdded: ["叙述边界"],
@@ -1830,7 +1830,7 @@ export const LEVEL_CARDS = [
       {
         id: "stop",
         label: "停止回应",
-        result: "你停止解释，精力回升一点，制度处理强度也下降。",
+        result: "你停下来。解释权少了一点，呼吸终于回来一点。",
         effects: { energy: 1, reputation: -1 },
         hiddenEffects: {},
         tagsAdded: ["中止解释"],
@@ -1850,7 +1850,7 @@ export const LEVEL_CARDS = [
       {
         id: "accept",
         label: "接受结果",
-        result: "你接受弱处理，让自己暂时停下来，问题并没有真正闭合。",
+        result: "流程到这里结束。页面显示已处理，你知道它只是停止了，不是解决了。",
         effects: { energy: 1, self: -1 },
         hiddenEffects: {},
         tagsAdded: ["问题未闭合"],
@@ -1860,7 +1860,7 @@ export const LEVEL_CARDS = [
       {
         id: "appeal",
         label: "继续申诉",
-        result: "你继续往上申诉，边界更清楚，钱和精力继续流失。",
+        result: "你继续往下走。每多走一步，都要再支付一点生活。",
         effects: { self: 1, energy: -2, money: -1 },
         hiddenEffects: {},
         tagsAdded: ["继续消耗"],
@@ -1871,7 +1871,7 @@ export const LEVEL_CARDS = [
       {
         id: "leave",
         label: "离开环境",
-        result: "你选择退出这个环境，安全感上升，退出成本立刻出现。",
+        result: "你离开这个环境。风险被切断一部分，过去积累的东西也被迫留在身后。",
         effects: { safety: 1, money: -2 },
         hiddenEffects: {},
         tagsAdded: ["退出成本", "信誉转移"],
@@ -1889,89 +1889,54 @@ export const SETTLEMENT_CARDS = [
     type: "settlement",
     chapterId: "C1",
     chapterTitle: "第一章：筛选",
-    title: "章节结算",
-    scene: "你是否获得一个位置，以及这个位置的质量如何。",
-    outcomes: [
-      "正常入职：信中高且能力不低。",
-      "低薪入职：信高但议价权低。",
-      "高压入职：能力高但管理风险高。",
-      "备选失败：信低且能力不足。",
-      "试用期阴影：信低但仍入职。"
-    ],
-    reveal: "结尾解锁长期数值“信”：别人是否愿意把你解释成可靠的人，会继续影响之后的生活。"
+    title: "记录更新",
+    text: "你获得了一个位置。它暂时接收你，也开始要求你用之后的表现继续证明自己。",
+    reveal: "记录更新：信誉。"
   },
   {
     id: "C2-S",
     type: "settlement",
     chapterId: "C2",
     chapterTitle: "第二章：房间",
-    title: "章节结算",
-    scene: "你租到了一个房间，但这个房间是否真正安全，取决于预算、合同、位置和信息暴露。",
-    outcomes: [
-      "安全住处：钱足、检查环境、合同风险低。",
-      "高租金住处：安高但钱低。",
-      "偏远住处：钱保住但安低。",
-      "临时住处：租房失败或押金不足。",
-      "合同风险：证低且直接签。"
-    ],
-    reveal: "结尾解锁长期数值“钱”：很多安全、体面和自由都有价格。"
+    title: "记录更新",
+    text: "你租到了一个相对明亮的房间。它不完美，但至少有些风险被挡在门外。",
+    reveal: "记录更新：钱。"
   },
   {
     id: "C3-S",
     type: "settlement",
     chapterId: "C3",
     chapterTitle: "第三章：路上",
-    title: "章节结算",
-    scene: "你完成了一周移动。你没有一定“出事”，但可能已经学会绕路、确认车牌、假装有人在等你。",
-    outcomes: [
-      "低损耗通勤：钱和安都不低。",
-      "安全但疲惫：多次绕路等待。",
-      "省钱但高警觉：少打车多近路。",
-      "有人知道：多次电话/公开回应。",
-      "持续警觉：安长期低。"
-    ],
-    reveal: "结尾解锁长期数值“安”：安全不是没出事，而是你是否需要反复计算逃离路线。"
+    title: "记录更新",
+    text: "这一周，你大多准时到达，也没有把自己耗得太空。这样的顺利并不常见。",
+    reveal: "记录更新：安全感。"
   },
   {
     id: "C4-S",
     type: "settlement",
     chapterId: "C4",
     chapterTitle: "第四章：桌面",
-    title: "章节结算",
-    scene: "你完成了项目，但项目是否看见你，不只取决于你做了多少。",
-    outcomes: [
-      "项目完成并被看见：信、证、精都不低。",
-      "项目完成但功劳不清：信高证低。",
-      "保住位置但过劳：信高精低。",
-      "被贴情绪化：冲高信低。",
-      "调岗/被裁风险：信低、功劳不清、精低。"
-    ],
-    reveal: "结尾解锁长期数值“精”：你不是每次都说不清楚，有时只是已经太累了。"
+    title: "记录更新",
+    text: "项目结束了。至少这一次，你做过的事没有完全消失在流程里。",
+    reveal: "记录更新：精力。"
   },
   {
     id: "C5-S",
     type: "settlement",
     chapterId: "C5",
     chapterTitle: "第五章：靠近",
-    title: "章节结算",
-    scene: "你是否能够靠近别人，同时不把边界交出去。",
-    outcomes: [
-      "边界稳定：自、安、关不低。",
-      "关系维持但边界模糊：关高自低。",
-      "安全但孤立：安高关低。",
-      "纠缠风险：住址暴露、未闭合关系、关低。",
-      "支持网络：多次求助可信者。"
-    ],
-    reveal: "结尾解锁长期数值“关”：独立不是不需要别人，只是有些求助本身也要付出代价。"
+    title: "记录更新",
+    text: "你靠近过，也退回来过。至少这一次，你没有把所有不舒服都留给自己。",
+    reveal: "记录更新：关系。"
   },
   {
     id: "C6-S",
     type: "settlement",
     chapterId: "C6",
     chapterTitle: "第六章：窗口",
-    title: "第六章结束：窗口",
-    text: "你开始意识到：坚持不是一种态度。它需要钱、精力、关系、证据和被相信的机会。",
-    reveal: "本章显化：自我。"
+    title: "记录更新",
+    text: "这件事被记录了。它没有完全解决，但至少没有只留在你一个人的记忆里。",
+    reveal: "记录更新：自我。"
   }
 ];
 
@@ -1981,40 +1946,49 @@ export const ENDING_CARDS = [
     type: "ending",
     chapterId: "E",
     chapterTitle: "终章：普通难度",
-    title: "数值总览",
-    scene: "系统第一次同时显示全部长期数值。",
-    content: "信：你有多少次被解释成可靠的人；钱：你有多少次能用资源购买安全和退出；安：你有多少空间可以不计算风险；精：你有多少力气把事情说清楚；关：你有多少次可以不独自面对；自：你有多少次还能说“不”。",
-    tagsSummary: "所有章节标签进入回放统计。"
+    title: "记录汇总",
+    text: "系统第一次把所有状态摆在一起。你看到的不是能力表，而是这一路上你被迫管理过的东西。"
   },
   {
     id: "E-02",
     type: "ending",
     chapterId: "E",
     chapterTitle: "终章：普通难度",
-    title: "行为统计",
-    scene: "系统回放玩家的真实操作，不作道德评价。",
-    content: "示例统计：修改表达方式、放弃近路、假装有人同行、保存证据、笑着跳过不适、解释自己没有恶意、为了安全额外付费、因为无法证明而放弃。",
-    tagsSummary: "统计根据玩家标签生成，不固定。"
+    title: "行为记录",
+    text: "你以为自己在做选择。现在它们被整理成记录：绕路、解释、沉默、留证、笑着跳过、假装有人同行。"
   },
   {
     id: "E-03",
     type: "ending",
     chapterId: "E",
     chapterTitle: "终章：普通难度",
-    title: "角色档案",
-    scene: "系统逐项生成角色信息。",
-    content: "年龄：27；职业：普通职员；城市：普通城市；收入：普通；家庭：普通；关系状态：普通；性别：女；难度：普通。",
-    tagsSummary: "“性别：女”最后显示，形成回看效应。"
+    title: "档案生成",
+    text: "档案一项项生成：年龄普通，职业普通，城市普通，收入普通，家庭普通。没有任何一项像特殊命运。"
   },
   {
     id: "E-04",
     type: "ending",
     chapterId: "E",
     chapterTitle: "终章：普通难度",
-    title: "主题揭示",
-    scene: "你没有进入战场。没有遭遇末日。没有被命运特别选中。你只是完成了一段普通生活。",
-    content: "女性不是一种性格，女性是一种处境。当一个人长期处在需要被评价、被相信、被允许、被保护、被解释的位置，他就会学会谨慎、计算、讨好、沉默、留证和提前道歉。",
-    tagsSummary: "解锁二周目“处境模式”：同一套机制可应用到租客、实习生、病人、老人、外地人、未成年人等弱位角色。"
+    title: "最后一项",
+    text: "最后一项出现：性别，女。前面那些选择忽然换了一种重量。",
+    reveal: "难度：普通。"
+  },
+  {
+    id: "E-05",
+    type: "ending",
+    chapterId: "E",
+    chapterTitle: "终章：普通难度",
+    title: "普通生活",
+    text: "你没有进入战场。没有遭遇末日。没有被命运特别选中。你只是完成了一段普通生活。"
+  },
+  {
+    id: "E-06",
+    type: "ending",
+    chapterId: "E",
+    chapterTitle: "终章：普通难度",
+    title: "结束页",
+    text: "女性不是一种性格，女性是一种处境。当一个人长期处在需要被评价、被相信、被允许、被保护、被解释的位置，他就会学会谨慎、计算、讨好、沉默、留证和提前道歉。"
   }
 ];
 
@@ -2066,7 +2040,7 @@ export const orderedCardIds = [
   "C4-01", "C4-02", "C4-03", "C4-04", "C4-05", "C4-06", "C4-07", "C4-S",
   "C5-01", "C5-02", "C5-03", "C5-04", "C5-05", "C5-06", "C5-07", "C5-S",
   "C6-01", "C6-02", "C6-03", "C6-04", "C6-05", "C6-06", "C6-07", "C6-08", "C6-S",
-  "E-01", "E-02", "E-03", "E-04"
+  "E-01", "E-02", "E-03", "E-04", "E-05", "E-06"
 ];
 
 const cardsById = new Map(

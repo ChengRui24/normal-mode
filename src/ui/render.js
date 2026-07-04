@@ -8,27 +8,21 @@ function escapeText(value) {
   return span.innerHTML;
 }
 
-function formatDelta(delta) {
-  return delta > 0 ? `+${delta}` : `${delta}`;
-}
-
 function renderStatStrip(state) {
   const visibleStats = getVisibleStats(state.stats, state.visibleStats);
   if (visibleStats.length === 0) return "";
 
   return `
-    <dl class="stat-strip" aria-label="当前状态">
+    <p class="stat-strip" aria-label="当前状态">
+      <span>记录：</span>
       ${visibleStats
         .map(
           (stat) => `
-            <div class="stat-pill">
-              <dt>${escapeText(stat.label)}</dt>
-              <dd>${escapeText(stat.word)}</dd>
-            </div>
+            <span class="stat-item">${escapeText(stat.label)}：${escapeText(stat.word)}</span>
           `
         )
         .join("")}
-    </dl>
+    </p>
   `;
 }
 
@@ -39,7 +33,7 @@ function renderHeader(card, state) {
         <p class="eyebrow">${escapeText(card.chapterTitle ?? "普通难度")}</p>
         <h1>${escapeText(card.title ?? "普通生活")}</h1>
       </div>
-      <button class="restart-button" type="button">重新开始</button>
+      <button class="restart-button" type="button" aria-label="重新开始">...</button>
     </header>
     ${renderStatStrip(state)}
   `;
@@ -80,18 +74,6 @@ function renderResultCard(root, card, state, onContinue) {
     <section class="game-card">
       ${renderHeader(card, state)}
       <p class="result-text">${escapeText(result.text)}</p>
-      <div class="change-list">
-        ${(result.visibleChanges ?? [])
-          .map(
-            (change) => `
-              <p class="change-line">${escapeText(change.label)} ${formatDelta(change.delta)}</p>
-            `
-          )
-          .join("")}
-        ${(result.visibleTags ?? [])
-          .map((tag) => `<p class="tag-line">新增状态：${escapeText(tag)}</p>`)
-          .join("")}
-      </div>
       <button class="continue-button" type="button">继续</button>
     </section>
   `;
@@ -100,10 +82,12 @@ function renderResultCard(root, card, state, onContinue) {
 }
 
 function renderStaticCard(root, card, state, onContinue) {
+  const primaryText = card.text ?? card.scene ?? "";
   root.innerHTML = `
     <section class="game-card">
       ${renderHeader(card, state)}
-      <p class="scene-text">${escapeText(card.text)}</p>
+      <p class="scene-text">${escapeText(primaryText)}</p>
+      ${card.content ? `<p class="content-text">${escapeText(card.content)}</p>` : ""}
       ${card.reveal ? `<p class="tag-line">${escapeText(card.reveal)}</p>` : ""}
       <button class="continue-button" type="button">继续</button>
     </section>
