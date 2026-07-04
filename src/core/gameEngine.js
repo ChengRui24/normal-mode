@@ -57,7 +57,9 @@ export function applyChoice(state, choice) {
 
 function nextOrderedId(currentCardId) {
   const index = orderedCardIds.indexOf(currentCardId);
-  if (index === -1) return orderedCardIds[0];
+  if (index === -1) {
+    throw new Error(`Unknown card id: ${currentCardId}`);
+  }
   return orderedCardIds[index + 1] ?? currentCardId;
 }
 
