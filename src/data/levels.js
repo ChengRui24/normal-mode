@@ -1971,7 +1971,7 @@ export const SETTLEMENT_CARDS = [
     chapterTitle: "第六章：窗口",
     title: "第六章结束：窗口",
     text: "你开始意识到：坚持不是一种态度。它需要钱、精力、关系、证据和被相信的机会。",
-    reveal: "本章显化：自我"
+    reveal: "本章显化：自我。"
   }
 ];
 

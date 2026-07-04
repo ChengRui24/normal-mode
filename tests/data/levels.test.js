@@ -56,6 +56,18 @@ describe("level data", () => {
     expect(ENDING_CARDS.map((card) => card.id)).toEqual(["E-01", "E-02", "E-03", "E-04"]);
   });
 
+  it("keeps the chapter 6 settlement copy exact", () => {
+    expect(getCardById("C6-S")).toEqual({
+      id: "C6-S",
+      type: "settlement",
+      chapterId: "C6",
+      chapterTitle: "第六章：窗口",
+      title: "第六章结束：窗口",
+      text: "你开始意识到：坚持不是一种态度。它需要钱、精力、关系、证据和被相信的机会。",
+      reveal: "本章显化：自我。"
+    });
+  });
+
   it("includes at least one conditional insert card", () => {
     expect(INSERT_CARDS.length).toBeGreaterThanOrEqual(1);
     expect(INSERT_CARDS[0].trigger.tagsAll).toContain("低电量风险");
