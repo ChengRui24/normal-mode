@@ -24,7 +24,7 @@ button {
 }
 
 .app-shell {
-  width: min(100%, 430px);
+  width: min(100%, 390px);
   min-height: 100vh;
   margin: 0 auto;
   padding: 18px 14px 26px;
@@ -171,5 +171,11 @@ h1 {
 
   h1 {
     font-size: 1.32rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .app-shell {
+    margin: 0;
   }
 }
