@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  CRISIS_CARDS,
   ENDING_CARDS,
   INSERT_CARDS,
   INTRO_CARDS,
@@ -27,7 +28,7 @@ const expectedOrderedIds = [
   "C6-I",
   "C6-01", "C6-02", "C6-03", "C6-04", "C6-05", "C6-06", "C6-07", "C6-08", "C6-S",
   "E-I",
-  "E-01", "E-02", "E-03", "E-04", "E-05", "E-06"
+  "E-01", "E-02", "E-03", "E-04", "E-05", "E-06", "E-07", "E-08", "E-09", "E-10"
 ];
 
 const statKeySet = new Set(STAT_KEYS);
@@ -66,8 +67,26 @@ describe("level data", () => {
       "C1-S", "C2-S", "C3-S", "C4-S", "C5-S", "C6-S"
     ]);
     expect(ENDING_CARDS.map((card) => card.id)).toEqual([
-      "E-01", "E-02", "E-03", "E-04", "E-05", "E-06"
+      "E-01", "E-02", "E-03", "E-04", "E-05", "E-06", "E-07", "E-08", "E-09", "E-10"
     ]);
+  });
+
+  it("has one crisis card per long-term stat", () => {
+    expect(CRISIS_CARDS.map((card) => card.id)).toEqual([
+      "CR-reputation",
+      "CR-money",
+      "CR-safety",
+      "CR-energy",
+      "CR-relationship",
+      "CR-self"
+    ]);
+
+    for (const card of CRISIS_CARDS) {
+      expect(card.type).toBe("level");
+      expect(card.crisis).toBe(true);
+      expect(card.stat).toBeTypeOf("string");
+      expect(card.choices.length).toBeGreaterThanOrEqual(2);
+    }
   });
 
   it("keeps approved chapter intro copy and theme tokens", () => {
@@ -130,10 +149,11 @@ describe("level data", () => {
   });
 
   it("keeps ending titles away from RPG-style score screens", () => {
-    expect(getCardById("E-01").title).toBe("记录汇总");
+    expect(getCardById("E-01").title).toBe("记录完成");
     expect(getCardById("E-01").title).not.toBe("数值总览");
-    expect(getCardById("E-04").title).toBe("最后一项");
-    expect(getCardById("E-06").title).toBe("结束页");
+    expect(getCardById("E-04").title).toBe("通关方式");
+    expect(getCardById("E-08").title).toBe("档案更新");
+    expect(getCardById("E-10").title).toBe("普通生活");
   });
 
   it("includes at least one conditional insert card", () => {
@@ -142,7 +162,7 @@ describe("level data", () => {
   });
 
   it("uses only approved schema keys in ordinary and insert cards", () => {
-    for (const card of [...LEVEL_CARDS, ...INSERT_CARDS]) {
+    for (const card of [...LEVEL_CARDS, ...INSERT_CARDS, ...CRISIS_CARDS]) {
       for (const choice of card.choices) {
         for (const key of Object.keys(choice.effects ?? {})) {
           expect(statKeySet.has(key), `${card.id}.${choice.id} effects.${key}`).toBe(true);
@@ -176,7 +196,7 @@ describe("level data", () => {
       afterCardId: "C3-04",
       tagsAll: ["低电量风险", "人少夜路"],
       hiddenMax: {},
-      statMax: { safety: -2 }
+      statMax: { safety: 2 }
     });
 
     const c608ChoicesByLabel = Object.fromEntries(
@@ -185,11 +205,11 @@ describe("level data", () => {
 
     expect(c608ChoicesByLabel["接受结果"].requirements).toBeUndefined();
     expect(c608ChoicesByLabel["继续申诉"].requirements).toEqual({
-      minStats: { energy: -1, self: 0 },
+      minStats: { energy: 3, self: 3 },
       reason: "无法继续消耗"
     });
     expect(c608ChoicesByLabel["离开环境"].requirements).toEqual({
-      minStats: { money: -1, self: 0 },
+      minStats: { money: 3, self: 3 },
       reason: "退出成本不足"
     });
   });

@@ -84,6 +84,31 @@ describe("renderGame", () => {
     expect(root.querySelectorAll(".change-line").length).toBe(0);
   });
 
+  it("renders dynamic ending lines without raw score numbers", () => {
+    const root = document.createElement("main");
+
+    renderGame(root, {
+      state: {
+        ...createInitialState(),
+        phase: "ending",
+        currentCardId: "E-02",
+        stats: {
+          ...createInitialState().stats,
+          safety: 2
+        }
+      },
+      onChoose: vi.fn(),
+      onContinue: vi.fn(),
+      onRestart: vi.fn()
+    });
+
+    expect(root.textContent).toContain("状态总览");
+    expect(root.textContent).toContain("安全感：危险");
+    expect(root.textContent).toContain("你没有一直遇到危险");
+    expect(root.textContent).not.toContain("2/12");
+    expect(root.querySelectorAll(".ending-line").length).toBeGreaterThan(0);
+  });
+
   it("renders visible stats as a compact record line", () => {
     const root = document.createElement("main");
 

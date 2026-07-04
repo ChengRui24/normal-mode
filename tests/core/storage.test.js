@@ -27,7 +27,16 @@ describe("storage", () => {
   it("returns null for missing or invalid saved state", () => {
     expect(loadState()).toBe(null);
 
-    localStorage.setItem("ordinary-life-save-v1", "{bad json");
+    localStorage.setItem("ordinary-life-save-v2", "{bad json");
+
+    expect(loadState()).toBe(null);
+  });
+
+  it("ignores saves from the old stat scale", () => {
+    localStorage.setItem("ordinary-life-save-v1", JSON.stringify({
+      ...createInitialState(),
+      currentCardId: "C2-01"
+    }));
 
     expect(loadState()).toBe(null);
   });

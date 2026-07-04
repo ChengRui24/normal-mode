@@ -1,4 +1,5 @@
 import { getDisabledReason } from "../core/choiceRules.js";
+import { getEndingDisplay } from "../core/gameEngine.js";
 import { getVisibleStats } from "../core/stateWords.js";
 import { getCardById } from "../data/levels.js";
 
@@ -103,14 +104,18 @@ function renderIntroCard(root, card, onContinue) {
 }
 
 function renderStaticCard(root, card, state, onContinue) {
-  const primaryText = card.text ?? card.scene ?? "";
+  const display = card.type === "ending" ? getEndingDisplay(card, state) : card;
+  const primaryText = display.text ?? display.scene ?? "";
   root.innerHTML = `
     <section class="game-card">
-      ${renderHeader(card, state)}
+      ${renderHeader(display, state)}
       <p class="scene-text">${escapeText(primaryText)}</p>
-      ${card.content ? `<p class="content-text">${escapeText(card.content)}</p>` : ""}
-      ${card.reveal ? `<p class="tag-line">${escapeText(card.reveal)}</p>` : ""}
-      <button class="continue-button" type="button">继续</button>
+      ${display.content ? `<p class="content-text">${escapeText(display.content)}</p>` : ""}
+      ${(display.lines ?? []).length > 0
+        ? `<ul class="ending-list">${display.lines.map((line) => `<li class="ending-line">${escapeText(line)}</li>`).join("")}</ul>`
+        : ""}
+      ${display.reveal ? `<p class="tag-line">${escapeText(display.reveal)}</p>` : ""}
+      <button class="continue-button" type="button">${escapeText(display.buttonLabel ?? "继续")}</button>
     </section>
   `;
 

@@ -21,13 +21,13 @@ describe("choice rules", () => {
   it("returns custom reason when min stat requirements are unmet", () => {
     const state = {
       ...createInitialState(),
-      stats: { ...createInitialState().stats, money: -1 }
+      stats: { ...createInitialState().stats, money: 2 }
     };
 
     const reason = getDisabledReason(
       {
         requirements: {
-          minStats: { money: 1 },
+          minStats: { money: 3 },
           reason: "钱不够"
         }
       },
@@ -57,12 +57,15 @@ describe("choice rules", () => {
   });
 
   it("uses fallback disabled reason when no custom reason exists", () => {
-    const state = createInitialState();
+    const state = {
+      ...createInitialState(),
+      stats: { ...createInitialState().stats, reputation: 2 }
+    };
 
     const reason = getDisabledReason(
       {
         requirements: {
-          minStats: { reputation: 1 }
+          minStats: { reputation: 3 }
         }
       },
       state
@@ -74,14 +77,14 @@ describe("choice rules", () => {
   it("returns empty reason when choice is available", () => {
     const state = {
       ...createInitialState(),
-      stats: { ...createInitialState().stats, reputation: 2 },
+      stats: { ...createInitialState().stats, reputation: 6 },
       tags: ["准备充分", "有人知道"]
     };
 
     const reason = getDisabledReason(
       {
         requirements: {
-          minStats: { reputation: 1 },
+          minStats: { reputation: 3 },
           tagsAll: ["准备充分"]
         }
       },

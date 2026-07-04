@@ -1,4 +1,4 @@
-import { HIDDEN_KEYS, STAT_KEYS } from "../data/statConfig.js";
+import { HIDDEN_KEYS, INITIAL_STATS, STAT_KEYS } from "../data/statConfig.js";
 
 function zeroRecord(keys) {
   return Object.fromEntries(keys.map((key) => [key, 0]));
@@ -9,11 +9,13 @@ export function createInitialState() {
     phase: "intro",
     currentCardId: "P-I",
     pendingResult: null,
-    stats: zeroRecord(STAT_KEYS),
+    stats: { ...INITIAL_STATS },
     hidden: zeroRecord(HIDDEN_KEYS),
     tags: [],
     visibleStats: [],
     triggeredInserts: [],
+    triggeredCrises: [],
+    returnCardId: null,
     chapterOutcomes: {},
     counters: {
       adjustedExpression: 0,

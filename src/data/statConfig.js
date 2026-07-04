@@ -16,6 +16,19 @@ export const STAT_LABELS = {
   self: "自我"
 };
 
+export const INITIAL_STATS = {
+  reputation: 6,
+  money: 6,
+  safety: 6,
+  energy: 7,
+  relationship: 5,
+  self: 6
+};
+
+export const STAT_MIN = 0;
+export const STAT_MAX = 12;
+export const DANGER_MAX = 2;
+
 export const CHAPTER_VISIBLE_STATS = {
   P: [],
   C1: ["reputation"],
@@ -37,8 +50,8 @@ export const HIDDEN_KEYS = [
 ];
 
 export const STATE_WORDS = [
-  { min: 3, word: "较高" },
-  { min: 0, word: "稳定" },
-  { min: -2, word: "紧张" },
+  { min: 9, word: "较高" },
+  { min: 6, word: "稳定" },
+  { min: 3, word: "紧张" },
   { min: Number.NEGATIVE_INFINITY, word: "危险" }
 ];

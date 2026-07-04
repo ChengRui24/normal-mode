@@ -1996,7 +1996,7 @@ export const LEVEL_CARDS = [
         hiddenEffects: {},
         tagsAdded: ["继续消耗"],
         visibleChanges: ["self", "energy", "money"],
-        requirements: { minStats: { energy: -1, self: 0 }, reason: "无法继续消耗" },
+        requirements: { minStats: { energy: 3, self: 3 }, reason: "无法继续消耗" },
         track: { recognition: 1 }
       },
       {
@@ -2007,7 +2007,7 @@ export const LEVEL_CARDS = [
         hiddenEffects: {},
         tagsAdded: ["退出成本", "信誉转移"],
         visibleChanges: ["safety", "money"],
-        requirements: { minStats: { money: -1, self: 0 }, reason: "退出成本不足" },
+        requirements: { minStats: { money: 3, self: 3 }, reason: "退出成本不足" },
         track: { paidForSafety: 1 }
       }
     ]
@@ -2077,49 +2077,302 @@ export const ENDING_CARDS = [
     type: "ending",
     chapterId: "E",
     chapterTitle: "终章：普通难度",
-    title: "记录汇总",
-    text: "系统第一次把所有状态摆在一起。你看到的不是能力表，而是这一路上你被迫管理过的东西。"
+    title: "记录完成",
+    text: "你通过了这一段生活。系统没有判断你勇敢、软弱、敏感或多疑，只记录你怎样继续走到了这里。",
+    buttonLabel: "查看记录"
   },
   {
     id: "E-02",
     type: "ending",
     chapterId: "E",
     chapterTitle: "终章：普通难度",
-    title: "行为记录",
-    text: "你以为自己在做选择。现在它们被整理成记录：绕路、解释、沉默、留证、笑着跳过、假装有人同行。"
+    title: "状态总览",
+    text: "系统第一次把所有状态摆在一起。你看到的不是能力表，而是这一路上你被迫管理过的东西。"
   },
   {
     id: "E-03",
     type: "ending",
     chapterId: "E",
     chapterTitle: "终章：普通难度",
-    title: "档案生成",
-    text: "档案一项项生成：年龄普通，职业普通，城市普通，收入普通，家庭普通。没有任何一项像特殊命运。"
+    title: "你学会的方式",
+    text: "你以为自己在做选择。现在它们被整理成记录。"
   },
   {
     id: "E-04",
     type: "ending",
     chapterId: "E",
     chapterTitle: "终章：普通难度",
-    title: "最后一项",
-    text: "最后一项出现：性别，女。前面那些选择忽然换了一种重量。",
-    reveal: "难度：普通。"
+    title: "通关方式",
+    text: "系统没有给你胜利。它只记录你采用了哪一种方式继续生活。"
   },
   {
     id: "E-05",
     type: "ending",
     chapterId: "E",
     chapterTitle: "终章：普通难度",
-    title: "普通生活",
-    text: "你没有进入战场。没有遭遇末日。没有被命运特别选中。你只是完成了一段普通生活。"
+    title: "代价清单",
+    text: "你走到了这里。系统开始整理那些没有写成失败的损耗。"
   },
   {
     id: "E-06",
     type: "ending",
     chapterId: "E",
     chapterTitle: "终章：普通难度",
-    title: "结束页",
-    text: "女性不是一种性格，女性是一种处境。当一个人长期处在需要被评价、被相信、被允许、被保护、被解释的位置，他就会学会谨慎、计算、讨好、沉默、留证和提前道歉。"
+    title: "没有发生",
+    text: "很多事情没有发生。你没有被跟踪到家，没有在面试中彻底失败，没有在饭局上失控，没有让投诉完全反噬。系统把它们记为安全通过。",
+    content: "但为了这些“没有发生”，你已经绕路、沉默、解释、付费、留证、提前道歉。"
+  },
+  {
+    id: "E-07",
+    type: "ending",
+    chapterId: "E",
+    chapterTitle: "终章：普通难度",
+    title: "角色档案生成中",
+    text: "系统开始补全你的身份。没有任何一项看起来像特殊命运。",
+    content: "年龄：27；职业：普通职员；城市：普通城市；收入：普通；家庭：普通；关系状态：普通。"
+  },
+  {
+    id: "E-08",
+    type: "ending",
+    chapterId: "E",
+    chapterTitle: "终章：普通难度",
+    title: "档案更新",
+    text: "最后一项信息被补上。",
+    content: "性别：女。难度：普通。"
+  },
+  {
+    id: "E-09",
+    type: "ending",
+    chapterId: "E",
+    chapterTitle: "终章：普通难度",
+    title: "回看",
+    text: "你刚才经历的，不是战场，不是末日，不是传奇，也不是一段特别糟糕的人生。它只是一次普通难度。",
+    content: "那些看起来像性格的东西，谨慎、敏感、会解释、怕麻烦别人、总想先准备好，也可能是处境留下的形状。"
+  },
+  {
+    id: "E-10",
+    type: "ending",
+    chapterId: "E",
+    chapterTitle: "终章：普通难度",
+    title: "普通生活",
+    text: "女性不是一种性格。女性是一种处境。当一个人长期处在需要被评价、被相信、被允许、被保护、被解释的位置，他就会学会谨慎、计算、讨好、沉默、留证和提前道歉。",
+    content: "这不是因为她天生如此。是因为世界经常这样要求她。",
+    buttonLabel: "结束"
+  }
+];
+
+export const CRISIS_CARDS = [
+  {
+    id: "CR-reputation",
+    type: "level",
+    chapterId: "Crisis",
+    chapterTitle: "记录中断",
+    title: "信誉危机",
+    scene: "你发现自己说的很多话，都需要比别人多解释一遍。",
+    crisis: true,
+    stat: "reputation",
+    choices: [
+      {
+        id: "accept-lower-bar",
+        label: "接受低要求",
+        result: "你把标准放低了一些，流程重新松动。只是之后你更难把自己往前推。",
+        effects: { reputation: 1, self: -1 },
+        tagsAdded: ["低要求推进"],
+        track: { adjustedExpression: 1 }
+      },
+      {
+        id: "ask-witness",
+        label: "找人作证",
+        result: "有人替你补了一句话。它有用，也让一次关系被消耗掉。",
+        effects: { reputation: 1, relationship: -1 },
+        tagsAdded: ["外部作证"],
+        track: { explainedIntent: 1 }
+      },
+      {
+        id: "silent-forward",
+        label: "沉默推进",
+        result: "你不再解释。事情继续往前，只是一些功劳和边界也一起模糊了。",
+        effects: { energy: 1 },
+        hiddenEffects: { credit: -1 },
+        tagsAdded: ["沉默推进"],
+        track: { laughedOffDiscomfort: 1 }
+      }
+    ]
+  },
+  {
+    id: "CR-money",
+    type: "level",
+    chapterId: "Crisis",
+    chapterTitle: "记录中断",
+    title: "钱危机",
+    scene: "余额让很多选择提前消失。你还没做决定，有些路已经关上了。",
+    crisis: true,
+    stat: "money",
+    choices: [
+      {
+        id: "lower-quality",
+        label: "接受低质量方案",
+        result: "你保住了一点余额。代价是把另一些不确定留给之后。",
+        effects: { money: 1, safety: -1 },
+        tagsAdded: ["低质量方案"]
+      },
+      {
+        id: "borrow",
+        label: "借钱求助",
+        result: "钱暂时补上了。那条求助消息，也在关系里留下了痕迹。",
+        effects: { money: 2, relationship: -1 },
+        tagsAdded: ["借钱求助"],
+        track: { paidForSafety: 1 }
+      },
+      {
+        id: "drop-processing",
+        label: "放弃处理",
+        result: "你停止继续消耗。生活轻了一点，事情也没有真正关上。",
+        effects: { energy: 1, self: -1 },
+        tagsAdded: ["放弃处理"],
+        track: { gaveUpForProof: 1 }
+      }
+    ]
+  },
+  {
+    id: "CR-safety",
+    type: "level",
+    chapterId: "Crisis",
+    chapterTitle: "记录中断",
+    title: "安全感危机",
+    scene: "你开始在进入每个空间前确认出口。什么都没发生，但你已经很累。",
+    crisis: true,
+    stat: "safety",
+    choices: [
+      {
+        id: "detour",
+        label: "绕路",
+        result: "你走向更亮的地方。安全感回来一点，身体更累。",
+        effects: { safety: 1, energy: -1 },
+        tagsAdded: ["绕路"],
+        track: { avoidedShortcut: 1 }
+      },
+      {
+        id: "contact-someone",
+        label: "联系别人",
+        result: "有人知道你在哪里。你不再完全独自移动，也多动用了一次关系。",
+        effects: { safety: 1, relationship: -1 },
+        tagsAdded: ["有人知道"],
+        track: { pretendedAccompanied: 1 }
+      },
+      {
+        id: "push-through",
+        label: "硬撑",
+        result: "你继续往前。路没有变短，只是身体把警觉记得更深。",
+        effects: { energy: -1 },
+        hiddenEffects: { exposure: 1 },
+        tagsAdded: ["持续警觉"]
+      }
+    ]
+  },
+  {
+    id: "CR-energy",
+    type: "level",
+    chapterId: "Crisis",
+    chapterTitle: "记录中断",
+    title: "精力危机",
+    scene: "你不是不想讲清楚，只是句子开始断掉。",
+    crisis: true,
+    stat: "energy",
+    choices: [
+      {
+        id: "rest",
+        label: "休息",
+        result: "你停下来恢复了一点。与此同时，有些评价先替你出现了。",
+        effects: { energy: 2, reputation: -1 },
+        tagsAdded: ["暂停恢复"]
+      },
+      {
+        id: "simplify",
+        label: "简化处理",
+        result: "你只保留最关键的部分。事情能继续，但证据没有那么完整。",
+        effects: { energy: 1 },
+        hiddenEffects: { evidence: -1 },
+        tagsAdded: ["简化处理"]
+      },
+      {
+        id: "ask-help",
+        label: "找人帮忙",
+        result: "有人帮你接住了一部分。你也记下了这次麻烦别人。",
+        effects: { energy: 1, relationship: -1 },
+        tagsAdded: ["外部帮助"],
+        track: { explainedIntent: 1 }
+      }
+    ]
+  },
+  {
+    id: "CR-relationship",
+    type: "level",
+    chapterId: "Crisis",
+    chapterTitle: "记录中断",
+    title: "关系危机",
+    scene: "你打开通讯录，发现每个名字后面都有上一次麻烦他们的记忆。",
+    crisis: true,
+    stat: "relationship",
+    choices: [
+      {
+        id: "alone",
+        label: "独自处理",
+        result: "你把事情留在自己手里。决定更清楚了，力气也少了一点。",
+        effects: { self: 1, energy: -1 },
+        tagsAdded: ["独自处理"]
+      },
+      {
+        id: "repair",
+        label: "恢复关系",
+        result: "你补上一段问候。关系回暖一点，今天的力气也被用掉一点。",
+        effects: { relationship: 1, energy: -1 },
+        tagsAdded: ["恢复关系"]
+      },
+      {
+        id: "stop-asking",
+        label: "放弃求助",
+        result: "你没有再开口。事情还在，只是更安静地压回你身上。",
+        effects: { safety: -1 },
+        tagsAdded: ["放弃求助"]
+      }
+    ]
+  },
+  {
+    id: "CR-self",
+    type: "level",
+    chapterId: "Crisis",
+    chapterTitle: "记录中断",
+    title: "自我危机",
+    scene: "你知道自己不愿意，但拒绝这件事本身也需要力气。",
+    crisis: true,
+    stat: "self",
+    choices: [
+      {
+        id: "comply",
+        label: "暂时顺从",
+        result: "事情顺利过去。只是那句没有说出口的拒绝，又往后退了一点。",
+        effects: { energy: 1, self: -1 },
+        tagsAdded: ["暂时顺从"],
+        track: { laughedOffDiscomfort: 1 }
+      },
+      {
+        id: "write-down",
+        label: "写下来",
+        result: "你没有当场说出口，但把它留了下来。边界变得可见，也消耗了力气。",
+        effects: { self: 1, energy: -1 },
+        hiddenEffects: { evidence: 1 },
+        tagsAdded: ["写下边界"],
+        track: { savedEvidence: 1 }
+      },
+      {
+        id: "confirm-help",
+        label: "求助确认",
+        result: "另一个人的回应让你确认这不是小题大做。你也再次动用了关系。",
+        effects: { self: 1, relationship: -1 },
+        tagsAdded: ["求助确认"]
+      }
+    ]
   }
 ];
 
@@ -2136,7 +2389,7 @@ export const INSERT_CARDS = [
       afterCardId: "C3-04",
       tagsAll: ["低电量风险", "人少夜路"],
       hiddenMax: {},
-      statMax: { safety: -2 }
+      statMax: { safety: 2 }
     },
     choices: [
       {
@@ -2179,11 +2432,11 @@ export const orderedCardIds = [
   "C6-I",
   "C6-01", "C6-02", "C6-03", "C6-04", "C6-05", "C6-06", "C6-07", "C6-08", "C6-S",
   "E-I",
-  "E-01", "E-02", "E-03", "E-04", "E-05", "E-06"
+  "E-01", "E-02", "E-03", "E-04", "E-05", "E-06", "E-07", "E-08", "E-09", "E-10"
 ];
 
 const cardsById = new Map(
-  [...INTRO_CARDS, ...LEVEL_CARDS, ...SETTLEMENT_CARDS, ...ENDING_CARDS, ...INSERT_CARDS].map((card) => [
+  [...INTRO_CARDS, ...LEVEL_CARDS, ...SETTLEMENT_CARDS, ...ENDING_CARDS, ...CRISIS_CARDS, ...INSERT_CARDS].map((card) => [
     card.id,
     card
   ])
