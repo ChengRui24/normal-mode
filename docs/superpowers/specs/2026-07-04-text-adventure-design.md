@@ -131,9 +131,9 @@ If more than two revealed stats changed, the UI chooses the two highest-priority
 
 ## Long-Term Stats
 
-There are six long-term stats. They exist from the start but become visible gradually:
+There are six long-term stats. They exist from the start but become visible gradually. A chapter's focused stat becomes visible when that chapter begins; the chapter settlement then names and explains what became visible during that chapter.
 
-| Unlock moment | Visible stat | Meaning | Gameplay role |
+| Visibility begins | Visible stat | Meaning | Gameplay role |
 | --- | --- | --- | --- |
 | Chapter 1 `筛选` | 信誉 | Whether others read the player as reliable, suitable, and believable | Interviews, probation, workplace evaluation, complaint credibility |
 | Chapter 2 `房间` | 钱 | Economic buffer | Housing, safer transport, complaints, refusing low-quality opportunities |
@@ -157,7 +157,7 @@ The UI may show compact labels such as:
 安全感：危险
 ```
 
-Only unlocked stats are shown. Unlocked means visible to the player, not newly created. All six stats can change from the prologue onward.
+Only visible stats are shown. Visible means revealed to the player, not newly created. All six stats can change from the prologue onward.
 
 ## Hidden Values And Tags
 
@@ -293,7 +293,7 @@ Each chapter ends with a short settlement card:
 - Chapter ending title.
 - One or two sentences of summary.
 - Important statuses gained.
-- Newly visible long-term stat.
+- The long-term stat that became visible during that chapter.
 - Continue button.
 
 Settlements should show that previous cards were not isolated. They should remain short and avoid complex reports.
@@ -310,7 +310,7 @@ Example:
 低薪入职
 试用期压力
 
-新数值解锁：信誉
+本章显化：信誉
 
 [继续]
 ```
@@ -352,13 +352,13 @@ Chapter 6 settlement outcomes:
 | 反噬 | Public expression with low reputation, weak evidence, and low relationship | Ending increases explanation count sharply |
 | 退出环境 | Money enough or self high | Ending says the player left, but not without cost |
 
-Chapter 6 unlock text:
+Chapter 6 settlement text for self:
 
 ```text
 你开始意识到：坚持不是一种态度。
 它需要钱、精力、关系、证据和被相信的机会。
 
-长期数值解锁：自我。
+本章显化：自我。
 ```
 
 ## Ending
@@ -475,7 +475,7 @@ Before calling the implementation complete, verify:
 - Refresh resumes from the saved state.
 - Restart clears saved progress.
 - At least one conditional inserted card can be triggered.
-- Chapter settlements unlock stats in the correct order.
+- Chapters expose stats in the correct order.
 - Result cards display no more than two stat changes.
 - Hidden tags and hidden values are not exposed in ordinary results.
 - Disabled choices show short reasons.
