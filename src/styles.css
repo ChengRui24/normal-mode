@@ -175,6 +175,7 @@ h1 {
 }
 
 .choice-button,
+.selected-choice,
 .continue-button {
   width: 100%;
   min-height: 48px;
@@ -207,6 +208,15 @@ h1 {
 .choice-button:disabled {
   background: #f1eee8;
   color: #918b82;
+}
+
+.selected-choice {
+  margin-top: 24px;
+  min-height: 42px;
+  border-color: #ded9d0;
+  background: #f4f1eb;
+  color: #6b665e;
+  text-align: left;
 }
 
 .continue-button {

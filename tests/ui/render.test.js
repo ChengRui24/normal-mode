@@ -59,7 +59,7 @@ describe("renderGame", () => {
     expect(root.querySelectorAll("button.choice-button").length).toBeGreaterThanOrEqual(2);
   });
 
-  it("renders result card without numeric change lines", () => {
+  it("renders result inline with the selected option kept as a disabled light button", () => {
     const root = document.createElement("main");
 
     renderGame(root, {
@@ -68,6 +68,7 @@ describe("renderGame", () => {
         phase: "result",
         currentCardId: "C6-08",
         pendingResult: {
+          choiceId: "appeal",
           text: "你继续往下走。每多走一步，都要再支付一点生活。"
         }
       },
@@ -76,7 +77,14 @@ describe("renderGame", () => {
       onRestart: vi.fn()
     });
 
+    expect(root.textContent).toContain("系统给出结果：证据不足");
+    const selected = root.querySelector("button.selected-choice");
+    expect(selected).not.toBe(null);
+    expect(selected?.textContent).toContain("继续申诉");
+    expect(selected?.disabled).toBe(true);
+    expect(root.querySelectorAll("button.choice-button").length).toBe(0);
     expect(root.textContent).toContain("你继续往下走。每多走一步，都要再支付一点生活。");
+    expect(root.textContent).not.toContain("你选择了");
     expect(root.textContent).not.toContain("自我 +1");
     expect(root.textContent).not.toContain("精力 -2");
     expect(root.textContent).not.toContain("新增状态");

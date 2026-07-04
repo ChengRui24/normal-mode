@@ -75,9 +75,12 @@ function renderChoiceCard(root, card, state, onChoose) {
 
 function renderResultCard(root, card, state, onContinue) {
   const result = state.pendingResult;
+  const selectedChoice = card.choices?.find((choice) => choice.id === result.choiceId);
   root.innerHTML = `
     <section class="game-card">
       ${renderHeader(card, state)}
+      <p class="scene-text">${escapeText(card.scene)}</p>
+      ${selectedChoice ? `<button class="selected-choice" type="button" disabled>${escapeText(selectedChoice.label)}</button>` : ""}
       <p class="result-text">${escapeText(result.text)}</p>
       <button class="continue-button" type="button">继续</button>
     </section>
