@@ -1,11 +1,39 @@
 import "./styles.css";
+import { advanceAfterResult, applyChoice } from "./core/gameEngine.js";
+import { createInitialState } from "./core/initialState.js";
+import { clearSavedState, loadState, saveState } from "./core/storage.js";
+import { renderGame } from "./ui/render.js";
 
 const root = document.querySelector("#app");
 
-root.innerHTML = `
-  <section class="game-card">
-    <p class="eyebrow">普通难度</p>
-    <h1>普通生活</h1>
-    <p class="scene-text">游戏正在加载。</p>
-  </section>
-`;
+let state = loadState() ?? createInitialState();
+
+function commitState(nextState) {
+  state = nextState;
+  saveState(state);
+  render();
+}
+
+function handleChoose(choice) {
+  commitState(applyChoice(state, choice));
+}
+
+function handleContinue() {
+  commitState(advanceAfterResult(state));
+}
+
+function handleRestart() {
+  clearSavedState();
+  commitState(createInitialState());
+}
+
+function render() {
+  renderGame(root, {
+    state,
+    onChoose: handleChoose,
+    onContinue: handleContinue,
+    onRestart: handleRestart
+  });
+}
+
+render();

@@ -146,7 +146,9 @@ function findInsert(state) {
 }
 
 export function advanceAfterResult(state) {
-  const inserted = findInsert(state);
+  const currentCard = getCardById(state.currentCardId);
+  const shouldCheckInsert = state.phase === "result" && !currentCard?.insert;
+  const inserted = shouldCheckInsert ? findInsert(state) : null;
   const nextId = inserted?.id ?? nextIdAfterCurrent(state);
   const nextCard = getCardById(nextId);
 
