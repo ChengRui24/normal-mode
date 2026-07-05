@@ -1,397 +1,1445 @@
 export const INTRO_CARDS = [
   {
-    id: "P-I",
-    type: "chapterIntro",
-    chapterId: "P",
-    chapterTitle: "序章：出门",
-    kicker: "序章",
-    title: "出门",
-    text: "今天有一场重要见面。你需要出门，准时抵达。没有人告诉你这会很难，也没有人觉得这值得被特别记录。",
-    objective: "目标：准时抵达。",
-    buttonLabel: "出门",
-    theme: { primary: "#9B8F80", surface: "#F6F1EA", accent: "#6F6256" }
+    "id": "P-I",
+    "type": "chapterIntro",
+    "chapterId": "P",
+    "chapterTitle": "序章：出门",
+    "kicker": "序章",
+    "title": "出门",
+    "text": "今天有一场重要见面。你要出门，准时到达。天气、路程、衣服和电量都只是小事。至少现在看起来是这样。",
+    "objective": "目标：准时抵达。",
+    "buttonLabel": "出门",
+    "theme": {
+      "primary": "#9B8F80",
+      "surface": "#F6F1EA",
+      "accent": "#6F6256"
+    }
   },
   {
-    id: "C1-I",
-    type: "chapterIntro",
-    chapterId: "C1",
-    chapterTitle: "第一章：筛选",
-    kicker: "第一章",
-    title: "筛选",
-    text: "你需要获得一个位置。这里的人会看你的资料、回答、语气和反应，也会看一些你以为不该重要的东西。",
-    objective: "目标：获得一个位置。",
-    buttonLabel: "进入筛选",
-    theme: { primary: "#7A6D5E", surface: "#F2EDE6", accent: "#4F463D" }
+    "id": "C1-I",
+    "type": "chapterIntro",
+    "chapterId": "C1",
+    "chapterTitle": "第一章：筛选",
+    "kicker": "第一章",
+    "title": "筛选",
+    "text": "你需要一个位置。表格、照片、问题和等待区，会比你先开口。这里不会只看你会做什么，也看你是不是适合被放进来。",
+    "objective": "目标：获得一个位置。",
+    "buttonLabel": "进入筛选",
+    "theme": {
+      "primary": "#7A6D5E",
+      "surface": "#F2EDE6",
+      "accent": "#4F463D"
+    }
   },
   {
-    id: "C2-I",
-    type: "chapterIntro",
-    chapterId: "C2",
-    chapterTitle: "第二章：房间",
-    kicker: "第二章",
-    title: "房间",
-    text: "你需要一个可以关上门的地方。它要足够近，足够便宜，最好也足够安全。但这些条件很少同时出现。",
-    objective: "目标：找到能住下来的地方。",
-    buttonLabel: "去看房",
-    theme: { primary: "#68705A", surface: "#EEF1EA", accent: "#3F4638" }
+    "id": "C2-I",
+    "type": "chapterIntro",
+    "chapterId": "C2",
+    "chapterTitle": "第二章：房间",
+    "kicker": "第二章",
+    "title": "房间",
+    "text": "你需要一扇能关上的门。离公司近一点会贵，便宜一点会远。地图上写着通勤时间，没写楼道灯和夜里回来的路。",
+    "objective": "目标：找到能住下来的地方。",
+    "buttonLabel": "去看房",
+    "theme": {
+      "primary": "#68705A",
+      "surface": "#EEF1EA",
+      "accent": "#3F4638"
+    }
   },
   {
-    id: "C3-I",
-    type: "chapterIntro",
-    chapterId: "C3",
-    chapterTitle: "第三章：路上",
-    kicker: "第三章",
-    title: "路上",
-    text: "城市看起来对所有人开放。路灯、车站、电梯、网约车和楼道，都只是普通设施。直到你开始计算时间、距离、出口和身后的人。",
-    objective: "目标：完成这一周的移动。",
-    buttonLabel: "出发",
-    theme: { primary: "#65798A", surface: "#ECF1F4", accent: "#394957" }
+    "id": "C3-I",
+    "type": "chapterIntro",
+    "chapterId": "C3",
+    "chapterTitle": "第三章：路上",
+    "kicker": "第三章",
+    "title": "路上",
+    "text": "城市看起来只是路线。车站、电梯、网约车、门禁，都按自己的规则运行。你要在这些规则之间移动。",
+    "objective": "目标：完成这一周的移动。",
+    "buttonLabel": "出发",
+    "theme": {
+      "primary": "#65798A",
+      "surface": "#ECF1F4",
+      "accent": "#394957"
+    }
   },
   {
-    id: "C4-I",
-    type: "chapterIntro",
-    chapterId: "C4",
-    chapterTitle: "第四章：桌面",
-    kicker: "第四章",
-    title: "桌面",
-    text: "你已经有了一个位置。现在你需要证明自己值得留下。你做的事要被看见，你说的话要被接住，而这两件事并不总是一起发生。",
-    objective: "目标：完成项目，保住位置。",
-    buttonLabel: "开始工作",
-    theme: { primary: "#9A7A4F", surface: "#F4EFE5", accent: "#5B4528" }
+    "id": "C4-I",
+    "type": "chapterIntro",
+    "chapterId": "C4",
+    "chapterTitle": "第四章：桌面",
+    "kicker": "第四章",
+    "title": "桌面",
+    "text": "你已经坐到桌边。接下来，你要让自己的话留在会议里，让做过的事留在记录里。它们不一定会自然发生。",
+    "objective": "目标：完成项目，保住位置。",
+    "buttonLabel": "开始工作",
+    "theme": {
+      "primary": "#9A7A4F",
+      "surface": "#F4EFE5",
+      "accent": "#5B4528"
+    }
   },
   {
-    id: "C5-I",
-    type: "chapterIntro",
-    chapterId: "C5",
-    chapterTitle: "第五章：靠近",
-    kicker: "第五章",
-    title: "靠近",
-    text: "有些关系会让生活轻一点，有些靠近也会带来新的判断。你需要分辨信任、礼貌、体贴和越界，但它们有时长得很像。",
-    objective: "目标：靠近别人，同时保留距离。",
-    buttonLabel: "继续靠近",
-    theme: { primary: "#8A5F66", surface: "#F3ECEE", accent: "#56383E" }
+    "id": "C5-I",
+    "type": "chapterIntro",
+    "chapterId": "C5",
+    "chapterTitle": "第五章：靠近",
+    "kicker": "第五章",
+    "title": "靠近",
+    "text": "有人靠近，生活会轻一点。也可能多出新的解释、等待和判断。你要在关系里移动，还要知道哪里应该停下。",
+    "objective": "目标：靠近别人，同时保留距离。",
+    "buttonLabel": "继续靠近",
+    "theme": {
+      "primary": "#8A5F66",
+      "surface": "#F3ECEE",
+      "accent": "#56383E"
+    }
   },
   {
-    id: "C6-I",
-    type: "chapterIntro",
-    chapterId: "C6",
-    chapterTitle: "第六章：窗口",
-    kicker: "第六章",
-    title: "窗口",
-    text: "有些事如果只停在你身上，就会被叫作感受。你需要把它变成时间、地点、截图、录音、记录和可以被处理的问题。",
-    objective: "目标：让问题被记录。",
-    buttonLabel: "进入流程",
-    theme: { primary: "#5F7180", surface: "#EDF1F3", accent: "#34424C" }
+    "id": "C6-I",
+    "type": "chapterIntro",
+    "chapterId": "C6",
+    "chapterTitle": "第六章：窗口",
+    "kicker": "第六章",
+    "title": "窗口",
+    "text": "你想把一件事说清楚。可在它被处理之前，它要先变成时间、地点、截图、记录，以及别人能读懂的格式。",
+    "objective": "目标：让问题被记录。",
+    "buttonLabel": "进入流程",
+    "theme": {
+      "primary": "#5F7180",
+      "surface": "#EDF1F3",
+      "accent": "#34424C"
+    }
   }
 ];
 
 export const LEVEL_CARDS = [
   {
-    id: "P-01",
-    type: "level",
-    chapterId: "P",
-    chapterTitle: "序章：出门",
-    title: "镜子",
-    scene: "今天有一场重要见面。你站在镜子前，灯光把衣服上的褶皱照得很清楚。你想起有人曾说你“不够认真”，也有人说你“太用力”。时间不多了，你需要决定以什么样子出门。",
-    progress: { current: 1, total: 2 },
-    choices: [
-      { id: "formal", label: "更正式", result: "你整理好领口，镜子里的人看起来更像“应该出现的人”。只是你也更清楚，今天会有人先看见你的样子，再听你说话。", effects: { reputation: 1, energy: -1 }, hiddenEffects: { exposure: 1 }, tagsAdded: ["noticed"] },
-      { id: "low-key", label: "更低调", result: "你把容易被注意的部分收起来。出门时轻了一点，也像是把自己的一部分先放回了柜子里。", effects: { safety: 1, self: -1 }, tagsAdded: ["low_presence"] },
-      { id: "comfortable", label: "穿得舒服", result: "你选择了一套行动方便的衣服。身体先松下来，但你还不知道它能不能被今天的场合接住。", effects: { energy: 1, self: 1 }, tagsAdded: ["self_first"] }
+    "id": "P-01",
+    "type": "level",
+    "chapterId": "P",
+    "chapterTitle": "序章：出门",
+    "title": "镜子",
+    "scene": "今天有一场重要见面。你站在镜子前，灯光把衣服上的褶皱照得很清楚。有人说过你“不够认真”，也有人说过你“太用力”。时间不多了，你要决定怎么出门。",
+    "choices": [
+      {
+        "id": "formal",
+        "label": "更正式",
+        "result": "你抚平领口，镜子里的人看起来更适合今天的房间。衣服没有替你说话，但会先一步到场。",
+        "effects": {
+          "reputation": 1,
+          "energy": -1
+        },
+        "hiddenEffects": {
+          "exposure": 1
+        },
+        "tagsAdded": [
+          "noticed"
+        ]
+      },
+      {
+        "id": "low-key",
+        "label": "更低调",
+        "result": "你把容易被注意的地方收起来。出门时轻了一点，镜子里的你也少了一点。",
+        "effects": {
+          "safety": 1,
+          "self": -1
+        },
+        "tagsAdded": [
+          "low_presence"
+        ]
+      },
+      {
+        "id": "comfortable",
+        "label": "穿得舒服",
+        "result": "你选了一套行动方便的衣服。身体先松下来。至于别人怎么读它，要到见面时才知道。",
+        "effects": {
+          "energy": 1,
+          "self": 1
+        },
+        "tagsAdded": [
+          "self_first"
+        ]
+      }
     ]
   },
   {
-    id: "P-04",
-    type: "level",
-    chapterId: "P",
-    chapterTitle: "序章：出门",
-    title: "路口",
-    scene: "最近的路要穿过一段人少的地方。大路亮一些，但会多走十分钟。你已经不早了，手机导航把两条路都标得很平静，像它们只是距离不同。",
-    progress: { current: 2, total: 2 },
-    choices: [
-      { id: "shortcut", label: "走近路", result: "你走进那段更短的路。脚步快了些，周围的声音也变得更清楚。", effects: { safety: -2 }, hiddenEffects: { time: 1, exposure: 1 }, tagsAdded: ["quiet_route"] },
-      { id: "main-road", label: "走大路", result: "路灯一直在。你多走了十分钟，抵达时比预想中更累。", effects: { safety: 1, energy: -1 }, hiddenEffects: { time: -1 }, tagsAdded: ["detour"], track: { detour: 1 } },
-      { id: "taxi", label: "打车", result: "你坐进车里，车窗把雨和人行道隔在外面。余额提醒在屏幕上亮了一下。", effects: { money: -2, safety: 1 }, hiddenEffects: { time: 1 }, tagsAdded: ["platform_trip"], track: { paidSafety: 1 }, requirements: { minStats: { money: 3 }, reason: "余额不足" } }
+    "id": "P-04",
+    "type": "level",
+    "chapterId": "P",
+    "chapterTitle": "序章：出门",
+    "title": "路口",
+    "scene": "最近的路要穿过一段人少的地方。大路亮一些，会多走十分钟。你已经不早了。手机导航把两条路标得很平静，像它们只是距离不同。",
+    "choices": [
+      {
+        "id": "shortcut",
+        "label": "走近路",
+        "result": "你走进那段更短的路。导航快了几分钟，周围的声音却变得很清楚。你开始更留意身后。",
+        "effects": {
+          "safety": -2
+        },
+        "hiddenEffects": {
+          "time": 1,
+          "exposure": 1
+        },
+        "tagsAdded": [
+          "quiet_route"
+        ]
+      },
+      {
+        "id": "main-road",
+        "label": "走大路",
+        "result": "路灯一直在。你多走了十分钟，脚步也慢了一点。至少这一路不需要反复回头。",
+        "effects": {
+          "safety": 1,
+          "energy": -1
+        },
+        "hiddenEffects": {
+          "time": -1
+        },
+        "tagsAdded": [
+          "detour"
+        ],
+        "track": {
+          "detour": 1
+        }
+      },
+      {
+        "id": "taxi",
+        "label": "打车",
+        "result": "你坐进车里，车窗把人行道隔在外面。屏幕上跳出价格，像一张小小的收据。余额变薄了。",
+        "effects": {
+          "money": -2,
+          "safety": 1
+        },
+        "hiddenEffects": {
+          "time": 1
+        },
+        "tagsAdded": [
+          "platform_trip"
+        ],
+        "track": {
+          "paidSafety": 1
+        },
+        "requirements": {
+          "minStats": {
+            "money": 3
+          },
+          "reason": "余额不够"
+        }
+      }
     ]
   },
   {
-    id: "C1-01",
-    type: "level",
-    chapterId: "C1",
-    chapterTitle: "第一章：筛选",
-    title: "照片",
-    scene: "申请表要求上传照片。你知道这不应该重要，但它在页面最上方，比经历和项目都更早出现。系统提示：资料越完整，处理越快。你停在上传按钮前，想了一会儿。",
-    progress: { current: 1, total: 3 },
-    choices: [
-      { id: "polished", label: "上传更精神的照片", result: "资料很快提交成功。页面上的你看起来足够清楚，也更容易被记住。", effects: { reputation: 1 }, hiddenEffects: { exposure: 1 }, tagsAdded: ["image_recorded"] },
-      { id: "plain", label: "上传普通证件照", result: "资料顺利提交。它没有替你多说什么，也没有把你推到更前面。", effects: { safety: 1 }, tagsAdded: ["plain_file"] },
-      { id: "skip", label: "不上传", result: "系统停在未完成状态。你没有违反规则，只是流程多了一道门槛。", effects: { reputation: -2 }, tagsAdded: ["file_blocked"] }
+    "id": "C1-01",
+    "type": "level",
+    "chapterId": "C1",
+    "chapterTitle": "第一章：筛选",
+    "title": "照片",
+    "scene": "申请表要求上传照片。它在页面最上方，比经历和项目都更早出现。系统提示：资料越完整，处理越快。你停在上传按钮前，想了一会儿。",
+    "choices": [
+      {
+        "id": "polished",
+        "label": "选更精神的照片",
+        "result": "资料很快提交成功。页面上的你更清楚，也更容易被记住。",
+        "effects": {
+          "reputation": 1
+        },
+        "hiddenEffects": {
+          "exposure": 1
+        },
+        "tagsAdded": [
+          "image_recorded"
+        ]
+      },
+      {
+        "id": "plain",
+        "label": "选普通证件照",
+        "result": "资料顺利提交。它没有替你多说什么，也没有把你推到更前面。",
+        "effects": {
+          "safety": 1
+        },
+        "tagsAdded": [
+          "plain_file"
+        ]
+      },
+      {
+        "id": "skip",
+        "label": "先不上传",
+        "result": "系统停在未完成状态。你没有违反规则，只是流程多了一道门槛。",
+        "effects": {
+          "reputation": -2
+        },
+        "tagsAdded": [
+          "file_blocked"
+        ]
+      }
     ]
   },
   {
-    id: "C1-04",
-    type: "level",
-    chapterId: "C1",
-    chapterTitle: "第一章：筛选",
-    title: "薪资",
-    scene: "对方给出的数字比招聘页低。解释是“试用期先这样，后面看表现”。你需要这份工作，也知道这个数字会跟着你进入下一个月。会议室里很安静，等待你的回答。",
-    progress: { current: 2, total: 3 },
-    choices: [
-      { id: "accept", label: "接受", result: "流程顺利往前走。那串数字没有再被讨论，但它会跟着你进入下一个月。", effects: { reputation: 1, money: -2, self: -1 }, tagsAdded: ["low_salary"], track: { concede: 1 } },
-      { id: "negotiate", label: "争取招聘页数字", result: "对方说可以再申请一下。房间里没有冲突，只是你变成了需要被重新考虑的人。", effects: { reputation: -2, money: 1, self: 1 }, tagsAdded: ["pending_offer"] },
-      { id: "write-contract", label: "要求写进合同", result: "气氛从聊天变成了确认条款。你留下了依据，也让对方意识到你不只是点头。", effects: { reputation: -1, self: 1 }, hiddenEffects: { evidence: 2 }, tagsAdded: ["contract_awareness"], track: { evidenceSaved: 1 } }
+    "id": "C1-04",
+    "type": "level",
+    "chapterId": "C1",
+    "chapterTitle": "第一章：筛选",
+    "title": "薪资",
+    "scene": "对方给出的数字比招聘页低。解释是“试用期先这样，后面看表现”。你需要这份工作，也知道这个数字会跟着你进入下一个月。会议室里很安静。",
+    "choices": [
+      {
+        "id": "accept",
+        "label": "接受",
+        "result": "流程顺利往前走。那串数字没有再被讨论，但它会跟着你进入下一个月。后面有些选择会变窄。",
+        "effects": {
+          "reputation": 1,
+          "money": -2,
+          "self": -1
+        },
+        "tagsAdded": [
+          "low_salary"
+        ],
+        "track": {
+          "concede": 1
+        }
+      },
+      {
+        "id": "negotiate",
+        "label": "按招聘页争取",
+        "result": "对方说可以再申请一下。房间里没有冲突，只有流程短暂停住。你从“合适的人”，变成了“需要再考虑的人”。之后，解释可能会变多一点。",
+        "effects": {
+          "reputation": -2,
+          "money": 1,
+          "self": 1
+        },
+        "tagsAdded": [
+          "pending_offer"
+        ]
+      },
+      {
+        "id": "write-contract",
+        "label": "要求写进合同",
+        "result": "气氛从聊天变成了确认条款。你留下了依据，也让对方知道你不只是点头。它没有到这里结束。",
+        "effects": {
+          "reputation": -1,
+          "self": 1
+        },
+        "hiddenEffects": {
+          "evidence": 2
+        },
+        "tagsAdded": [
+          "contract_awareness"
+        ],
+        "track": {
+          "evidenceSaved": 1
+        }
+      }
     ]
   },
   {
-    id: "C1-07",
-    type: "level",
-    chapterId: "C1",
-    chapterTitle: "第一章：筛选",
-    title: "玩笑",
-    scene: "有人开了一个关于你的玩笑。它不算严重，甚至可以被解释成热络。几个人已经笑了出来，你也被包含在这阵笑声里。你不舒服，但所有人都在等你怎么接。",
-    progress: { current: 3, total: 3 },
-    choices: [
-      { id: "laugh", label: "笑一下", result: "笑声顺利过去。你也一起过去了，只是那句话还留在身体里。", effects: { reputation: 1, self: -2, energy: -1 }, tagsAdded: ["joke_accepted"], track: { silence: 1, concede: 1 } },
-      { id: "deflect", label: "用玩笑转移", result: "话题被带走了。你没有正面处理它，也没有让场面停下来。", effects: { energy: -1 }, tagsAdded: ["low_conflict"] },
-      { id: "call-out", label: "认真指出", result: "有人说只是玩笑。你说出了不舒服，也看见了这句话能让空气变硬。", effects: { reputation: -2, self: 1, relationship: -1 }, tagsAdded: ["too_sensitive_flag"], track: { clearRefusal: 1 }, requirements: { minStats: { self: 3 }, reason: "你说不出口" } }
+    "id": "C1-07",
+    "type": "level",
+    "chapterId": "C1",
+    "chapterTitle": "第一章：筛选",
+    "title": "玩笑",
+    "scene": "有人开了一个关于你的玩笑。它不算严重，甚至可以被解释成热络。几个人已经笑了出来，你也被包含在这阵笑声里。你不舒服，但大家都在等你怎么接。",
+    "choices": [
+      {
+        "id": "laugh",
+        "label": "笑一下",
+        "result": "笑声顺利过去。你也一起过去了，只是那句话还留在身体里。你又往后退了一点。",
+        "effects": {
+          "reputation": 1,
+          "energy": -1,
+          "self": -2
+        },
+        "tagsAdded": [
+          "joke_accepted"
+        ],
+        "track": {
+          "silence": 1,
+          "concede": 1
+        }
+      },
+      {
+        "id": "deflect",
+        "label": "用玩笑转移",
+        "result": "话题被带走了。桌上的气氛没有停下来，你也没有真的回答那句话。",
+        "effects": {
+          "energy": -1
+        },
+        "tagsAdded": [
+          "low_conflict"
+        ]
+      },
+      {
+        "id": "call-out",
+        "label": "说不舒服",
+        "result": "有人说只是玩笑。你说出了不舒服，也看见了这句话能让空气变硬。",
+        "effects": {
+          "reputation": -2,
+          "relationship": -1,
+          "self": 1
+        },
+        "tagsAdded": [
+          "too_sensitive_flag"
+        ],
+        "track": {
+          "clearRefusal": 1
+        },
+        "requirements": {
+          "minStats": {
+            "self": 3
+          },
+          "reason": "这句话卡住了"
+        }
+      }
     ]
   },
   {
-    id: "C2-01",
-    type: "level",
-    chapterId: "C2",
-    chapterTitle: "第二章：房间",
-    title: "预算",
-    scene: "你打开租房软件。离公司近、门禁好、价格高；便宜的房子远一些，楼道灯坏了，评论也少。地图上的通勤时间被标成绿色和橙色，你第一次发现，住在哪里不是偏好，而是预算的形状。",
-    progress: { current: 1, total: 3 },
-    choices: [
-      { id: "near-expensive", label: "近且贵", result: "房子离公司很近，门禁也亮。转账成功后，余额变得很薄。", effects: { money: -2, safety: 1, energy: 1 }, tagsAdded: ["high_rent"], track: { paidSafety: 1 }, requirements: { minStats: { money: 3 }, reason: "余额不足" } },
-      { id: "far-cheap", label: "远且便宜", result: "你保住了现金。地图上回家的那段路，也被拉得更长、更暗。", effects: { money: 1, safety: -2, energy: -1 }, tagsAdded: ["remote_home"] },
-      { id: "keep-looking", label: "继续找", result: "你刷到更晚，收藏夹变长了，合适的房子没有变多。", effects: { energy: -1 }, hiddenEffects: { time: -1 }, tagsAdded: ["search_fatigue"] }
+    "id": "C2-01",
+    "type": "level",
+    "chapterId": "C2",
+    "chapterTitle": "第二章：房间",
+    "title": "预算",
+    "scene": "你打开租房软件。离公司近、门禁好的房子更贵；便宜的房子远一些，楼道灯坏了，评论也少。地图上写着通勤时间，没写夜里回来时的感觉。",
+    "choices": [
+      {
+        "id": "near-expensive",
+        "label": "近且贵",
+        "result": "房子离公司很近，门禁也亮。转账成功后，余额变得很薄。安全在账单里留下了一行。",
+        "effects": {
+          "money": -2,
+          "safety": 1,
+          "energy": 1
+        },
+        "tagsAdded": [
+          "high_rent"
+        ],
+        "track": {
+          "paidSafety": 1
+        },
+        "requirements": {
+          "minStats": {
+            "money": 3
+          },
+          "reason": "余额不够"
+        }
+      },
+      {
+        "id": "far-cheap",
+        "label": "远且便宜",
+        "result": "你保住了现金。地图上回家的那段路，被拉得更长，也更暗。",
+        "effects": {
+          "money": 1,
+          "safety": -2,
+          "energy": -1
+        },
+        "tagsAdded": [
+          "remote_home"
+        ]
+      },
+      {
+        "id": "keep-looking",
+        "label": "继续找",
+        "result": "你刷到更晚。收藏夹变长了，合适的房子没有变多。你更累了。",
+        "effects": {
+          "energy": -1
+        },
+        "hiddenEffects": {
+          "time": -1
+        },
+        "tagsAdded": [
+          "search_fatigue"
+        ]
+      }
     ]
   },
   {
-    id: "C2-03",
-    type: "level",
-    chapterId: "C2",
-    chapterTitle: "第二章：房间",
-    title: "合同",
-    scene: "合同有几条你看不懂。中介说“都是模板，大家都这么签”。你已经跑了一下午，房源页面还不断弹出“已有多人咨询”。桌上的笔被推到你面前。",
-    progress: { current: 2, total: 3 },
-    choices: [
-      { id: "sign", label: "直接签", result: "合同签完，房子终于定下来。几行没看懂的字，也一起被你签了进去。", effects: { money: -1, energy: 1 }, hiddenEffects: { evidence: -2 }, tagsAdded: ["contract_risk"] },
-      { id: "ask", label: "逐条问", result: "中介解释得很快，语气越来越短。你不一定完全懂，但知道哪里以后可能会出问题。", effects: { reputation: -1, energy: -1, self: 1 }, hiddenEffects: { evidence: 1 }, tagsAdded: ["asked_terms"] },
-      { id: "external-check", label: "拍下找人看", result: "你把合同拍给别人。房子被保留到晚上，压力没有消失，只是多了一个人帮你看。", effects: { relationship: -1 }, hiddenEffects: { evidence: 2, time: -1 }, tagsAdded: ["external_check"], track: { seekHelp: 1, evidenceSaved: 1 }, requirements: { minStats: { relationship: 3 }, reason: "最近已经麻烦过太多次" } }
+    "id": "C2-03",
+    "type": "level",
+    "chapterId": "C2",
+    "chapterTitle": "第二章：房间",
+    "title": "合同",
+    "scene": "合同有几条你看不懂。中介说“都是模板，大家都这么签”。你已经跑了一下午，房源页面还不断弹出“已有多人咨询”。桌上的笔被推到你面前。",
+    "choices": [
+      {
+        "id": "sign",
+        "label": "直接签",
+        "result": "合同签完，房子终于定下来。几行没看懂的字，也一起被你签了进去。",
+        "effects": {
+          "money": -1,
+          "energy": 1
+        },
+        "hiddenEffects": {
+          "evidence": -2
+        },
+        "tagsAdded": [
+          "contract_risk"
+        ]
+      },
+      {
+        "id": "ask",
+        "label": "逐条问",
+        "result": "中介解释得很快，语气越来越短。你不一定完全懂，但知道哪里以后可能会出问题。",
+        "effects": {
+          "reputation": -1,
+          "energy": -1,
+          "self": 1
+        },
+        "hiddenEffects": {
+          "evidence": 1
+        },
+        "tagsAdded": [
+          "asked_terms"
+        ]
+      },
+      {
+        "id": "external-check",
+        "label": "拍下找人看",
+        "result": "你把合同拍给别人。房子被保留到晚上，压力没有消失，只是多了一个人帮你看。下次开口，会更需要斟酌。",
+        "effects": {
+          "relationship": -1
+        },
+        "hiddenEffects": {
+          "time": -1,
+          "evidence": 2
+        },
+        "tagsAdded": [
+          "external_check"
+        ],
+        "track": {
+          "seekHelp": 1,
+          "evidenceSaved": 1
+        },
+        "requirements": {
+          "minStats": {
+            "relationship": 3
+          },
+          "reason": "开口变得很重"
+        }
+      }
     ]
   },
   {
-    id: "C2-05",
-    type: "level",
-    chapterId: "C2",
-    chapterTitle: "第二章：房间",
-    title: "维修",
-    scene: "晚上十点半，维修的人终于到了。水管不能再拖，对方说“五分钟就好”。房间里还没收拾完，门口堆着刚搬来的纸箱。你看了一眼手机，又看了一眼门锁。",
-    progress: { current: 3, total: 3 },
-    choices: [
-      { id: "let-in", label: "让他进来", result: "水管修好了。门关上以后，房间恢复安静，只是你知道这里又被一个陌生人记住了。", effects: { safety: -2 }, tagsAdded: ["address_seen"] },
-      { id: "daytime", label: "改约白天", result: "你把维修推到明天。今晚的问题还在，明天的请假理由也提前出现了。", effects: { safety: 1, energy: -1, reputation: -1 }, tagsAdded: ["leave_request_risk"] },
-      { id: "call-witness", label: "开电话陪同", result: "电话那头一直有人。维修过程很快，对方也没有多聊。", effects: { relationship: -1, safety: 1 }, hiddenEffects: { evidence: 1 }, tagsAdded: ["call_witness"], track: { seekHelp: 1 }, requirements: { minStats: { relationship: 3 }, reason: "最近已经麻烦过太多次" } }
+    "id": "C2-05",
+    "type": "level",
+    "chapterId": "C2",
+    "chapterTitle": "第二章：房间",
+    "title": "维修",
+    "scene": "晚上十点半，维修的人终于到了。预约单上写着入户维修。水管不能再拖，对方说“五分钟就好”。房间里还堆着纸箱，你看了一眼手机，又看了一眼门锁。",
+    "choices": [
+      {
+        "id": "let-in",
+        "label": "让他进来",
+        "result": "水管修好了。门关上以后，房间恢复安静。只是这扇门后面的样子，又被一个陌生人看过。",
+        "effects": {
+          "safety": -2
+        },
+        "tagsAdded": [
+          "address_seen"
+        ]
+      },
+      {
+        "id": "daytime",
+        "label": "改约白天",
+        "result": "你把维修推到明天。今晚的问题还在，明天的请假理由也提前出现了。",
+        "effects": {
+          "reputation": -1,
+          "safety": 1,
+          "energy": -1
+        },
+        "tagsAdded": [
+          "leave_request_risk"
+        ]
+      },
+      {
+        "id": "call-witness",
+        "label": "开电话陪同",
+        "result": "电话那头一直有人。维修过程很快，对方也没有多聊。你少了一点不确定，也多用掉一次求助。",
+        "effects": {
+          "safety": 1,
+          "relationship": -1
+        },
+        "hiddenEffects": {
+          "evidence": 1
+        },
+        "tagsAdded": [
+          "call_witness"
+        ],
+        "track": {
+          "seekHelp": 1
+        },
+        "requirements": {
+          "minStats": {
+            "relationship": 3
+          },
+          "reason": "开口变得很重"
+        }
+      }
     ]
   },
   {
-    id: "C3-03",
-    type: "level",
-    chapterId: "C3",
-    chapterTitle: "第三章：路上",
-    title: "低电量",
-    scene: "下班时手机只剩12%。今晚可能要晚回去。公司附近有便利店，但你已经很累，余额也不算宽。屏幕亮度自动降了下来，像是在提醒你时间不多。",
-    progress: { current: 1, total: 3 },
-    choices: [
-      { id: "power-bank", label: "买充电宝", result: "电量重新变得安全。余额少了一点，但手机不再像一个倒计时。", effects: { money: -1, safety: 2 }, tagsAdded: ["charged"], track: { paidSafety: 1 }, requirements: { minStats: { money: 3 }, reason: "余额不足" } },
-      { id: "save-money", label: "省钱不买", result: "你把手机扣上，决定快点回去。屏幕变暗时，路好像也跟着变长了。", effects: { safety: -2 }, tagsAdded: ["low_battery"] },
-      { id: "borrow-charge", label: "借同事充电", result: "同事借你充了一会儿。你晚走了半小时，也多留下一段寒暄。", effects: { reputation: 1, relationship: 1 }, hiddenEffects: { time: -1 }, tagsAdded: ["late_leave"] }
+    "id": "C3-03",
+    "type": "level",
+    "chapterId": "C3",
+    "chapterTitle": "第三章：路上",
+    "title": "低电量",
+    "scene": "下班时手机只剩 12%。今晚可能要晚回去。公司附近有便利店，但你已经很累，余额也不算宽。屏幕亮度自动降下来，像在提醒你时间不多。",
+    "choices": [
+      {
+        "id": "power-bank",
+        "label": "买充电宝",
+        "result": "电量重新变得安全。余额少了一点，但手机不再像一个倒计时。",
+        "effects": {
+          "money": -1,
+          "safety": 2
+        },
+        "tagsAdded": [
+          "charged"
+        ],
+        "track": {
+          "paidSafety": 1
+        },
+        "requirements": {
+          "minStats": {
+            "money": 3
+          },
+          "reason": "余额不够"
+        }
+      },
+      {
+        "id": "save-money",
+        "label": "省钱不买",
+        "result": "你把手机扣上，决定快点回去。屏幕变暗时，路好像也跟着变长了。",
+        "effects": {
+          "safety": -2
+        },
+        "tagsAdded": [
+          "low_battery"
+        ]
+      },
+      {
+        "id": "borrow-charge",
+        "label": "借同事充电",
+        "result": "同事借你充了一会儿。你晚走了半小时，也多留下一段寒暄。",
+        "effects": {
+          "reputation": 1,
+          "relationship": 1
+        },
+        "hiddenEffects": {
+          "time": -1
+        },
+        "tagsAdded": [
+          "late_leave"
+        ]
+      }
     ]
   },
   {
-    id: "C3-04",
-    type: "level",
-    chapterId: "C3",
-    chapterTitle: "第三章：路上",
-    title: "加班后的路线",
-    scene: "晚上十点，地铁口到家有两条路。近路人少，大路绕远。打车价格翻倍。地图把它们标成三个普通选项，没有标出路灯、店铺和途中会不会遇到谁。",
-    progress: { current: 2, total: 3 },
-    choices: [
-      { id: "shortcut", label: "走近路", result: "你走进更短的路。导航显示快了几分钟，周围却安静得太清楚。", effects: { safety: -2 }, hiddenEffects: { time: 1, exposure: 1 }, tagsAdded: ["night_quiet_route"] },
-      { id: "main-road", label: "走大路", result: "路灯和店铺一直在。你绕远了，脚步也越来越慢。", effects: { safety: 1, energy: -1 }, tagsAdded: ["habit_detour"], track: { detour: 1 } },
-      { id: "taxi", label: "打车", result: "你坐进车里，不用经过那段路。价格比白天更像一张提醒。", effects: { money: -2, safety: 2 }, tagsAdded: ["platform_trip"], track: { paidSafety: 1 }, requirements: { minStats: { money: 3 }, reason: "余额不足" } }
+    "id": "C3-04",
+    "type": "level",
+    "chapterId": "C3",
+    "chapterTitle": "第三章：路上",
+    "title": "加班后的路线",
+    "scene": "晚上十点，地铁口到家有两条路。近路人少，大路绕远。打车价格翻倍。地图把它们标成三个普通选项，没有标出路灯、店铺和途中会不会遇到谁。",
+    "choices": [
+      {
+        "id": "shortcut",
+        "label": "走近路",
+        "result": "你走进更短的路。导航显示快了几分钟，周围却安静得太清楚。",
+        "effects": {
+          "safety": -2
+        },
+        "hiddenEffects": {
+          "time": 1,
+          "exposure": 1
+        },
+        "tagsAdded": [
+          "night_quiet_route"
+        ]
+      },
+      {
+        "id": "main-road",
+        "label": "走大路",
+        "result": "路灯和店铺一直在。你绕远了，脚步也越来越慢。",
+        "effects": {
+          "safety": 1,
+          "energy": -1
+        },
+        "tagsAdded": [
+          "habit_detour"
+        ],
+        "track": {
+          "detour": 1
+        }
+      },
+      {
+        "id": "taxi",
+        "label": "打车",
+        "result": "你坐进车里，不用经过那段路。价格比白天更像一张提醒。余额变薄了。",
+        "effects": {
+          "money": -2,
+          "safety": 2
+        },
+        "tagsAdded": [
+          "platform_trip"
+        ],
+        "track": {
+          "paidSafety": 1
+        },
+        "requirements": {
+          "minStats": {
+            "money": 3
+          },
+          "reason": "余额不够"
+        }
+      }
     ]
   },
   {
-    id: "C3-05",
-    type: "level",
-    chapterId: "C3",
-    chapterTitle: "第三章：路上",
-    title: "路线偏移",
-    scene: "司机说：“前面堵，我走另一边。”导航上的路线偏了一点。车窗外的街道变得陌生，你不确定这是不是正常，也不想让车里的空气立刻变硬。",
-    progress: { current: 3, total: 3 },
-    choices: [
-      { id: "follow-nav", label: "要求按导航走", result: "司机照做了，车里安静下来。路线回来了，气氛也硬了一点。", effects: { safety: 1, self: 1 }, hiddenEffects: { conflict: 1 }, tagsAdded: ["route_confirmed"] },
-      { id: "silent", label: "不说话", result: "车继续往前开。你盯着地图，手指停在通话界面旁边。", effects: { safety: -2, energy: -1 }, tagsAdded: ["silent_monitor"], track: { silence: 1 } },
-      { id: "call", label: "打电话说快到了", result: "你对着电话说快到了。车里没有人再问你去哪儿。", effects: { safety: 1, relationship: -1 }, tagsAdded: ["someone_knows"], track: { seekHelp: 1 }, requirements: { minStats: { relationship: 3 }, reason: "最近已经麻烦过太多次" } }
+    "id": "C3-05",
+    "type": "level",
+    "chapterId": "C3",
+    "chapterTitle": "第三章：路上",
+    "title": "路线偏移",
+    "scene": "司机说：“前面堵，我走另一边。”导航上的路线偏了一点。车窗外的街道变得陌生。你不确定这是不是正常，也不想让车里的空气立刻变硬。",
+    "choices": [
+      {
+        "id": "follow-nav",
+        "label": "要求按导航走",
+        "result": "司机照做了。路线回来了，车里也安静下来。你更安心，气氛也硬了一点。",
+        "effects": {
+          "safety": 1,
+          "self": 1
+        },
+        "hiddenEffects": {
+          "conflict": 1
+        },
+        "tagsAdded": [
+          "route_confirmed"
+        ]
+      },
+      {
+        "id": "silent",
+        "label": "不说话",
+        "result": "车继续往前开。你盯着地图，手指停在通话界面旁边。你开始更留意周围。",
+        "effects": {
+          "safety": -2,
+          "energy": -1
+        },
+        "tagsAdded": [
+          "silent_monitor"
+        ],
+        "track": {
+          "silence": 1
+        }
+      },
+      {
+        "id": "call",
+        "label": "打电话说快到了",
+        "result": "你对着电话说快到了。车里没有人再问你去哪儿。下次开口，会更需要斟酌。",
+        "effects": {
+          "safety": 1,
+          "relationship": -1
+        },
+        "tagsAdded": [
+          "someone_knows"
+        ],
+        "track": {
+          "seekHelp": 1
+        },
+        "requirements": {
+          "minStats": {
+            "relationship": 3
+          },
+          "reason": "开口变得很重"
+        }
+      }
     ]
   },
   {
-    id: "C3-06",
-    type: "level",
-    chapterId: "C3",
-    chapterTitle: "第三章：路上",
-    title: "楼道",
-    scene: "你到家楼下，后面有人也刷门禁进来。你不确定对方是不是住户。电梯门开了，里面的灯比大厅更白。你听见两个人的脚步声在门口短暂重合。",
-    progress: { current: 3, total: 3 },
-    choices: [
-      { id: "share-elevator", label: "一起进电梯", result: "你们一起进了电梯。数字一层层往上跳，你记住了对方按下的楼层。", effects: { safety: -2 }, hiddenEffects: { time: 1 }, tagsAdded: ["shared_elevator"] },
-      { id: "wait", label: "等下一趟", result: "你让电梯先走。大厅里空了一会儿，你也多站了一会儿。", effects: { safety: 1, energy: -1 }, tagsAdded: ["avoid_closed_space"], track: { detour: 1 } },
-      { id: "parcel", label: "假装取快递", result: "你转身去快递架前停了一下。对方先上楼，你才重新走回电梯口。", effects: { safety: 1, energy: -1, self: -1 }, tagsAdded: ["pretend_route"], track: { detour: 1, concede: 1 } }
+    "id": "C3-06",
+    "type": "level",
+    "chapterId": "C3",
+    "chapterTitle": "第三章：路上",
+    "title": "楼道",
+    "scene": "你到家楼下，后面有人也刷门禁进来。你不确定对方是不是住户。电梯门开了，里面的灯比大厅更白。两个人的脚步声在门口短暂重合。",
+    "choices": [
+      {
+        "id": "share-elevator",
+        "label": "一起进电梯",
+        "result": "你们一起进了电梯。数字一层层往上跳，你记住了对方按下的楼层。",
+        "effects": {
+          "safety": -2
+        },
+        "hiddenEffects": {
+          "time": 1
+        },
+        "tagsAdded": [
+          "shared_elevator"
+        ]
+      },
+      {
+        "id": "wait",
+        "label": "等下一趟",
+        "result": "你让电梯先走。大厅里空了一会儿，你也多站了一会儿。",
+        "effects": {
+          "safety": 1,
+          "energy": -1
+        },
+        "tagsAdded": [
+          "avoid_closed_space"
+        ],
+        "track": {
+          "detour": 1
+        }
+      },
+      {
+        "id": "parcel",
+        "label": "假装取快递",
+        "result": "你转身去快递架前停了一下。对方先上楼，你才重新走回电梯口。你又绕了一小段。",
+        "effects": {
+          "safety": 1,
+          "energy": -1,
+          "self": -1
+        },
+        "tagsAdded": [
+          "pretend_route"
+        ],
+        "track": {
+          "detour": 1,
+          "concede": 1
+        }
+      }
     ]
   },
   {
-    id: "C4-02",
-    type: "level",
-    chapterId: "C4",
-    chapterTitle: "第四章：桌面",
-    title: "被打断",
-    scene: "你刚讲到关键部分，有人打断你，替你总结了一个并不准确的版本。大家已经开始点头，像是这个版本更容易被会议接收。你的下一页 PPT 还停在屏幕上。",
-    progress: { current: 1, total: 3 },
-    choices: [
-      { id: "correct-live", label: "立刻纠正", result: "你把话题拉回原处。事实更清楚了，房间也更安静了。", effects: { energy: -1, self: 1 }, hiddenEffects: { conflict: 2 }, tagsAdded: ["corrected_live"], track: { clearRefusal: 1 }, requirements: { minStats: { self: 3 }, reason: "你说不出口" } },
-      { id: "wait-add", label: "等他说完补充", result: "你等他说完再补充。错误没有扩大，但重点也不再完全属于你。", effects: { energy: -1 }, hiddenEffects: { credit: -1 }, tagsAdded: ["partial_distortion"] },
-      { id: "written", label: "会后书面说明", result: "你没有在现场争。会后那封说明写了很久，也终于留下了痕迹。", effects: { energy: -2 }, hiddenEffects: { evidence: 2, credit: 1 }, tagsAdded: ["written_trace"], track: { evidenceSaved: 1 } }
+    "id": "C4-02",
+    "type": "level",
+    "chapterId": "C4",
+    "chapterTitle": "第四章：桌面",
+    "title": "被打断",
+    "scene": "你刚讲到关键部分，有人打断你，替你总结了一个并不准确的版本。大家已经开始点头。你的下一页 PPT 还停在屏幕上，轮到你决定要不要接回去。",
+    "choices": [
+      {
+        "id": "correct-live",
+        "label": "立刻纠正",
+        "result": "你把话题拉回原处。事实更清楚了，房间也更安静了。",
+        "effects": {
+          "energy": -1,
+          "self": 1
+        },
+        "hiddenEffects": {
+          "conflict": 2
+        },
+        "tagsAdded": [
+          "corrected_live"
+        ],
+        "track": {
+          "clearRefusal": 1
+        },
+        "requirements": {
+          "minStats": {
+            "self": 3
+          },
+          "reason": "这句话卡住了"
+        }
+      },
+      {
+        "id": "wait-add",
+        "label": "等他说完补充",
+        "result": "你等他说完再补充。错误没有扩大，但重点也不再完全属于你。",
+        "effects": {
+          "energy": -1
+        },
+        "hiddenEffects": {
+          "credit": -1
+        },
+        "tagsAdded": [
+          "partial_distortion"
+        ]
+      },
+      {
+        "id": "written",
+        "label": "会后书面说明",
+        "result": "你没有在现场争。会后那封说明写了很久，终于留下了痕迹。你更累了。",
+        "effects": {
+          "energy": -2
+        },
+        "hiddenEffects": {
+          "evidence": 2,
+          "credit": 1
+        },
+        "tagsAdded": [
+          "written_trace"
+        ],
+        "track": {
+          "evidenceSaved": 1
+        }
+      }
     ]
   },
   {
-    id: "C4-04",
-    type: "level",
-    chapterId: "C4",
-    chapterTitle: "第四章：桌面",
-    title: "额外任务",
-    scene: "会议纪要、订餐、安抚新人、整理材料，又自然地落到你这里。没人正式安排，但大家默认你会做。消息一条条跳出来，像它们本来就知道该找谁。",
-    progress: { current: 2, total: 3 },
-    choices: [
-      { id: "take", label: "接下", result: "事情顺利运转。会议纪要发出时，没有人问这是谁的工作。", effects: { reputation: 1, energy: -2, self: -1 }, tagsAdded: ["invisible_labor"], track: { concede: 1 } },
-      { id: "share", label: "分派给大家", result: "你把任务拆给大家。有人接了，有人没回，你还要再跟一次。", effects: { energy: -1, self: 1 }, hiddenEffects: { conflict: 1 }, tagsAdded: ["task_shared"] },
-      { id: "refuse", label: "拒绝", result: "场面停了一下。没人指责你，只是后来有些消息没有再艾特你。", effects: { reputation: -2, energy: 1, self: 1 }, tagsAdded: ["not_warm_flag"], requirements: { minStats: { self: 3 }, reason: "你说不出口" } }
+    "id": "C4-04",
+    "type": "level",
+    "chapterId": "C4",
+    "chapterTitle": "第四章：桌面",
+    "title": "额外任务",
+    "scene": "会议纪要、订餐、安抚新人、整理材料，又自然地落到你这里。没人正式安排，但消息一条条跳出来，像它们本来就知道该艾特谁。",
+    "choices": [
+      {
+        "id": "take",
+        "label": "接下",
+        "result": "事情顺利运转。会议纪要发出时，没有人问这是谁的工作。你又把一件事接住了。",
+        "effects": {
+          "reputation": 1,
+          "energy": -2,
+          "self": -1
+        },
+        "tagsAdded": [
+          "invisible_labor"
+        ],
+        "track": {
+          "concede": 1
+        }
+      },
+      {
+        "id": "share",
+        "label": "分派给大家",
+        "result": "你把任务拆给大家。有人接了，有人没回。你还要再跟一次。",
+        "effects": {
+          "energy": -1,
+          "self": 1
+        },
+        "hiddenEffects": {
+          "conflict": 1
+        },
+        "tagsAdded": [
+          "task_shared"
+        ]
+      },
+      {
+        "id": "refuse",
+        "label": "拒绝",
+        "result": "场面停了一下。没人指责你，只是后来有些消息没有再艾特你。",
+        "effects": {
+          "reputation": -2,
+          "energy": 1,
+          "self": 1
+        },
+        "tagsAdded": [
+          "not_warm_flag"
+        ],
+        "requirements": {
+          "minStats": {
+            "self": 3
+          },
+          "reason": "这句话卡住了"
+        }
+      }
     ]
   },
   {
-    id: "C4-06",
-    type: "level",
-    chapterId: "C4",
-    chapterTitle: "第四章：桌面",
-    title: "别激动",
-    scene: "一个决定明显不公平。你提出异议后，对方说：“你先别激动，我们就事论事。”问题忽然从决定本身，滑向你的语气。会议室里有人低头看电脑，有人等你继续说。",
-    progress: { current: 3, total: 3 },
-    choices: [
-      { id: "lower-tone", label: "压低语气继续说", result: "你把声音放慢。讨论继续了，只是你要先证明自己足够平静。", effects: { energy: -2, reputation: 1, self: -1 }, tagsAdded: ["tone_control"], track: { concede: 1 } },
-      { id: "stop", label: "停止争论", result: "你停了下来。会议继续推进，记录里没有留下你的那部分。", effects: { energy: 1, self: -1 }, hiddenEffects: { evidence: -1 }, tagsAdded: ["opinion_disappeared"], track: { silence: 1 } },
-      { id: "name-problem", label: "指出这句话的问题", result: "对方说你把事情复杂化了。问题从决定本身，转向了你的反应。", effects: { reputation: -2, energy: -1, self: 1 }, hiddenEffects: { conflict: 2 }, tagsAdded: ["reaction_flag"], requirements: { minStats: { self: 3 }, reason: "你说不出口" } }
+    "id": "C4-06",
+    "type": "level",
+    "chapterId": "C4",
+    "chapterTitle": "第四章：桌面",
+    "title": "别激动",
+    "scene": "一个决定明显不公平。你提出异议后，对方说：“你先别激动，我们就事论事。”会议室里有人低头看电脑，有人等你继续说。问题从决定本身，滑向你的语气。",
+    "choices": [
+      {
+        "id": "lower-tone",
+        "label": "压低语气继续说",
+        "result": "你把声音放慢。讨论继续了，只是你要先证明自己足够平静。你又往后退了一点。",
+        "effects": {
+          "reputation": 1,
+          "energy": -2,
+          "self": -1
+        },
+        "tagsAdded": [
+          "tone_control"
+        ],
+        "track": {
+          "concede": 1
+        }
+      },
+      {
+        "id": "stop",
+        "label": "停止争论",
+        "result": "你停了下来。会议继续推进，记录里没有留下你的那部分。",
+        "effects": {
+          "energy": 1,
+          "self": -1
+        },
+        "hiddenEffects": {
+          "evidence": -1
+        },
+        "tagsAdded": [
+          "opinion_disappeared"
+        ],
+        "track": {
+          "silence": 1
+        }
+      },
+      {
+        "id": "name-problem",
+        "label": "指出这句话的问题",
+        "result": "对方说你把事情复杂化了。问题从决定本身，转向了你的反应。",
+        "effects": {
+          "reputation": -2,
+          "energy": -1,
+          "self": 1
+        },
+        "hiddenEffects": {
+          "conflict": 2
+        },
+        "tagsAdded": [
+          "reaction_flag"
+        ],
+        "requirements": {
+          "minStats": {
+            "self": 3
+          },
+          "reason": "这句话卡住了"
+        }
+      }
     ]
   },
   {
-    id: "C4-07",
-    type: "level",
-    chapterId: "C4",
-    chapterTitle: "第四章：桌面",
-    title: "绩效材料",
-    scene: "绩效面谈前，你要整理自己的贡献。很多事你做了，但没有留下明确记录。那些顺手接住的工作，很难变成表格里的成果。文件夹里有很多版本，却没有一个完整地指向你。",
-    progress: { current: 3, total: 3 },
-    choices: [
-      { id: "complete-file", label: "补材料", result: "你熬夜把贡献整理出来。文件夹变完整了，身体变空了一点。", effects: { energy: -2 }, hiddenEffects: { evidence: 2, credit: 1 }, tagsAdded: ["visible_work"], track: { evidenceSaved: 1 }, requirements: { minStats: { energy: 3 }, reason: "你已经说不下去" } },
-      { id: "ally", label: "找同事作证", result: "有人愿意替你说一句。你记下了这份帮助，也知道它不能每次都有。", effects: { relationship: -1, reputation: 1 }, tagsAdded: ["ally_statement"], track: { seekHelp: 1 }, requirements: { minStats: { relationship: 3 }, reason: "最近已经麻烦过太多次" } },
-      { id: "core-only", label: "只写核心成果", result: "材料很简洁。那些被你顺手接住的工作，也像从来没有发生过。", hiddenEffects: { credit: -2 }, tagsAdded: ["missing_contribution"] }
+    "id": "C4-07",
+    "type": "level",
+    "chapterId": "C4",
+    "chapterTitle": "第四章：桌面",
+    "title": "绩效材料",
+    "scene": "绩效面谈前，你要整理自己的贡献。很多事你做了，但没有留下明确记录。会议纪要、聊天记录、版本文件都在，却没有一个完整地指向你。",
+    "choices": [
+      {
+        "id": "complete-file",
+        "label": "补完整材料",
+        "result": "你熬夜把贡献整理出来。文件夹变完整了。你坐在屏幕前，很久没有动。",
+        "effects": {
+          "energy": -2
+        },
+        "hiddenEffects": {
+          "evidence": 2,
+          "credit": 1
+        },
+        "tagsAdded": [
+          "visible_work"
+        ],
+        "track": {
+          "evidenceSaved": 1
+        },
+        "requirements": {
+          "minStats": {
+            "energy": 3
+          },
+          "reason": "没有力气再讲一遍"
+        }
+      },
+      {
+        "id": "ally",
+        "label": "找同事作证",
+        "result": "有人愿意替你说一句。你记下了这份帮助，也知道它不能每次都有。",
+        "effects": {
+          "reputation": 1,
+          "relationship": -1
+        },
+        "tagsAdded": [
+          "ally_statement"
+        ],
+        "track": {
+          "seekHelp": 1
+        },
+        "requirements": {
+          "minStats": {
+            "relationship": 3
+          },
+          "reason": "开口变得很重"
+        }
+      },
+      {
+        "id": "core-only",
+        "label": "只写核心成果",
+        "result": "材料很简洁。那些被你顺手接住的工作，也像从来没有发生过。",
+        "effects": {},
+        "hiddenEffects": {
+          "credit": -2
+        },
+        "tagsAdded": [
+          "missing_contribution"
+        ]
+      }
     ]
   },
   {
-    id: "C5-02",
-    type: "level",
-    chapterId: "C5",
-    chapterTitle: "第五章：靠近",
-    title: "第一次见面",
-    scene: "有人约你见面。对方提议去一个安静的地方，说那里人少、好聊天。你更想选人多的地方，但又不想显得太防备。聊天记录停在地点那一行，等待你回复。",
-    progress: { current: 1, total: 3 },
-    choices: [
-      { id: "private", label: "接受安静地点", result: "你接受了那个安静的地方。对方显得高兴，你开始留意出口在哪里。", effects: { relationship: 1, safety: -2 }, tagsAdded: ["private_place"] },
-      { id: "public", label: "改公共场所", result: "你把地点改到人多的地方。对方说你很谨慎，像在评价，也像在开玩笑。", effects: { safety: 1, relationship: -1 }, tagsAdded: ["public_place"] },
-      { id: "friend", label: "带朋友短暂出现", result: "朋友短暂出现。气氛有些别扭，但这个晚上多了一个知道你在哪的人。", effects: { relationship: -1, safety: 1 }, tagsAdded: ["seen_by_friend"], track: { seekHelp: 1 }, requirements: { minStats: { relationship: 3 }, reason: "最近已经麻烦过太多次" } }
+    "id": "C5-02",
+    "type": "level",
+    "chapterId": "C5",
+    "chapterTitle": "第五章：靠近",
+    "title": "第一次见面",
+    "scene": "有人约你见面。对方提议去一个安静的地方，说那里人少、好聊天。你更想选人多的地方，但又不想显得太防备。聊天记录停在地点那一行。",
+    "choices": [
+      {
+        "id": "private",
+        "label": "去安静的地方",
+        "result": "你接受了那个安静的地方。对方显得高兴，你开始留意出口在哪里。",
+        "effects": {
+          "safety": -2,
+          "relationship": 1
+        },
+        "tagsAdded": [
+          "private_place"
+        ]
+      },
+      {
+        "id": "public",
+        "label": "改公共场所",
+        "result": "你把地点改到人多的地方。对方说你很谨慎，像在评价，也像在开玩笑。",
+        "effects": {
+          "safety": 1,
+          "relationship": -1
+        },
+        "tagsAdded": [
+          "public_place"
+        ]
+      },
+      {
+        "id": "friend",
+        "label": "带朋友短暂出现",
+        "result": "朋友短暂出现。气氛有些别扭，但这个晚上多了一个知道你在哪的人。",
+        "effects": {
+          "safety": 1,
+          "relationship": -1
+        },
+        "tagsAdded": [
+          "seen_by_friend"
+        ],
+        "track": {
+          "seekHelp": 1
+        },
+        "requirements": {
+          "minStats": {
+            "relationship": 3
+          },
+          "reason": "开口变得很重"
+        }
+      }
     ]
   },
   {
-    id: "C5-05",
-    type: "level",
-    chapterId: "C5",
-    chapterTitle: "第五章：靠近",
-    title: "靠近",
-    scene: "对方靠近了一点。你没有立刻后退。对方似乎把这理解成允许。灯光和音乐都很柔和，只有你的身体先紧了一下。你需要在几秒钟里决定怎么把距离重新说清楚。",
-    progress: { current: 2, total: 3 },
-    choices: [
-      { id: "clear-no", label: "明确说“不”", result: "距离被说清楚了。对方停下来，气氛也一起停了一下。", effects: { safety: 1, relationship: -2, self: 2 }, tagsAdded: ["distance_clear"], track: { clearRefusal: 1 }, requirements: { minStats: { self: 3 }, reason: "你说不出口" } },
-      { id: "joke", label: "用玩笑带过", result: "你用笑把距离拉开一点。对方也笑了，但你不确定他听懂了多少。", effects: { energy: -1 }, tagsAdded: ["distance_blurry"] },
-      { id: "endure", label: "暂时忍一下", result: "事情没有立刻变糟。只是你把不舒服先放到了自己身上。", effects: { relationship: 1, safety: -1, self: -2 }, tagsAdded: ["distance_retreat"], track: { concede: 1 } }
+    "id": "C5-05",
+    "type": "level",
+    "chapterId": "C5",
+    "chapterTitle": "第五章：靠近",
+    "title": "靠近",
+    "scene": "对方靠近了一点。你没有立刻后退。对方似乎把这理解成允许。灯光和音乐都很柔和，只有你的身体先紧了一下。你只有几秒钟，决定要不要把距离拉回来。",
+    "choices": [
+      {
+        "id": "clear-no",
+        "label": "明确说“不”",
+        "result": "距离被说清楚了。对方停下来，气氛也一起停了一下。你更清楚自己不想退到哪里。",
+        "effects": {
+          "safety": 1,
+          "relationship": -2,
+          "self": 2
+        },
+        "tagsAdded": [
+          "distance_clear"
+        ],
+        "track": {
+          "clearRefusal": 1
+        },
+        "requirements": {
+          "minStats": {
+            "self": 3
+          },
+          "reason": "这句话卡住了"
+        }
+      },
+      {
+        "id": "joke",
+        "label": "用玩笑带过",
+        "result": "你用笑把距离拉开一点。对方也笑了，但你不确定他听懂了多少。",
+        "effects": {
+          "energy": -1
+        },
+        "tagsAdded": [
+          "distance_blurry"
+        ]
+      },
+      {
+        "id": "endure",
+        "label": "暂时忍一下",
+        "result": "事情没有立刻变糟。只是你把不舒服先放到了自己身上。你又往后退了一点。",
+        "effects": {
+          "safety": -1,
+          "relationship": 1,
+          "self": -2
+        },
+        "tagsAdded": [
+          "distance_retreat"
+        ],
+        "track": {
+          "concede": 1
+        }
+      }
     ]
   },
   {
-    id: "C5-07",
-    type: "level",
-    chapterId: "C5",
-    chapterTitle: "第五章：靠近",
-    title: "退出",
-    scene: "你决定结束这段关系。对方发来很多消息，一会儿道歉，一会儿指责。你明天还要上班，手机却一直亮。每一条新消息都像在要求你重新回到对话里。",
-    progress: { current: 3, total: 3 },
-    choices: [
-      { id: "explain", label: "解释清楚", result: "你发了很长的消息。对方继续追问，像是只有你说到他满意，事情才算结束。", effects: { energy: -2, relationship: -1 }, tagsAdded: ["explain_loop"], track: { explain: 1 }, requirements: { minStats: { energy: 3 }, reason: "你已经说不下去" } },
-      { id: "stop-reply", label: "不再回复", result: "手机安静了一会儿。你没有继续喂给这段关系新的理由。", effects: { energy: 1, safety: -1 }, tagsAdded: ["unclosed_relation"], track: { silence: 1 } },
-      { id: "block-save", label: "拉黑并保存记录", result: "消息停了，记录留下。你没有解决所有风险，只是把门关紧了一些。", effects: { relationship: -1, safety: 1, self: 1 }, hiddenEffects: { evidence: 2 }, tagsAdded: ["record_saved"], track: { evidenceSaved: 1 } }
+    "id": "C5-07",
+    "type": "level",
+    "chapterId": "C5",
+    "chapterTitle": "第五章：靠近",
+    "title": "退出",
+    "scene": "你决定结束这段关系。对方发来很多消息，一会儿道歉，一会儿指责。你明天还要上班，手机却一直亮。每一条新消息都像在要求你重新回到对话里。",
+    "choices": [
+      {
+        "id": "explain",
+        "label": "解释清楚",
+        "result": "你发了很长的消息。对方继续追问，像是只有你说到他满意，事情才算结束。",
+        "effects": {
+          "energy": -2,
+          "relationship": -1
+        },
+        "tagsAdded": [
+          "explain_loop"
+        ],
+        "track": {
+          "explain": 1
+        },
+        "requirements": {
+          "minStats": {
+            "energy": 3
+          },
+          "reason": "没有力气再讲一遍"
+        }
+      },
+      {
+        "id": "stop-reply",
+        "label": "不再回复",
+        "result": "手机安静了一会儿。你没有继续喂给这段关系新的理由。",
+        "effects": {
+          "safety": -1,
+          "energy": 1
+        },
+        "tagsAdded": [
+          "unclosed_relation"
+        ],
+        "track": {
+          "silence": 1
+        }
+      },
+      {
+        "id": "block-save",
+        "label": "拉黑并保存记录",
+        "result": "消息停了，记录留下。你没有解决所有问题，只是让门像是关紧了一点。",
+        "effects": {
+          "safety": 1,
+          "relationship": -1,
+          "self": 1
+        },
+        "hiddenEffects": {
+          "evidence": 2
+        },
+        "tagsAdded": [
+          "record_saved"
+        ],
+        "track": {
+          "evidenceSaved": 1
+        }
+      }
     ]
   },
   {
-    id: "C6-02",
-    type: "level",
-    chapterId: "C6",
-    chapterTitle: "第六章：窗口",
-    title: "整理证据",
-    scene: "聊天记录、时间、地点、截图、录音，你都有一点，但没有一样完整。你需要把它们整理成别人能看懂的样子。文件名、时间线和备注框，开始替代你原本想说的话。",
-    progress: { current: 1, total: 3 },
-    choices: [
-      { id: "all", label: "全部整理", result: "文件夹一点点完整起来。你把经历拆成时间、地点、截图和编号，也把自己拆得很累。", effects: { energy: -2, self: 1 }, hiddenEffects: { evidence: 3 }, tagsAdded: ["evidence_complete"], track: { evidenceSaved: 1 }, requirements: { minStats: { energy: 3 }, reason: "你已经说不下去" } },
-      { id: "key", label: "只整理关键", result: "你留下最关键的几项。材料能说明一些东西，也留下了一些会被追问的空白。", effects: { energy: -1 }, hiddenEffects: { evidence: 1 }, tagsAdded: ["evidence_limited"] },
-      { id: "tell", label: "直接说", result: "你保留了事情最原本的样子。只是流程更习惯接收材料，而不是接收一段混乱的经历。", effects: { self: 1 }, hiddenEffects: { evidence: -1 }, tagsAdded: ["statement_risk"] }
+    "id": "C6-02",
+    "type": "level",
+    "chapterId": "C6",
+    "chapterTitle": "第六章：窗口",
+    "title": "整理证据",
+    "scene": "聊天记录、时间、地点、截图、录音，你都有一点，但没有一样完整。你需要把它们整理成别人能看懂的样子。文件名、时间线和备注框，开始替代你原本想说的话。",
+    "choices": [
+      {
+        "id": "all",
+        "label": "全部整理",
+        "result": "文件夹一点点完整起来。你把经历拆成时间、地点、截图和编号，也把自己拆得很累。",
+        "effects": {
+          "energy": -2,
+          "self": 1
+        },
+        "hiddenEffects": {
+          "evidence": 3
+        },
+        "tagsAdded": [
+          "evidence_complete"
+        ],
+        "track": {
+          "evidenceSaved": 1
+        },
+        "requirements": {
+          "minStats": {
+            "energy": 3
+          },
+          "reason": "没有力气再讲一遍"
+        }
+      },
+      {
+        "id": "key",
+        "label": "只整理关键",
+        "result": "你留下最关键的几项。材料能说明一些东西，也留下了一些会被追问的空白。",
+        "effects": {
+          "energy": -1
+        },
+        "hiddenEffects": {
+          "evidence": 1
+        },
+        "tagsAdded": [
+          "evidence_limited"
+        ]
+      },
+      {
+        "id": "tell",
+        "label": "直接说",
+        "result": "你保留了事情最原本的样子。只是流程更习惯接收材料，而不是一段混乱的经历。",
+        "effects": {
+          "self": 1
+        },
+        "hiddenEffects": {
+          "evidence": -1
+        },
+        "tagsAdded": [
+          "statement_risk"
+        ]
+      }
     ]
   },
   {
-    id: "C6-04",
-    type: "level",
-    chapterId: "C6",
-    chapterTitle: "第六章：窗口",
-    title: "有没有误会",
-    scene: "对方问：“会不会是误会？有没有可能对方不是这个意思？”你听过类似的话很多次。每一次都像是在把事情往更轻的地方推。你需要决定，是继续补充，还是把话拉回原处。",
-    progress: { current: 2, total: 3 },
-    choices: [
-      { id: "details", label: "补充细节", result: "你补充更多细节。对方的表情有一点变化，你的力气少了很多。", effects: { energy: -2, reputation: 1 }, tagsAdded: ["repeat_explain"], track: { explain: 1 }, requirements: { minStats: { energy: 3 }, reason: "你已经说不下去" } },
-      { id: "feeling", label: "强调感受", result: "对方说理解你的心情。你听见“心情”这个词时，知道事情正在变轻。", effects: { self: 1 }, tagsAdded: ["feeling_framed"] },
-      { id: "facts", label: "要求按事实处理", result: "你把话拉回事实。对方没有再安慰你，也不得不继续记下去。", effects: { self: 1 }, hiddenEffects: { conflict: 1 }, tagsAdded: ["fact_frame"], track: { clearRefusal: 1 }, requirements: { minStats: { self: 3 }, reason: "你说不出口" } }
+    "id": "C6-04",
+    "type": "level",
+    "chapterId": "C6",
+    "chapterTitle": "第六章：窗口",
+    "title": "有没有误会",
+    "scene": "对方问：“会不会是误会？有没有可能不是这个意思？”你听过类似的话很多次。每一次都像是在把事情往更轻的地方推。你要决定继续补充，还是把话拉回原处。",
+    "choices": [
+      {
+        "id": "details",
+        "label": "补充细节",
+        "result": "你补充更多细节。对方的表情有一点变化，你的力气少了很多。",
+        "effects": {
+          "reputation": 1,
+          "energy": -2
+        },
+        "tagsAdded": [
+          "repeat_explain"
+        ],
+        "track": {
+          "explain": 1
+        },
+        "requirements": {
+          "minStats": {
+            "energy": 3
+          },
+          "reason": "没有力气再讲一遍"
+        }
+      },
+      {
+        "id": "feeling",
+        "label": "强调感受",
+        "result": "对方说理解你的心情。你听见“心情”这个词时，知道事情正在变轻。",
+        "effects": {
+          "self": 1
+        },
+        "tagsAdded": [
+          "feeling_framed"
+        ]
+      },
+      {
+        "id": "facts",
+        "label": "要求按事实处理",
+        "result": "你把话拉回事实。对方没有再安慰你，也不得不继续记下去。",
+        "effects": {
+          "self": 1
+        },
+        "hiddenEffects": {
+          "conflict": 1
+        },
+        "tagsAdded": [
+          "fact_frame"
+        ],
+        "track": {
+          "clearRefusal": 1
+        },
+        "requirements": {
+          "minStats": {
+            "self": 3
+          },
+          "reason": "这句话卡住了"
+        }
+      }
     ]
   },
   {
-    id: "C6-08",
-    type: "level",
-    chapterId: "C6",
-    chapterTitle: "第六章：窗口",
-    title: "处理结果",
-    scene: "系统给出结果：证据不足，但会提醒相关人员注意。你不能说它完全没用，也不能说它解决了什么。页面上显示“已处理”。这个词很短，短到装不下你花掉的时间。",
-    progress: { current: 3, total: 3 },
-    choices: [
-      { id: "accept", label: "接受结果", result: "流程到这里结束。页面显示已处理，你知道它只是停止了，不是解决了。", effects: { energy: 1, self: -2 }, tagsAdded: ["unclosed_issue"] },
-      { id: "appeal", label: "继续申诉", result: "你继续往下走。每多走一步，都要再支付一点生活。", effects: { self: 1, energy: -2, money: -1 }, tagsAdded: ["appeal_continue"], track: { explain: 1 }, requirements: { minStats: { energy: 3 }, reason: "你已经说不下去" } },
-      { id: "leave", label: "离开环境", result: "你离开这个环境。风险被切断一部分，过去积累的东西也被迫留在身后。", effects: { safety: 1, money: -2, reputation: -1 }, tagsAdded: ["exit_cost"], track: { paidSafety: 1 }, requirements: { minStats: { money: 3 }, reason: "余额不足" } }
+    "id": "C6-08",
+    "type": "level",
+    "chapterId": "C6",
+    "chapterTitle": "第六章：窗口",
+    "title": "处理结果",
+    "scene": "系统给出结果：证据不足，但会提醒相关人员注意。你不能说它完全没用，也不能说它解决了什么。页面上显示“已处理”。这个词很短，短到装不下你花掉的时间。",
+    "choices": [
+      {
+        "id": "accept",
+        "label": "接受结果",
+        "result": "流程到这里结束。页面显示已处理。你知道它只是停止了，不是解决了。",
+        "effects": {
+          "energy": 1,
+          "self": -2
+        },
+        "tagsAdded": [
+          "unclosed_issue"
+        ]
+      },
+      {
+        "id": "appeal",
+        "label": "继续申诉",
+        "result": "你继续往下走。每多走一步，都要再花掉一点生活。",
+        "effects": {
+          "money": -1,
+          "energy": -2,
+          "self": 1
+        },
+        "tagsAdded": [
+          "appeal_continue"
+        ],
+        "track": {
+          "explain": 1
+        },
+        "requirements": {
+          "minStats": {
+            "energy": 3
+          },
+          "reason": "没有力气再讲一遍"
+        }
+      },
+      {
+        "id": "leave",
+        "label": "离开环境",
+        "result": "你离开这个环境。风险被切断一部分，过去积累的东西也被迫留在身后。",
+        "effects": {
+          "reputation": -1,
+          "money": -2,
+          "safety": 1
+        },
+        "tagsAdded": [
+          "exit_cost"
+        ],
+        "track": {
+          "paidSafety": 1
+        },
+        "requirements": {
+          "minStats": {
+            "money": 3
+          },
+          "reason": "余额不够"
+        }
+      }
     ]
   }
 ];
@@ -400,132 +1448,314 @@ export const SETTLEMENT_CARDS = [];
 
 export const ENDING_CARDS = [
   {
-    id: "E-01",
-    type: "ending",
-    chapterId: "E",
-    chapterTitle: "终章：普通难度",
-    title: "记录完成",
-    text: "你通过了这一段生活。系统没有判断你勇敢、软弱、敏感或多疑。它只记录你怎样继续走到了这里。",
-    buttonLabel: "查看状态"
+    "id": "E-01",
+    "type": "ending",
+    "chapterId": "E",
+    "chapterTitle": "终章：普通难度",
+    "title": "记录完成",
+    "text": "你走到了这一段生活的末尾。系统没有判断你勇敢、软弱、敏感或多疑。它只整理你怎样来到这里。",
+    "content": "筛选、房间、路上、桌面、靠近、窗口，每一段都没有单独决定结局。它们只是一个接一个，把后面的选择改窄了一点。",
+    "buttonLabel": "查看状态"
   },
   {
-    id: "E-02",
-    type: "ending",
-    chapterId: "E",
-    chapterTitle: "终章：普通难度",
-    title: "状态总览",
-    text: "系统第一次把所有状态摆在一起。你看到的不是能力表。它们是这一路上你反复管理过的东西。",
-    buttonLabel: "继续"
+    "id": "E-02",
+    "type": "ending",
+    "chapterId": "E",
+    "chapterTitle": "终章：普通难度",
+    "title": "状态总览",
+    "text": "系统第一次把所有状态摆在一起。你看到的不是能力表，而是这一路上你反复照看的东西。",
+    "content": "有些东西看起来像性格，有些看起来像习惯。现在它们被整理成状态：信誉、钱、安全感、精力、关系、自我。",
+    "buttonLabel": "继续"
   },
   {
-    id: "E-03",
-    type: "ending",
-    chapterId: "E",
-    chapterTitle: "终章：普通难度",
-    title: "角色档案生成中",
-    text: "系统开始补全你的身份。没有任何一项看起来像特殊命运。",
-    buttonLabel: "继续生成"
+    "id": "E-03",
+    "type": "ending",
+    "chapterId": "E",
+    "chapterTitle": "终章：普通难度",
+    "title": "角色档案生成中",
+    "text": "系统开始补全你的身份。没有任何一项看起来像特殊命运。",
+    "content": "年龄：27。职业：普通职员。城市：普通城市。收入：普通。家庭：普通。关系状态：普通。",
+    "buttonLabel": "继续生成",
+    "reveal": "性别：女。\n难度：普通。\n\n你刚才经历的，不是战场，不是末日，不是传奇，也不是一段特别糟糕的人生。\n\n它只是一次普通难度。"
   },
   {
-    id: "E-04",
-    type: "ending",
-    chapterId: "E",
-    chapterTitle: "终章：普通难度",
-    title: "普通难度 · 通关记录",
-    text: "系统整理完毕。",
-    buttonLabel: "重新开始"
+    "id": "E-04",
+    "type": "ending",
+    "chapterId": "E",
+    "chapterTitle": "终章：普通难度",
+    "title": "普通难度 · 通关记录",
+    "text": "系统整理完毕。",
+    "content": "女性不是一种性格，也不只是一组特征。\n\n在很多时候，女性意味着一种被反复放置的位置。\n\n当一个人长期处在需要被评价、被相信、被允许、被保护、被解释的位置，她就会学会谨慎、计算、讨好、沉默、留证和提前道歉。\n\n这不是因为她天生如此。是因为世界经常这样要求她。\n\n你已经学会了普通生活。",
+    "buttonLabel": "重新开始"
   }
 ];
 
 export const CRISIS_CARDS = [
   {
-    id: "CR-reputation",
-    type: "level",
-    crisis: true,
-    stat: "reputation",
-    chapterId: "CR",
-    chapterTitle: "记录中断",
-    title: "信誉危险",
-    scene: "你发现自己说的很多话，都需要比别人多解释一遍。不是每句话都被反驳，但每句话都像要先通过一层看不见的筛选。",
-    choices: [
-      { id: "lower", label: "接受更低要求", result: "事情继续推进，但你把标准往后退了一点。", effects: { reputation: 1, self: -1 } },
-      { id: "confirm", label: "找人帮你确认", result: "有人替你说了一句，话变得更容易被接收。", effects: { reputation: 1, relationship: -1 }, track: { seekHelp: 1 } },
-      { id: "pause", label: "暂时不争", result: "流程顺了，问题也少了一部分入口。", effects: { energy: 1 }, hiddenEffects: { credit: -1 } }
+    "id": "CR-reputation",
+    "type": "level",
+    "chapterId": "CR",
+    "chapterTitle": "记录中断",
+    "title": "信誉危险",
+    "scene": "你发现自己说的很多话，都要比别人多绕一圈。不是每句话都被反驳，但每句话都像要先通过一层筛选。",
+    "stat": "reputation",
+    "crisis": true,
+    "choices": [
+      {
+        "id": "lower",
+        "label": "接受更低要求",
+        "result": "事情继续推进，但你把标准往后退了一点。",
+        "effects": {
+          "reputation": 1,
+          "self": -1
+        }
+      },
+      {
+        "id": "confirm",
+        "label": "找人帮你确认",
+        "result": "有人替你说了一句。话变得更容易被听完。",
+        "effects": {
+          "reputation": 1,
+          "relationship": -1
+        },
+        "track": {
+          "seekHelp": 1
+        }
+      },
+      {
+        "id": "pause",
+        "label": "暂时不争",
+        "result": "流程顺了，问题也少了一部分入口。",
+        "effects": {
+          "energy": 1
+        },
+        "hiddenEffects": {
+          "credit": -1
+        }
+      }
     ]
   },
   {
-    id: "CR-money",
-    type: "level",
-    crisis: true,
-    stat: "money",
-    chapterId: "CR",
-    chapterTitle: "记录中断",
-    title: "钱危险",
-    scene: "余额让很多选择提前消失。你还没做决定，有些路已经关上了。",
-    choices: [
-      { id: "low-quality", label: "接受低质量方案", result: "钱暂时够了，代价会在之后出现。", effects: { money: 1, safety: -1 } },
-      { id: "borrow", label: "向人求助", result: "余额被拉回来一点，人情也被记下。", effects: { money: 2, relationship: -1 }, track: { seekHelp: 1 } },
-      { id: "drop", label: "放弃处理", result: "你少花了一笔钱，也少了一次改变局面的机会。", effects: { energy: 1, self: -1 } }
+    "id": "CR-money",
+    "type": "level",
+    "chapterId": "CR",
+    "chapterTitle": "记录中断",
+    "title": "钱危险",
+    "scene": "余额让很多选择提前消失。你还没做决定，有些按钮已经不再属于你。",
+    "stat": "money",
+    "crisis": true,
+    "choices": [
+      {
+        "id": "low-quality",
+        "label": "接受低质量方案",
+        "result": "钱暂时够了。代价会在之后出现。",
+        "effects": {
+          "money": 1,
+          "safety": -1
+        }
+      },
+      {
+        "id": "borrow",
+        "label": "向人求助",
+        "result": "余额被拉回来一点，人情也被记下。",
+        "effects": {
+          "money": 2,
+          "relationship": -1
+        },
+        "track": {
+          "seekHelp": 1
+        }
+      },
+      {
+        "id": "drop",
+        "label": "放弃处理",
+        "result": "你少花了一笔钱，也少了一次改变局面的机会。",
+        "effects": {
+          "energy": 1,
+          "self": -1
+        }
+      }
     ]
   },
   {
-    id: "CR-safety",
-    type: "level",
-    crisis: true,
-    stat: "safety",
-    chapterId: "CR",
-    chapterTitle: "记录中断",
-    title: "安全感危险",
-    scene: "你开始在进入每个空间前确认出口。什么都没发生，但你已经很累。",
-    choices: [
-      { id: "detour", label: "绕远一点", result: "灯光和人群多了，路也长了。", effects: { safety: 1, energy: -1 }, track: { detour: 1 } },
-      { id: "contact", label: "联系别人", result: "你让另一个人知道自己在哪里。", effects: { safety: 1, relationship: -1 }, track: { seekHelp: 1 } },
-      { id: "push", label: "硬撑过去", result: "你没有改变路线，只把速度加快了一点。", effects: { energy: -1 }, hiddenEffects: { exposure: 1 } }
+    "id": "CR-safety",
+    "type": "level",
+    "chapterId": "CR",
+    "chapterTitle": "记录中断",
+    "title": "安全感危险",
+    "scene": "你开始在进入每个空间前确认出口。什么都没发生，但你已经很累。你不是每次都害怕，只是很难完全不想。",
+    "stat": "safety",
+    "crisis": true,
+    "choices": [
+      {
+        "id": "detour",
+        "label": "绕远一点",
+        "result": "灯光和人群多了，路也长了。",
+        "effects": {
+          "safety": 1,
+          "energy": -1
+        },
+        "track": {
+          "detour": 1
+        }
+      },
+      {
+        "id": "contact",
+        "label": "联系别人",
+        "result": "你让另一个人知道自己在哪里。",
+        "effects": {
+          "safety": 1,
+          "relationship": -1
+        },
+        "track": {
+          "seekHelp": 1
+        }
+      },
+      {
+        "id": "push",
+        "label": "硬撑过去",
+        "result": "你没有改变路线，只把速度加快了一点。",
+        "effects": {
+          "energy": -1
+        },
+        "hiddenEffects": {
+          "exposure": 1
+        }
+      }
     ]
   },
   {
-    id: "CR-energy",
-    type: "level",
-    crisis: true,
-    stat: "energy",
-    chapterId: "CR",
-    chapterTitle: "记录中断",
-    title: "精力危险",
-    scene: "你不是不想讲清楚，只是句子开始断掉。很多事还没结束，你已经先空了。",
-    choices: [
-      { id: "rest", label: "休息一下", result: "你恢复了一些力气，也错过了一点机会。", effects: { energy: 2, reputation: -1 } },
-      { id: "simplify", label: "简化处理", result: "事情还能推进，但细节被压缩掉了。", effects: { energy: 1 }, hiddenEffects: { evidence: -1 } },
-      { id: "help", label: "找人帮忙", result: "你不用一个人处理所有信息。", effects: { energy: 1, relationship: -1 }, track: { seekHelp: 1 } }
+    "id": "CR-energy",
+    "type": "level",
+    "chapterId": "CR",
+    "chapterTitle": "记录中断",
+    "title": "精力危险",
+    "scene": "你不是不想讲清楚，只是句子开始断掉。很多事还没结束，你已经先空了。",
+    "stat": "energy",
+    "crisis": true,
+    "choices": [
+      {
+        "id": "rest",
+        "label": "休息一下",
+        "result": "你恢复了一些力气，也错过了一点机会。",
+        "effects": {
+          "reputation": -1,
+          "energy": 2
+        }
+      },
+      {
+        "id": "simplify",
+        "label": "简化处理",
+        "result": "事情还能推进，但细节被压缩掉了。",
+        "effects": {
+          "energy": 1
+        },
+        "hiddenEffects": {
+          "evidence": -1
+        }
+      },
+      {
+        "id": "help",
+        "label": "找人帮忙",
+        "result": "你不用一个人处理所有信息。",
+        "effects": {
+          "energy": 1,
+          "relationship": -1
+        },
+        "track": {
+          "seekHelp": 1
+        }
+      }
     ]
   },
   {
-    id: "CR-relationship",
-    type: "level",
-    crisis: true,
-    stat: "relationship",
-    chapterId: "CR",
-    chapterTitle: "记录中断",
-    title: "关系危险",
-    scene: "你打开通讯录，发现每个名字后面都有上一次麻烦他们的记忆。",
-    choices: [
-      { id: "alone", label: "独自处理", result: "你省下了人情，也把压力留给了自己。", effects: { self: 1, energy: -1 } },
-      { id: "repair", label: "主动恢复关系", result: "你发出消息，重新接上一点联系。", effects: { relationship: 1, energy: -1 } },
-      { id: "give-up", label: "放弃求助", result: "你不再打扰别人，事情也更安静地压回你身上。", effects: { safety: -1, energy: 1 } }
+    "id": "CR-relationship",
+    "type": "level",
+    "chapterId": "CR",
+    "chapterTitle": "记录中断",
+    "title": "关系危险",
+    "scene": "你打开通讯录，发现每个名字后面都有上一次麻烦他们的记忆。你不是没有人可找，只是每一次开口都变重了。",
+    "stat": "relationship",
+    "crisis": true,
+    "choices": [
+      {
+        "id": "alone",
+        "label": "独自处理",
+        "result": "你省下了人情，也把压力留给了自己。",
+        "effects": {
+          "energy": -1,
+          "self": 1
+        }
+      },
+      {
+        "id": "repair",
+        "label": "主动恢复关系",
+        "result": "你发出消息，重新接上一点联系。",
+        "effects": {
+          "energy": -1,
+          "relationship": 1
+        }
+      },
+      {
+        "id": "give-up",
+        "label": "放弃求助",
+        "result": "你不再打扰别人，事情也更安静地压回你身上。",
+        "effects": {
+          "safety": -1,
+          "energy": 1
+        }
+      }
     ]
   },
   {
-    id: "CR-self",
-    type: "level",
-    crisis: true,
-    stat: "self",
-    chapterId: "CR",
-    chapterTitle: "记录中断",
-    title: "自我危险",
-    scene: "你知道自己不愿意，但拒绝这件事本身也需要力气。",
-    choices: [
-      { id: "comply", label: "暂时顺从", result: "场面顺利过去，你又退了一点。", effects: { energy: 1, self: -1 }, track: { concede: 1 } },
-      { id: "write", label: "写下来", result: "你先不当场说，把自己的判断留住。", effects: { self: 1, energy: -1 }, hiddenEffects: { evidence: 1 }, track: { evidenceSaved: 1 } },
-      { id: "confirm", label: "找人确认", result: "另一个人的回应帮你把感觉扶正了一点。", effects: { self: 1, relationship: -1 }, track: { seekHelp: 1 } }
+    "id": "CR-self",
+    "type": "level",
+    "chapterId": "CR",
+    "chapterTitle": "记录中断",
+    "title": "自我危险",
+    "scene": "你知道自己不愿意。只是拒绝这件事本身也需要力气。边界还在心里，要说出来却要再多撑一下。",
+    "stat": "self",
+    "crisis": true,
+    "choices": [
+      {
+        "id": "comply",
+        "label": "暂时顺从",
+        "result": "场面顺利过去，你又退了一点。",
+        "effects": {
+          "energy": 1,
+          "self": -1
+        },
+        "track": {
+          "concede": 1
+        }
+      },
+      {
+        "id": "write",
+        "label": "写下来",
+        "result": "你先不当场说，把自己的判断留住。",
+        "effects": {
+          "energy": -1,
+          "self": 1
+        },
+        "hiddenEffects": {
+          "evidence": 1
+        },
+        "track": {
+          "evidenceSaved": 1
+        }
+      },
+      {
+        "id": "confirm",
+        "label": "找人确认",
+        "result": "另一个人的回应帮你把感觉扶正了一点。",
+        "effects": {
+          "relationship": -1,
+          "self": 1
+        },
+        "track": {
+          "seekHelp": 1
+        }
+      }
     ]
   }
 ];

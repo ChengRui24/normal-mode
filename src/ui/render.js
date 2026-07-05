@@ -53,9 +53,21 @@ function getChapterTheme(card) {
   return INTRO_CARDS.find((intro) => intro.chapterId === card?.chapterId)?.theme;
 }
 
+const SHORT_MAINLINE_PROGRESS = {
+  "C3-03": { current: 1, total: 3 },
+  "C3-04": { current: 2, total: 3 },
+  "C3-05": { current: 3, total: 3 },
+  "C3-06": { current: 3, total: 3 },
+  "C4-02": { current: 1, total: 3 },
+  "C4-04": { current: 2, total: 3 },
+  "C4-06": { current: 3, total: 3 },
+  "C4-07": { current: 3, total: 3 }
+};
+
 function getChapterProgress(card) {
   if (card?.type !== "level" || card.insert || card.crisis) return null;
   if (card.progress) return card.progress;
+  if (SHORT_MAINLINE_PROGRESS[card.id]) return SHORT_MAINLINE_PROGRESS[card.id];
 
   const chapterCards = LEVEL_CARDS.filter((item) => item.chapterId === card.chapterId);
   const index = chapterCards.findIndex((item) => item.id === card.id);

@@ -131,7 +131,7 @@ describe("level data", () => {
       chapterTitle: "第一章：筛选",
       kicker: "第一章",
       title: "筛选",
-      text: "你需要获得一个位置。这里的人会看你的资料、回答、语气和反应，也会看一些你以为不该重要的东西。",
+      text: "你需要一个位置。表格、照片、问题和等待区，会比你先开口。这里不会只看你会做什么，也看你是不是适合被放进来。",
       objective: "目标：获得一个位置。",
       buttonLabel: "进入筛选",
       theme: {
@@ -158,16 +158,16 @@ describe("level data", () => {
     );
 
     expect(c201ChoicesByLabel["远且便宜"].result).toBe(
-      "你保住了现金。地图上回家的那段路，也被拉得更长、更暗。"
+      "你保住了现金。地图上回家的那段路，被拉得更长，也更暗。"
     );
     expect(c608ChoicesByLabel["继续申诉"].result).toBe(
-      "你继续往下走。每多走一步，都要再支付一点生活。"
+      "你继续往下走。每多走一步，都要再花掉一点生活。"
     );
   });
 
-  it("uses v0.6 short-mainline scene copy without changing choice configuration", () => {
+  it("uses v0.7 short-mainline scene copy without changing choice configuration", () => {
     expect(getCardById("P-01").scene).toBe(
-      "今天有一场重要见面。你站在镜子前，灯光把衣服上的褶皱照得很清楚。你想起有人曾说你“不够认真”，也有人说你“太用力”。时间不多了，你需要决定以什么样子出门。"
+      "今天有一场重要见面。你站在镜子前，灯光把衣服上的褶皱照得很清楚。有人说过你“不够认真”，也有人说过你“太用力”。时间不多了，你要决定怎么出门。"
     );
     expect(getCardById("C3-04").scene).toBe(
       "晚上十点，地铁口到家有两条路。近路人少，大路绕远。打车价格翻倍。地图把它们标成三个普通选项，没有标出路灯、店铺和途中会不会遇到谁。"
@@ -176,7 +176,7 @@ describe("level data", () => {
       "系统给出结果：证据不足，但会提醒相关人员注意。你不能说它完全没用，也不能说它解决了什么。页面上显示“已处理”。这个词很短，短到装不下你花掉的时间。"
     );
     expect(getCardById("CR-self").scene).toBe(
-      "你知道自己不愿意，但拒绝这件事本身也需要力气。"
+      "你知道自己不愿意。只是拒绝这件事本身也需要力气。边界还在心里，要说出来却要再多撑一下。"
     );
     expect(getCardById("C6-08").choices.map((choice) => choice.id)).toEqual([
       "accept",
@@ -265,11 +265,11 @@ describe("level data", () => {
     expect(c608ChoicesByLabel["接受结果"].requirements).toBeUndefined();
     expect(c608ChoicesByLabel["继续申诉"].requirements).toEqual({
       minStats: { energy: 3 },
-      reason: "你已经说不下去"
+      reason: "没有力气再讲一遍"
     });
     expect(c608ChoicesByLabel["离开环境"].requirements).toEqual({
       minStats: { money: 3 },
-      reason: "余额不足"
+      reason: "余额不够"
     });
   });
 
