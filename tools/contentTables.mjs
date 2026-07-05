@@ -399,8 +399,8 @@ function buildCards(cardRows, choiceRows, triggerRows, config) {
         accent: row.themeAccent
       });
     }
-    if (row.insert === "true") card.insert = true;
-    if (row.crisis === "true") card.crisis = true;
+    if (row.insert?.toLowerCase() === "true") card.insert = true;
+    if (row.crisis?.toLowerCase() === "true") card.crisis = true;
 
     const choiceRowsForCard = choicesByCard.get(row.id);
     if (choiceRowsForCard) {

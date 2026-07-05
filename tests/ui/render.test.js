@@ -122,7 +122,7 @@ describe("renderGame", () => {
     expect(onChoose).toHaveBeenCalledTimes(1);
     expect(root.querySelectorAll("button.choice-button").length).toBe(0);
     expect(root.querySelector(".selected-choice")?.textContent).toBe("[继续申诉]");
-    expect(root.textContent).toContain("你继续往下走。每多走一步，都要再支付一点生活。");
+    expect(root.textContent).toContain("你继续往下走。每多走一步，都要再花掉一点生活。");
     expect(root.textContent).toContain("（你开始只处理最急的部分。）");
     expect(root.querySelector(".aftermath-text")).not.toBe(null);
     expect(root.querySelector(".stat-strip")?.textContent).toContain("精力：紧张");
