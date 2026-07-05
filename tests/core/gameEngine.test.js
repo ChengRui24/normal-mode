@@ -9,11 +9,15 @@ import {
   buildBlockedChoiceLines,
   getChoiceAftermath,
   getEndingDisplay,
+  getViewedState,
   getVisibleStatsForCard,
+  goToNextView,
+  goToPreviousView,
   resolvePassStyle,
   resolveChapterOutcome,
   startGame
 } from "../../src/core/gameEngine.js";
+import { getCardById } from "../../src/data/levels.js";
 
 describe("game engine choice application", () => {
   it("starts ordinary difficulty stats on the approved 0-12 scale", () => {
@@ -185,6 +189,85 @@ describe("game engine progression", () => {
 
     expect(next.phase).toBe("choice");
     expect(next.currentCardId).toBe("P-01");
+  });
+
+  it("records view history and moves the review cursor without rolling back game state", () => {
+    const started = startGame(createInitialState());
+    const firstChoicePage = advanceAfterResult(started);
+    const choice = getCardById("P-01").choices[0];
+    const resultPage = applyChoice(firstChoicePage, choice);
+
+    expect(resultPage.viewHistory.map((view) => `${view.phase}:${view.currentCardId}`)).toEqual([
+      "intro:P-I",
+      "result:P-01"
+    ]);
+    expect(resultPage.viewIndex).toBe(1);
+
+    const reviewingIntro = goToPreviousView(resultPage);
+
+    expect(reviewingIntro.phase).toBe("result");
+    expect(reviewingIntro.currentCardId).toBe("P-01");
+    expect(reviewingIntro.stats).toEqual(resultPage.stats);
+    expect(getViewedState(reviewingIntro)).toMatchObject({
+      phase: "intro",
+      currentCardId: "P-I",
+      isViewingHistory: true
+    });
+
+    const backToResult = goToNextView(reviewingIntro);
+
+    expect(getViewedState(backToResult)).toMatchObject({
+      phase: "result",
+      currentCardId: "P-01",
+      isViewingHistory: false
+    });
+    expect(backToResult.stats).toEqual(resultPage.stats);
+  });
+
+  it("does not expose answered choice pages when reviewing older history", () => {
+    let state = startGame(createInitialState());
+    state = advanceAfterResult(state);
+    state = applyChoice(state, getCardById("P-01").choices[0]);
+    state = advanceAfterResult(state);
+    state = applyChoice(state, getCardById("P-04").choices[0]);
+    state = advanceAfterResult(state);
+    state = advanceAfterResult(state);
+
+    expect(state.phase).toBe("choice");
+    expect(state.currentCardId).toBe("C1-01");
+
+    let reviewing = goToPreviousView(state);
+    reviewing = goToPreviousView(reviewing);
+    reviewing = goToPreviousView(reviewing);
+
+    expect(getViewedState(reviewing)).toMatchObject({
+      phase: "result",
+      currentCardId: "P-01",
+      isViewingHistory: true
+    });
+    expect(state.viewHistory.map((view) => `${view.phase}:${view.currentCardId}`)).not.toContain("choice:P-01");
+    expect(state.viewHistory.map((view) => `${view.phase}:${view.currentCardId}`)).not.toContain("choice:P-04");
+  });
+
+  it("normalizes legacy history cursors that point at answered choice pages", () => {
+    const intro = startGame(createInitialState());
+    const choicePage = advanceAfterResult(intro);
+    const resultPage = applyChoice(choicePage, getCardById("P-01").choices[0]);
+    const legacyState = {
+      ...resultPage,
+      viewHistory: [
+        resultPage.viewHistory[0],
+        { ...choicePage, viewHistory: undefined, viewIndex: undefined },
+        resultPage.viewHistory[1]
+      ],
+      viewIndex: 1
+    };
+
+    expect(getViewedState(legacyState)).toMatchObject({
+      phase: "result",
+      currentCardId: "P-01",
+      viewIndex: 2
+    });
   });
 
   it("advances from a result card to the next ordered card", () => {
@@ -751,12 +834,12 @@ describe("settlements and ending statistics", () => {
     };
 
     expect(resolvePassStyle(state)).toMatchObject({
-      id: "struggling",
-      label: "勉强通关"
+      id: "low_margin",
+      label: "余量耗尽"
     });
   });
 
-  it("resolves high-alert pass style before stable style", () => {
+  it("resolves risk-internalized pass style before stable style", () => {
     const state = {
       ...createInitialState(),
       stats: {
@@ -770,12 +853,12 @@ describe("settlements and ending statistics", () => {
     };
 
     expect(resolvePassStyle(state)).toMatchObject({
-      id: "high-alert",
-      label: "高警觉通关"
+      id: "always_ready",
+      label: "风险内化"
     });
   });
 
-  it("resolves high-alert pass style from repeated route strategies", () => {
+  it("resolves risk-internalized pass style from repeated route strategies", () => {
     const state = {
       ...createInitialState(),
       counters: {
@@ -787,8 +870,8 @@ describe("settlements and ending statistics", () => {
     };
 
     expect(resolvePassStyle(state)).toMatchObject({
-      id: "high-alert",
-      label: "高警觉通关"
+      id: "always_ready",
+      label: "风险内化"
     });
   });
 
@@ -813,9 +896,9 @@ describe("settlements and ending statistics", () => {
     };
 
     expect(buildCostLines(state)).toEqual([
-      "你没有一直遇到危险，但你一直在为危险做准备。",
-      "你保住了一些安全，代价是余额越来越薄。",
-      "你完成了很多处理，也失去了解释更多的力气。"
+      "很多事没有发生，但你已经为它们准备过很多次。",
+      "你花钱换过安全，也因此失去了一些选择。",
+      "你把流程走完了，但已经没有力气再讲一遍。"
     ]);
   });
 
@@ -843,13 +926,27 @@ describe("settlements and ending statistics", () => {
     const profile = getEndingDisplay({ id: "E-03", title: "角色档案生成中" }, state);
     const report = getEndingDisplay({ id: "E-04", title: "普通难度 · 通关记录" }, state);
 
-    expect(record.lines).toHaveLength(6);
-    expect(status.lines).toContain("安全感：危险。你没有一直遇到危险，但你一直在为危险做准备。");
-    expect(status.lines.join("\n")).not.toContain("2/12");
-    expect(status.lines).toContain("放弃近路：4 次");
-    expect(profile.lines).toContain("年龄：27");
-    expect(report.lines).toContain("通关方式：高警觉通关");
-    expect(report.lines).toContain("难度：普通");
-    expect(report.lines).toContain("本次代价：");
+    expect(record.timelineItems).toHaveLength(6);
+    expect(record.timelineItems[0]).toMatchObject({
+      chapter: "筛选"
+    });
+    expect(status.statusItems).toContainEqual({
+      key: "safety",
+      label: "安全感",
+      word: "危险"
+    });
+    expect(status.counterLines).toContain("放弃近路：4 次");
+    expect(status.blockedChoiceLines).toContain("有几次，你不是不想选择更安全的路，只是余额不允许。");
+    expect(profile.lines).toContain("年龄：27。");
+    expect(report.text).toBe("");
+    expect(report.lines).toEqual([]);
+    expect(report.finalReport.situation).toMatchObject({
+      id: "always_ready",
+      label: "风险内化"
+    });
+    expect(report.finalReport.situation.text).toContain("路灯、出口、车牌和手机电量");
+    expect(report.finalReport.concept).toContain("当风险长期存在但不一定每次发生");
+    expect(report.finalReport.statusItems).toBeUndefined();
+    expect(report.finalReport.costLines).toContain("很多事没有发生，但你已经为它们准备过很多次。");
   });
 });

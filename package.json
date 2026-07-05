@@ -10,6 +10,7 @@
     "export:content": "node tools/export-content.mjs",
     "generate:agent-manifest": "node tools/generate-agent-manifest.mjs",
     "import:content": "node tools/import-content.mjs",
+    "import:text-json": "node tools/import-text-json.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
   },

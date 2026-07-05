@@ -1,5 +1,13 @@
 import "./styles.css";
-import { advanceAfterResult, applyChoice, startGame } from "./core/gameEngine.js";
+import {
+  advanceAfterResult,
+  applyChoice,
+  canGoToNextView,
+  getViewedState,
+  goToNextView,
+  goToPreviousView,
+  startGame
+} from "./core/gameEngine.js";
 import { createInitialState } from "./core/initialState.js";
 import { clearSavedState, loadState, saveState } from "./core/storage.js";
 import { renderGame } from "./ui/render.js";
@@ -21,7 +29,19 @@ function handleChoose(choice, options) {
 }
 
 function handleContinue() {
+  if (canGoToNextView(state)) {
+    commitState(goToNextView(state));
+    return;
+  }
   commitState(state.phase === "home" ? startGame(state) : advanceAfterResult(state));
+}
+
+function handlePrevious() {
+  commitState(goToPreviousView(state));
+}
+
+function handleNext() {
+  commitState(goToNextView(state));
 }
 
 function handleRestart() {
@@ -31,9 +51,11 @@ function handleRestart() {
 
 function render() {
   renderGame(root, {
-    state,
+    state: getViewedState(state),
     onChoose: handleChoose,
     onContinue: handleContinue,
+    onPrevious: handlePrevious,
+    onNext: handleNext,
     onRestart: handleRestart
   });
 }

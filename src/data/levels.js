@@ -1,7 +1,6 @@
 export const INTRO_CARDS = [
   {
     "id": "P-I",
-    "type": "chapterIntro",
     "chapterId": "P",
     "chapterTitle": "序章：出门",
     "kicker": "序章",
@@ -13,27 +12,27 @@ export const INTRO_CARDS = [
       "primary": "#9B8F80",
       "surface": "#F6F1EA",
       "accent": "#6F6256"
-    }
+    },
+    "type": "chapterIntro"
   },
   {
     "id": "C1-I",
-    "type": "chapterIntro",
     "chapterId": "C1",
     "chapterTitle": "第一章：筛选",
     "kicker": "第一章",
     "title": "筛选",
-    "text": "你需要一个位置。表格、照片、问题和等待区，会比你先开口。这里不会只看你会做什么，也看你是不是适合被放进来。",
+    "text": "你需要一个位置。表格、照片、问题和等待区，会比你先开口。这里会看你会做什么，也会看你会不会让流程停下来。",
     "objective": "目标：获得一个位置。",
     "buttonLabel": "进入筛选",
     "theme": {
       "primary": "#7A6D5E",
       "surface": "#F2EDE6",
       "accent": "#4F463D"
-    }
+    },
+    "type": "chapterIntro"
   },
   {
     "id": "C2-I",
-    "type": "chapterIntro",
     "chapterId": "C2",
     "chapterTitle": "第二章：房间",
     "kicker": "第二章",
@@ -45,27 +44,27 @@ export const INTRO_CARDS = [
       "primary": "#68705A",
       "surface": "#EEF1EA",
       "accent": "#3F4638"
-    }
+    },
+    "type": "chapterIntro"
   },
   {
     "id": "C3-I",
-    "type": "chapterIntro",
     "chapterId": "C3",
     "chapterTitle": "第三章：路上",
     "kicker": "第三章",
     "title": "路上",
-    "text": "城市看起来只是路线。车站、电梯、网约车、门禁，都按自己的规则运行。你要在这些规则之间移动。",
+    "text": "城市看起来只是路线。车站、电梯、网约车、门禁，都按自己的时间开合。你要赶上它们，也要避开一些没有写在地图上的东西。",
     "objective": "目标：完成这一周的移动。",
     "buttonLabel": "出发",
     "theme": {
       "primary": "#65798A",
       "surface": "#ECF1F4",
       "accent": "#394957"
-    }
+    },
+    "type": "chapterIntro"
   },
   {
     "id": "C4-I",
-    "type": "chapterIntro",
     "chapterId": "C4",
     "chapterTitle": "第四章：桌面",
     "kicker": "第四章",
@@ -77,27 +76,27 @@ export const INTRO_CARDS = [
       "primary": "#9A7A4F",
       "surface": "#F4EFE5",
       "accent": "#5B4528"
-    }
+    },
+    "type": "chapterIntro"
   },
   {
     "id": "C5-I",
-    "type": "chapterIntro",
     "chapterId": "C5",
     "chapterTitle": "第五章：靠近",
     "kicker": "第五章",
     "title": "靠近",
-    "text": "有人靠近，生活会轻一点。也可能多出新的解释、等待和判断。你要在关系里移动，还要知道哪里应该停下。",
+    "text": "有人靠近，生活会轻一点。也可能多出新的解释、等待和判断。你要判断什么时候往前，什么时候停下。",
     "objective": "目标：靠近别人，同时保留距离。",
     "buttonLabel": "继续靠近",
     "theme": {
       "primary": "#8A5F66",
       "surface": "#F3ECEE",
       "accent": "#56383E"
-    }
+    },
+    "type": "chapterIntro"
   },
   {
     "id": "C6-I",
-    "type": "chapterIntro",
     "chapterId": "C6",
     "chapterTitle": "第六章：窗口",
     "kicker": "第六章",
@@ -109,14 +108,14 @@ export const INTRO_CARDS = [
       "primary": "#5F7180",
       "surface": "#EDF1F3",
       "accent": "#34424C"
-    }
+    },
+    "type": "chapterIntro"
   }
 ];
 
 export const LEVEL_CARDS = [
   {
     "id": "P-01",
-    "type": "level",
     "chapterId": "P",
     "chapterTitle": "序章：出门",
     "title": "镜子",
@@ -161,11 +160,11 @@ export const LEVEL_CARDS = [
           "self_first"
         ]
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "P-04",
-    "type": "level",
     "chapterId": "P",
     "chapterTitle": "序章：出门",
     "title": "路口",
@@ -228,11 +227,11 @@ export const LEVEL_CARDS = [
           "reason": "余额不够"
         }
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C1-01",
-    "type": "level",
     "chapterId": "C1",
     "chapterTitle": "第一章：筛选",
     "title": "照片",
@@ -274,11 +273,11 @@ export const LEVEL_CARDS = [
           "file_blocked"
         ]
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C1-04",
-    "type": "level",
     "chapterId": "C1",
     "chapterTitle": "第一章：筛选",
     "title": "薪资",
@@ -331,11 +330,11 @@ export const LEVEL_CARDS = [
           "evidenceSaved": 1
         }
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C1-07",
-    "type": "level",
     "chapterId": "C1",
     "chapterTitle": "第一章：筛选",
     "title": "玩笑",
@@ -388,14 +387,14 @@ export const LEVEL_CARDS = [
           "minStats": {
             "self": 3
           },
-          "reason": "这句话卡住了"
+          "reason": "现在说不出口"
         }
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C2-01",
-    "type": "level",
     "chapterId": "C2",
     "chapterTitle": "第二章：房间",
     "title": "预算",
@@ -450,11 +449,11 @@ export const LEVEL_CARDS = [
           "search_fatigue"
         ]
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C2-03",
-    "type": "level",
     "chapterId": "C2",
     "chapterTitle": "第二章：房间",
     "title": "合同",
@@ -492,15 +491,15 @@ export const LEVEL_CARDS = [
         ]
       },
       {
-        "id": "external-check",
+        "id": "photo-send",
         "label": "拍下找人看",
-        "result": "你把合同拍给别人。房子被保留到晚上，压力没有消失，只是多了一个人帮你看。下次开口，会更需要斟酌。",
+        "result": "你把合同拍给别人。房子被保留到晚上，压力没有消失，只是多了一个人帮你看。",
         "effects": {
           "relationship": -1
         },
         "hiddenEffects": {
-          "time": -1,
-          "evidence": 2
+          "evidence": 2,
+          "time": -1
         },
         "tagsAdded": [
           "external_check"
@@ -513,23 +512,23 @@ export const LEVEL_CARDS = [
           "minStats": {
             "relationship": 3
           },
-          "reason": "开口变得很重"
+          "reason": "不想再麻烦别人"
         }
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C2-05",
-    "type": "level",
     "chapterId": "C2",
     "chapterTitle": "第二章：房间",
     "title": "维修",
-    "scene": "晚上十点半，维修的人终于到了。预约单上写着入户维修。水管不能再拖，对方说“五分钟就好”。房间里还堆着纸箱，你看了一眼手机，又看了一眼门锁。",
+    "scene": "晚上十点半，维修的人终于到了。水管不能再拖，对方说“五分钟就好”。房间里还没收拾完，门口堆着刚搬来的纸箱。你看了一眼手机，又看了一眼门锁。",
     "choices": [
       {
         "id": "let-in",
         "label": "让他进来",
-        "result": "水管修好了。门关上以后，房间恢复安静。只是这扇门后面的样子，又被一个陌生人看过。",
+        "result": "水管修好了。门关上以后，房间恢复安静，只是你知道这里又被一个陌生人记住了。",
         "effects": {
           "safety": -2
         },
@@ -542,21 +541,21 @@ export const LEVEL_CARDS = [
         "label": "改约白天",
         "result": "你把维修推到明天。今晚的问题还在，明天的请假理由也提前出现了。",
         "effects": {
-          "reputation": -1,
           "safety": 1,
-          "energy": -1
+          "energy": -1,
+          "reputation": -1
         },
         "tagsAdded": [
           "leave_request_risk"
         ]
       },
       {
-        "id": "call-witness",
+        "id": "call",
         "label": "开电话陪同",
-        "result": "电话那头一直有人。维修过程很快，对方也没有多聊。你少了一点不确定，也多用掉一次求助。",
+        "result": "电话那头一直有人。维修过程很快，对方也没有多聊。电话挂断后，你看了一会儿联系人名字。",
         "effects": {
-          "safety": 1,
-          "relationship": -1
+          "relationship": -1,
+          "safety": 1
         },
         "hiddenEffects": {
           "evidence": 1
@@ -571,14 +570,14 @@ export const LEVEL_CARDS = [
           "minStats": {
             "relationship": 3
           },
-          "reason": "开口变得很重"
+          "reason": "不想再麻烦别人"
         }
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C3-03",
-    "type": "level",
     "chapterId": "C3",
     "chapterTitle": "第三章：路上",
     "title": "低电量",
@@ -631,11 +630,11 @@ export const LEVEL_CARDS = [
           "late_leave"
         ]
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C3-04",
-    "type": "level",
     "chapterId": "C3",
     "chapterTitle": "第三章：路上",
     "title": "加班后的路线",
@@ -692,11 +691,11 @@ export const LEVEL_CARDS = [
           "reason": "余额不够"
         }
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C3-05",
-    "type": "level",
     "chapterId": "C3",
     "chapterTitle": "第三章：路上",
     "title": "路线偏移",
@@ -735,7 +734,7 @@ export const LEVEL_CARDS = [
       {
         "id": "call",
         "label": "打电话说快到了",
-        "result": "你对着电话说快到了。车里没有人再问你去哪儿。下次开口，会更需要斟酌。",
+        "result": "你对着电话说快到了。车里没有人再问你去哪儿。电话挂断后，你看了一会儿联系人名字。",
         "effects": {
           "safety": 1,
           "relationship": -1
@@ -750,14 +749,14 @@ export const LEVEL_CARDS = [
           "minStats": {
             "relationship": 3
           },
-          "reason": "开口变得很重"
+          "reason": "不想再麻烦别人"
         }
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C3-06",
-    "type": "level",
     "chapterId": "C3",
     "chapterTitle": "第三章：路上",
     "title": "楼道",
@@ -809,11 +808,11 @@ export const LEVEL_CARDS = [
           "concede": 1
         }
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C4-02",
-    "type": "level",
     "chapterId": "C4",
     "chapterTitle": "第四章：桌面",
     "title": "被打断",
@@ -840,7 +839,7 @@ export const LEVEL_CARDS = [
           "minStats": {
             "self": 3
           },
-          "reason": "这句话卡住了"
+          "reason": "现在说不出口"
         }
       },
       {
@@ -873,13 +872,19 @@ export const LEVEL_CARDS = [
         ],
         "track": {
           "evidenceSaved": 1
+        },
+        "requirements": {
+          "minStats": {
+            "energy": 3
+          },
+          "reason": "没有力气再讲一遍"
         }
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C4-04",
-    "type": "level",
     "chapterId": "C4",
     "chapterTitle": "第四章：桌面",
     "title": "额外任务",
@@ -888,7 +893,7 @@ export const LEVEL_CARDS = [
       {
         "id": "take",
         "label": "接下",
-        "result": "事情顺利运转。会议纪要发出时，没有人问这是谁的工作。你又把一件事接住了。",
+        "result": "事情顺利运转。会议纪要发出时，没有人问这是谁的工作。",
         "effects": {
           "reputation": 1,
           "energy": -2,
@@ -932,14 +937,14 @@ export const LEVEL_CARDS = [
           "minStats": {
             "self": 3
           },
-          "reason": "这句话卡住了"
+          "reason": "现在说不出口"
         }
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C4-06",
-    "type": "level",
     "chapterId": "C4",
     "chapterTitle": "第四章：桌面",
     "title": "别激动",
@@ -998,14 +1003,14 @@ export const LEVEL_CARDS = [
           "minStats": {
             "self": 3
           },
-          "reason": "这句话卡住了"
+          "reason": "现在说不出口"
         }
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C4-07",
-    "type": "level",
     "chapterId": "C4",
     "chapterTitle": "第四章：桌面",
     "title": "绩效材料",
@@ -1053,14 +1058,13 @@ export const LEVEL_CARDS = [
           "minStats": {
             "relationship": 3
           },
-          "reason": "开口变得很重"
+          "reason": "不想再麻烦别人"
         }
       },
       {
         "id": "core-only",
         "label": "只写核心成果",
-        "result": "材料很简洁。那些被你顺手接住的工作，也像从来没有发生过。",
-        "effects": {},
+        "result": "材料很简洁。那些被你顺手做完的事，也像从来没有发生过。",
         "hiddenEffects": {
           "credit": -2
         },
@@ -1068,11 +1072,11 @@ export const LEVEL_CARDS = [
           "missing_contribution"
         ]
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C5-02",
-    "type": "level",
     "chapterId": "C5",
     "chapterTitle": "第五章：靠近",
     "title": "第一次见面",
@@ -1120,14 +1124,14 @@ export const LEVEL_CARDS = [
           "minStats": {
             "relationship": 3
           },
-          "reason": "开口变得很重"
+          "reason": "不想再麻烦别人"
         }
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C5-05",
-    "type": "level",
     "chapterId": "C5",
     "chapterTitle": "第五章：靠近",
     "title": "靠近",
@@ -1152,7 +1156,7 @@ export const LEVEL_CARDS = [
           "minStats": {
             "self": 3
           },
-          "reason": "这句话卡住了"
+          "reason": "现在说不出口"
         }
       },
       {
@@ -1182,11 +1186,11 @@ export const LEVEL_CARDS = [
           "concede": 1
         }
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C5-07",
-    "type": "level",
     "chapterId": "C5",
     "chapterTitle": "第五章：靠近",
     "title": "退出",
@@ -1247,11 +1251,11 @@ export const LEVEL_CARDS = [
           "evidenceSaved": 1
         }
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C6-02",
-    "type": "level",
     "chapterId": "C6",
     "chapterTitle": "第六章：窗口",
     "title": "整理证据",
@@ -1298,7 +1302,7 @@ export const LEVEL_CARDS = [
       {
         "id": "tell",
         "label": "直接说",
-        "result": "你保留了事情最原本的样子。只是流程更习惯接收材料，而不是一段混乱的经历。",
+        "result": "你保留了事情最原本的样子。只是流程更习惯材料，而不是一段混乱的经历。",
         "effects": {
           "self": 1
         },
@@ -1309,11 +1313,11 @@ export const LEVEL_CARDS = [
           "statement_risk"
         ]
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C6-04",
-    "type": "level",
     "chapterId": "C6",
     "chapterTitle": "第六章：窗口",
     "title": "有没有误会",
@@ -1371,14 +1375,14 @@ export const LEVEL_CARDS = [
           "minStats": {
             "self": 3
           },
-          "reason": "这句话卡住了"
+          "reason": "现在说不出口"
         }
       }
-    ]
+    ],
+    "type": "level"
   },
   {
     "id": "C6-08",
-    "type": "level",
     "chapterId": "C6",
     "chapterTitle": "第六章：窗口",
     "title": "处理结果",
@@ -1440,7 +1444,8 @@ export const LEVEL_CARDS = [
           "reason": "余额不够"
         }
       }
-    ]
+    ],
+    "type": "level"
   }
 ];
 
@@ -1449,57 +1454,53 @@ export const SETTLEMENT_CARDS = [];
 export const ENDING_CARDS = [
   {
     "id": "E-01",
-    "type": "ending",
-    "chapterId": "E",
-    "chapterTitle": "终章：普通难度",
     "title": "记录完成",
     "text": "你走到了这一段生活的末尾。系统没有判断你勇敢、软弱、敏感或多疑。它只整理你怎样来到这里。",
-    "content": "筛选、房间、路上、桌面、靠近、窗口，每一段都没有单独决定结局。它们只是一个接一个，把后面的选择改窄了一点。",
-    "buttonLabel": "查看状态"
+    "contentTemplate": "筛选：{C1}\n房间：{C2}\n路上：{C3}\n桌面：{C4}\n靠近：{C5}\n窗口：{C6}",
+    "buttonLabel": "查看状态",
+    "type": "ending",
+    "chapterId": "E",
+    "chapterTitle": "终章：普通难度"
   },
   {
     "id": "E-02",
+    "title": "状态总览",
+    "text": "系统第一次把所有状态摆在一起。你看到的不是能力表，而是这一路上你反复处理过的东西。",
+    "contentTemplate": "状态\n{statusBlock}\n\n本次记录\n{topCounters}\n\n被拿走的选择\n{blockedChoiceBlock}",
+    "buttonLabel": "继续",
     "type": "ending",
     "chapterId": "E",
-    "chapterTitle": "终章：普通难度",
-    "title": "状态总览",
-    "text": "系统第一次把所有状态摆在一起。你看到的不是能力表，而是这一路上你反复照看的东西。",
-    "content": "有些东西看起来像性格，有些看起来像习惯。现在它们被整理成状态：信誉、钱、安全感、精力、关系、自我。",
-    "buttonLabel": "继续"
+    "chapterTitle": "终章：普通难度"
   },
   {
     "id": "E-03",
-    "type": "ending",
-    "chapterId": "E",
-    "chapterTitle": "终章：普通难度",
     "title": "角色档案生成中",
     "text": "系统开始补全你的身份。没有任何一项看起来像特殊命运。",
-    "content": "年龄：27。职业：普通职员。城市：普通城市。收入：普通。家庭：普通。关系状态：普通。",
+    "content": "年龄：27。\n职业：普通职员。\n城市：普通城市。\n收入：普通。\n家庭：普通。\n关系状态：普通。",
     "buttonLabel": "继续生成",
-    "reveal": "性别：女。\n难度：普通。\n\n你刚才经历的，不是战场，不是末日，不是传奇，也不是一段特别糟糕的人生。\n\n它只是一次普通难度。"
+    "reveal": "性别：女。\n难度：普通。\n\n你刚才经历的，不是战场，不是末日，不是传奇，也不是一段特别糟糕的人生。\n\n它只是一次普通难度。",
+    "type": "ending",
+    "chapterId": "E",
+    "chapterTitle": "终章：普通难度"
   },
   {
     "id": "E-04",
+    "title": "普通难度 · 通关记录",
+    "text": "本次处境\n{endingTitle}\n\n{endingSummary}",
+    "contentTemplate": "本次代价\n{costLines}\n\n处境说明\n{endingConcept}\n\n女性不是一种性格，也不只是一组特征。\n\n在很多时候，女性意味着一种被反复放置的位置。\n\n当一个人长期处在需要被评价、被相信、被允许、被保护、被解释的位置，她就会学会谨慎、计算、讨好、沉默、留证和提前道歉。\n\n这不是因为她天生如此。是因为世界经常这样要求她。\n\n你已经学会了普通生活。",
+    "buttonLabel": "重新开始",
     "type": "ending",
     "chapterId": "E",
-    "chapterTitle": "终章：普通难度",
-    "title": "普通难度 · 通关记录",
-    "text": "系统整理完毕。",
-    "content": "女性不是一种性格，也不只是一组特征。\n\n在很多时候，女性意味着一种被反复放置的位置。\n\n当一个人长期处在需要被评价、被相信、被允许、被保护、被解释的位置，她就会学会谨慎、计算、讨好、沉默、留证和提前道歉。\n\n这不是因为她天生如此。是因为世界经常这样要求她。\n\n你已经学会了普通生活。",
-    "buttonLabel": "重新开始"
+    "chapterTitle": "终章：普通难度"
   }
 ];
 
 export const CRISIS_CARDS = [
   {
     "id": "CR-reputation",
-    "type": "level",
-    "chapterId": "CR",
-    "chapterTitle": "记录中断",
+    "stat": "reputation",
     "title": "信誉危险",
     "scene": "你发现自己说的很多话，都要比别人多绕一圈。不是每句话都被反驳，但每句话都像要先通过一层筛选。",
-    "stat": "reputation",
-    "crisis": true,
     "choices": [
       {
         "id": "lower",
@@ -1533,22 +1534,22 @@ export const CRISIS_CARDS = [
           "credit": -1
         }
       }
-    ]
-  },
-  {
-    "id": "CR-money",
+    ],
     "type": "level",
     "chapterId": "CR",
     "chapterTitle": "记录中断",
-    "title": "钱危险",
-    "scene": "余额让很多选择提前消失。你还没做决定，有些按钮已经不再属于你。",
+    "crisis": true
+  },
+  {
+    "id": "CR-money",
     "stat": "money",
-    "crisis": true,
+    "title": "钱危险",
+    "scene": "余额让很多选择提前消失。你还没做决定，有些路已经关上了。",
     "choices": [
       {
-        "id": "low-quality",
+        "id": "lower-quality",
         "label": "接受低质量方案",
-        "result": "钱暂时够了。代价会在之后出现。",
+        "result": "钱暂时够了，代价会在之后出现。",
         "effects": {
           "money": 1,
           "safety": -1
@@ -1567,7 +1568,7 @@ export const CRISIS_CARDS = [
         }
       },
       {
-        "id": "drop",
+        "id": "give-up",
         "label": "放弃处理",
         "result": "你少花了一笔钱，也少了一次改变局面的机会。",
         "effects": {
@@ -1575,17 +1576,17 @@ export const CRISIS_CARDS = [
           "self": -1
         }
       }
-    ]
-  },
-  {
-    "id": "CR-safety",
+    ],
     "type": "level",
     "chapterId": "CR",
     "chapterTitle": "记录中断",
-    "title": "安全感危险",
-    "scene": "你开始在进入每个空间前确认出口。什么都没发生，但你已经很累。你不是每次都害怕，只是很难完全不想。",
+    "crisis": true
+  },
+  {
+    "id": "CR-safety",
     "stat": "safety",
-    "crisis": true,
+    "title": "安全感危险",
+    "scene": "你开始在进入每个空间前确认出口。什么都没发生，但你已经很累。",
     "choices": [
       {
         "id": "detour",
@@ -1600,7 +1601,7 @@ export const CRISIS_CARDS = [
         }
       },
       {
-        "id": "contact",
+        "id": "call",
         "label": "联系别人",
         "result": "你让另一个人知道自己在哪里。",
         "effects": {
@@ -1612,7 +1613,7 @@ export const CRISIS_CARDS = [
         }
       },
       {
-        "id": "push",
+        "id": "push-through",
         "label": "硬撑过去",
         "result": "你没有改变路线，只把速度加快了一点。",
         "effects": {
@@ -1622,25 +1623,25 @@ export const CRISIS_CARDS = [
           "exposure": 1
         }
       }
-    ]
-  },
-  {
-    "id": "CR-energy",
+    ],
     "type": "level",
     "chapterId": "CR",
     "chapterTitle": "记录中断",
+    "crisis": true
+  },
+  {
+    "id": "CR-energy",
+    "stat": "energy",
     "title": "精力危险",
     "scene": "你不是不想讲清楚，只是句子开始断掉。很多事还没结束，你已经先空了。",
-    "stat": "energy",
-    "crisis": true,
     "choices": [
       {
         "id": "rest",
         "label": "休息一下",
         "result": "你恢复了一些力气，也错过了一点机会。",
         "effects": {
-          "reputation": -1,
-          "energy": 2
+          "energy": 2,
+          "reputation": -1
         }
       },
       {
@@ -1655,7 +1656,7 @@ export const CRISIS_CARDS = [
         }
       },
       {
-        "id": "help",
+        "id": "ask-help",
         "label": "找人帮忙",
         "result": "你不用一个人处理所有信息。",
         "effects": {
@@ -1666,25 +1667,25 @@ export const CRISIS_CARDS = [
           "seekHelp": 1
         }
       }
-    ]
-  },
-  {
-    "id": "CR-relationship",
+    ],
     "type": "level",
     "chapterId": "CR",
     "chapterTitle": "记录中断",
-    "title": "关系危险",
-    "scene": "你打开通讯录，发现每个名字后面都有上一次麻烦他们的记忆。你不是没有人可找，只是每一次开口都变重了。",
+    "crisis": true
+  },
+  {
+    "id": "CR-relationship",
     "stat": "relationship",
-    "crisis": true,
+    "title": "关系危险",
+    "scene": "你打开通讯录，发现每个名字后面都有上一次麻烦他们的记忆。",
     "choices": [
       {
         "id": "alone",
         "label": "独自处理",
         "result": "你省下了人情，也把压力留给了自己。",
         "effects": {
-          "energy": -1,
-          "self": 1
+          "self": 1,
+          "energy": -1
         }
       },
       {
@@ -1692,12 +1693,12 @@ export const CRISIS_CARDS = [
         "label": "主动恢复关系",
         "result": "你发出消息，重新接上一点联系。",
         "effects": {
-          "energy": -1,
-          "relationship": 1
+          "relationship": 1,
+          "energy": -1
         }
       },
       {
-        "id": "give-up",
+        "id": "no-help",
         "label": "放弃求助",
         "result": "你不再打扰别人，事情也更安静地压回你身上。",
         "effects": {
@@ -1705,17 +1706,17 @@ export const CRISIS_CARDS = [
           "energy": 1
         }
       }
-    ]
-  },
-  {
-    "id": "CR-self",
+    ],
     "type": "level",
     "chapterId": "CR",
     "chapterTitle": "记录中断",
-    "title": "自我危险",
-    "scene": "你知道自己不愿意。只是拒绝这件事本身也需要力气。边界还在心里，要说出来却要再多撑一下。",
+    "crisis": true
+  },
+  {
+    "id": "CR-self",
     "stat": "self",
-    "crisis": true,
+    "title": "自我危险",
+    "scene": "你知道自己不愿意，但拒绝这件事本身也需要力气。",
     "choices": [
       {
         "id": "comply",
@@ -1724,9 +1725,6 @@ export const CRISIS_CARDS = [
         "effects": {
           "energy": 1,
           "self": -1
-        },
-        "track": {
-          "concede": 1
         }
       },
       {
@@ -1734,8 +1732,8 @@ export const CRISIS_CARDS = [
         "label": "写下来",
         "result": "你先不当场说，把自己的判断留住。",
         "effects": {
-          "energy": -1,
-          "self": 1
+          "self": 1,
+          "energy": -1
         },
         "hiddenEffects": {
           "evidence": 1
@@ -1749,14 +1747,18 @@ export const CRISIS_CARDS = [
         "label": "找人确认",
         "result": "另一个人的回应帮你把感觉扶正了一点。",
         "effects": {
-          "relationship": -1,
-          "self": 1
+          "self": 1,
+          "relationship": -1
         },
         "track": {
           "seekHelp": 1
         }
       }
-    ]
+    ],
+    "type": "level",
+    "chapterId": "CR",
+    "chapterTitle": "记录中断",
+    "crisis": true
   }
 ];
 

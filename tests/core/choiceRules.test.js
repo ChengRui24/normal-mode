@@ -59,6 +59,24 @@ describe("choice rules", () => {
     expect(reason).toBe("条件不足");
   });
 
+  it("uses configured short disabled reasons for common resource gates", () => {
+    const state = {
+      ...createInitialState(),
+      stats: { ...createInitialState().stats, money: 2 }
+    };
+
+    const reason = getDisabledReason(
+      {
+        requirements: {
+          minStats: { money: 3 }
+        }
+      },
+      state
+    );
+
+    expect(reason).toBe("余额不够");
+  });
+
   it("returns empty reason when choice is available", () => {
     const state = {
       ...createInitialState(),

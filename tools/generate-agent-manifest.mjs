@@ -20,6 +20,14 @@ import {
   STAT_MAX,
   STAT_MIN
 } from "../src/data/statConfig.js";
+import {
+  CHAPTER_ECHOES,
+  HOME_CONTENT,
+  RECORD_VERSION_DATE,
+  REQUIREMENT_REASON_MAP,
+  TEXT_VERSION
+} from "../src/data/textConfig.js";
+import { ENDING_SITUATIONS } from "../src/core/gameEngine.js";
 
 const outputPath = process.argv[2] ?? "public/agent-manifest.json";
 
@@ -64,6 +72,14 @@ const manifest = {
       words: STATE_WORDS
     },
     restart: "重新开始以底部小字呈现。"
+  },
+  textConfig: {
+    version: TEXT_VERSION,
+    recordVersionDate: RECORD_VERSION_DATE,
+    home: clone(HOME_CONTENT),
+    chapterEchoes: clone(CHAPTER_ECHOES),
+    requirementsReasonMap: clone(REQUIREMENT_REASON_MAP),
+    endingSituations: clone(ENDING_SITUATIONS)
   },
   mechanics: {
     stats: {

@@ -27,6 +27,8 @@ export function createInitialState() {
       evidenceSaved: 0,
       paidSafety: 0
     },
-    history: []
+    history: [],
+    viewHistory: [],
+    viewIndex: -1
   };
 }

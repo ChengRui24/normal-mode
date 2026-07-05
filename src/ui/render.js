@@ -1,8 +1,16 @@
 import { getDisabledReason } from "../core/choiceRules.js";
-import { getChoiceAftermath, getEndingDisplay, getIntroEcho, getSettlementDisplay } from "../core/gameEngine.js";
+import {
+  canGoToNextView,
+  canGoToPreviousView,
+  getChoiceAftermath,
+  getEndingDisplay,
+  getIntroEcho,
+  getSettlementDisplay
+} from "../core/gameEngine.js";
 import { getVisibleStats } from "../core/stateWords.js";
 import { INTRO_CARDS, LEVEL_CARDS, getCardById } from "../data/levels.js";
 import { STAT_MAX, STAT_MIN } from "../data/statConfig.js";
+import { HOME_CONTENT } from "../data/textConfig.js";
 
 function escapeText(value) {
   const span = document.createElement("span");
@@ -91,11 +99,12 @@ function progressDotsHtml(progress) {
   `;
 }
 
-function renderHeader(card, state) {
+function renderHeader(card, state, options = {}) {
   const progress = getChapterProgress(card);
   const chapterLine = progress
     ? `${card.chapterTitle ?? "普通难度"} · ${progress.current}/${progress.total}`
     : card.chapterTitle ?? "普通难度";
+  const showStats = options.showStats ?? true;
 
   return `
     <header class="card-header">
@@ -105,7 +114,7 @@ function renderHeader(card, state) {
       </div>
     </header>
     ${progressDotsHtml(progress)}
-    ${renderStatStrip(state)}
+    ${showStats ? renderStatStrip(state) : ""}
   `;
 }
 
@@ -117,12 +126,25 @@ function restartFooterHtml() {
   `;
 }
 
+function historyNavHtml(state) {
+  return `
+    <nav class="history-nav" aria-label="页面历史">
+      <button class="history-button" type="button" data-history-action="previous" ${canGoToPreviousView(state) ? "" : "disabled"}>← 上一页</button>
+      <button class="history-button" type="button" data-history-action="next" ${canGoToNextView(state) ? "" : "disabled"}>下一页 →</button>
+    </nav>
+  `;
+}
+
+function formatAftermathText(aftermath) {
+  return aftermath.replace(/[。.!！]+$/u, "");
+}
+
 function resultPanelHtml(choice, resultText, aftermath = "") {
   return `
     <div class="result-panel">
       ${choice ? `<p class="selected-choice">[${escapeText(choice.label)}]</p>` : ""}
       <p class="result-text">${escapeText(resultText)}</p>
-      ${aftermath ? `<p class="aftermath-text">（${escapeText(aftermath)}）</p>` : ""}
+      ${aftermath ? `<p class="aftermath-text">（${escapeText(formatAftermathText(aftermath))}）</p>` : ""}
     </div>
   `;
 }
@@ -139,6 +161,7 @@ function revealInlineResult(root, choice, aftermath, onContinue) {
 }
 
 function renderChoiceCard(root, card, state, onChoose, onContinue) {
+  const isReviewing = state.isViewingHistory === true;
   root.innerHTML = `
     <section class="game-card themed-card" style="${cardStyle(card)}">
       ${renderHeader(card, state)}
@@ -147,8 +170,9 @@ function renderChoiceCard(root, card, state, onChoose, onContinue) {
         ${card.choices
           .map((choice) => {
             const reason = getDisabledReason(choice, state);
+            const disabled = reason || isReviewing;
             return `
-              <button class="choice-button" type="button" data-choice-id="${escapeText(choice.id)}" ${reason ? "disabled" : ""}>
+              <button class="choice-button" type="button" data-choice-id="${escapeText(choice.id)}" ${disabled ? "disabled" : ""}>
                 <span>${escapeText(choice.label)}</span>
                 ${reason ? `<small>${escapeText(reason)}</small>` : ""}
               </button>
@@ -156,6 +180,7 @@ function renderChoiceCard(root, card, state, onChoose, onContinue) {
           })
           .join("")}
       </div>
+      ${historyNavHtml(state)}
       ${restartFooterHtml()}
     </section>
   `;
@@ -181,6 +206,7 @@ function renderResultCard(root, card, state, onContinue) {
       <p class="scene-text">${escapeText(card.scene)}</p>
       ${resultPanelHtml(selectedChoice, result.text, result.aftermath)}
       <button class="continue-button" type="button">继续</button>
+      ${historyNavHtml(state)}
       ${restartFooterHtml()}
     </section>
   `;
@@ -209,6 +235,7 @@ function renderIntroCard(root, card, state, onContinue) {
       <p class="scene-text">${escapeText(card.text)}</p>
       <p class="intro-objective">${escapeText(card.objective)}</p>
       <button class="continue-button intro-button" type="button">${escapeText(card.buttonLabel)}</button>
+      ${historyNavHtml(state)}
       ${restartFooterHtml()}
     </section>
   `;
@@ -219,22 +246,27 @@ function renderIntroCard(root, card, state, onContinue) {
 function renderHomeCard(root, onContinue) {
   root.innerHTML = `
     <section class="game-card home-card" aria-labelledby="home-title">
-      <h1 id="home-title">普通难度</h1>
-      <p class="home-kicker">一段普通生活记录。</p>
+      <h1 id="home-title">${escapeText(HOME_CONTENT.title)}</h1>
+      <p class="home-kicker">${escapeText(HOME_CONTENT.subtitle)}</p>
       <div class="home-lines">
-        <p>读文字。</p>
-        <p>做选择。</p>
-        <p>继续。</p>
+        ${(HOME_CONTENT.primaryLines ?? []).map((line) => `<p>${escapeText(line)}</p>`).join("")}
       </div>
       <div class="home-lines home-lines-secondary">
-        <p>没有标准答案。</p>
-        <p>只有之后发生的事。</p>
+        ${(HOME_CONTENT.secondaryLines ?? []).map((line) => `<p>${escapeText(line)}</p>`).join("")}
       </div>
       <div class="home-notes" aria-label="提示">
-        <span>无需登录</span>
-        <span>建议竖屏</span>
+        ${(HOME_CONTENT.noteLine ?? []).map((line) => `<span>${escapeText(line)}</span>`).join("")}
       </div>
-      <button class="continue-button home-start-button" type="button">开始</button>
+      <div class="home-meta" aria-label="记录信息">
+        ${(HOME_CONTENT.metaLines ?? [])
+          .map((line) => `
+            <p>
+              ${line.map((item) => `<span>${escapeText(item)}</span>`).join("")}
+            </p>
+          `)
+          .join("")}
+      </div>
+      <button class="continue-button home-start-button" type="button">${escapeText(HOME_CONTENT.buttonLabel)}</button>
     </section>
   `;
 
@@ -245,10 +277,10 @@ function renderProfileCard(root, card, state, onContinue) {
   const display = getEndingDisplay(card, state);
   root.innerHTML = `
     <section class="game-card themed-card" style="${cardStyle(display)}">
-      ${renderHeader(display, state)}
+      ${renderHeader(display, state, { showStats: false })}
       <p class="scene-text">${escapeText(display.text ?? "")}</p>
       ${(display.lines ?? []).length > 0
-        ? `<ul class="ending-list">${display.lines.map((line) => `<li class="ending-line">${escapeText(line)}</li>`).join("")}</ul>`
+        ? `<ul class="profile-list">${display.lines.map((line) => `<li>${escapeText(line)}</li>`).join("")}</ul>`
         : ""}
       <div class="profile-reveal" aria-live="polite"></div>
       <button class="continue-button" type="button">${escapeText(display.buttonLabel ?? "继续生成")}</button>
@@ -260,10 +292,10 @@ function renderProfileCard(root, card, state, onContinue) {
     event.currentTarget.remove();
     const reveal = root.querySelector(".profile-reveal");
     reveal.innerHTML = `
-      <ul class="ending-list">
-        <li class="ending-line">性别：女</li>
-        <li class="ending-line">难度：普通</li>
-      </ul>
+      <div class="profile-identity-card">
+        <p>性别：女</p>
+        <p>难度：普通</p>
+      </div>
       <div class="profile-afterword"></div>
     `;
 
@@ -272,35 +304,121 @@ function renderProfileCard(root, card, state, onContinue) {
       afterword.innerHTML = `
         <p class="content-text">你刚才经历的，不是战场，不是末日，不是传奇，也不是一段特别糟糕的人生。</p>
         <p class="content-text">它只是一次普通难度。</p>
-        <button class="continue-button" type="button">查看通关报告</button>
+        <button class="continue-button" type="button">查看通关记录</button>
       `;
       afterword.querySelector(".continue-button").addEventListener("click", onContinue);
     }, 1500);
   });
 }
 
+function timelineHtml(items = []) {
+  if (items.length === 0) return "";
+
+  return `
+    <div class="ending-timeline" aria-label="本局路径">
+      ${items
+        .map((item) => `
+          <div class="timeline-item">
+            <span>${escapeText(item.chapter)}</span>
+            <p>${escapeText(item.text)}</p>
+          </div>
+        `)
+        .join("")}
+    </div>
+  `;
+}
+
+function statusOverviewHtml(display) {
+  if (!display.statusItems) return "";
+
+  return `
+    <div class="ending-status-overview">
+      <section class="final-section" aria-labelledby="ending-status-title">
+        <p class="section-label" id="ending-status-title">状态</p>
+        <div class="status-grid">
+          ${display.statusItems
+            .map((item) => `
+              <div class="status-card${item.word === "危险" ? " is-danger" : ""}">
+                <span>${escapeText(item.label)}</span>
+                <strong>${escapeText(item.word)}</strong>
+              </div>
+            `)
+            .join("")}
+        </div>
+      </section>
+
+      <section class="final-section" aria-labelledby="ending-counter-title">
+        <p class="section-label" id="ending-counter-title">本次记录</p>
+        <ul class="ending-counter-list">
+          ${(display.counterLines ?? []).map((line) => `<li>${escapeText(line)}</li>`).join("")}
+        </ul>
+      </section>
+
+      <section class="blocked-choice-block" aria-labelledby="blocked-choice-title">
+        <p class="section-label" id="blocked-choice-title">被拿走的选择</p>
+        ${(display.blockedChoiceLines ?? []).map((line) => `<p>${escapeText(line)}</p>`).join("")}
+      </section>
+    </div>
+  `;
+}
+
+function finalReportHtml(report) {
+  return `
+    <div class="final-report">
+      <section class="final-situation" aria-labelledby="final-situation-title">
+        <p class="section-label" id="final-situation-title">本次处境</p>
+        <h2>${escapeText(report.situation.label)}</h2>
+        <p>${escapeText(report.situation.text)}</p>
+      </section>
+
+      <section class="final-section cost-section" aria-labelledby="final-cost-title">
+        <p class="section-label" id="final-cost-title">本次代价</p>
+        <div class="cost-lines">
+          ${report.costLines.map((line) => `<p>${escapeText(line)}</p>`).join("")}
+        </div>
+      </section>
+
+      <section class="concept-section" aria-labelledby="final-concept-title">
+        <p class="section-label" id="final-concept-title">处境说明</p>
+        <p>${escapeText(report.concept)}</p>
+      </section>
+
+      <section class="theme-section" aria-label="主题">
+        ${report.themeLines.map((line) => `<p>${escapeText(line)}</p>`).join("")}
+        <p class="final-line">${escapeText(report.finalLine)}</p>
+      </section>
+    </div>
+  `;
+}
+
 function renderStaticCard(root, card, state, onContinue, onRestart) {
   const display = card.type === "ending" ? getEndingDisplay(card, state) : getSettlementDisplay(card, state);
   const primaryText = display.text ?? display.scene ?? "";
+  const isFinalReport = Boolean(display.finalReport);
+  const isEndingCard = display.type === "ending";
   root.innerHTML = `
     <section class="game-card themed-card" style="${cardStyle(display)}">
-      ${renderHeader(display, state)}
-      <p class="scene-text">${escapeText(primaryText)}</p>
+      ${renderHeader(display, state, { showStats: !isEndingCard })}
+      ${primaryText ? `<p class="scene-text">${escapeText(primaryText)}</p>` : ""}
       ${display.content ? `<p class="content-text">${escapeText(display.content)}</p>` : ""}
+      ${timelineHtml(display.timelineItems)}
+      ${statusOverviewHtml(display)}
       ${(display.lines ?? []).length > 0
         ? `<ul class="ending-list">${display.lines.map((line) => `<li class="ending-line">${escapeText(line)}</li>`).join("")}</ul>`
         : ""}
+      ${isFinalReport ? finalReportHtml(display.finalReport) : ""}
       ${display.reveal ? `<p class="tag-line">${escapeText(display.reveal)}</p>` : ""}
-      ${card.id === "E-04" ? "" : `<button class="continue-button" type="button">${escapeText(display.buttonLabel ?? "继续")}</button>`}
-      ${restartFooterHtml()}
+      ${isFinalReport ? "" : historyNavHtml(state)}
+      <button class="continue-button${isFinalReport ? " final-restart-button" : ""}" type="button">${escapeText(display.buttonLabel ?? "继续")}</button>
+      ${isFinalReport ? "" : restartFooterHtml()}
     </section>
   `;
 
-  const action = card.id === "E-04" ? onRestart : onContinue;
+  const action = isFinalReport ? onRestart : onContinue;
   root.querySelector(".continue-button")?.addEventListener("click", action);
 }
 
-export function renderGame(root, { state, onChoose, onContinue, onRestart }) {
+export function renderGame(root, { state, onChoose, onContinue, onPrevious, onNext, onRestart }) {
   if (state.phase === "home") {
     renderHomeCard(root, onContinue);
     return;
@@ -326,4 +444,6 @@ export function renderGame(root, { state, onChoose, onContinue, onRestart }) {
   }
 
   root.querySelector(".restart-text-button")?.addEventListener("click", onRestart);
+  root.querySelector('[data-history-action="previous"]')?.addEventListener("click", onPrevious ?? (() => {}));
+  root.querySelector('[data-history-action="next"]')?.addEventListener("click", onNext ?? (() => {}));
 }

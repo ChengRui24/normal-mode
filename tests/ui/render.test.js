@@ -2,6 +2,8 @@
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createInitialState } from "../../src/core/initialState.js";
+import { advanceAfterResult, applyChoice, getViewedState, goToPreviousView, startGame } from "../../src/core/gameEngine.js";
+import { getCardById } from "../../src/data/levels.js";
 import { renderGame } from "../../src/ui/render.js";
 
 describe("renderGame", () => {
@@ -30,6 +32,9 @@ describe("renderGame", () => {
     expect(root.textContent).toContain("只有之后发生的事。");
     expect(root.textContent).toContain("无需登录");
     expect(root.textContent).toContain("建议竖屏");
+    expect(root.textContent).toContain("序章 + 六章 + 终章");
+    expect(root.textContent).toContain("约 10-15 分钟");
+    expect(root.textContent).toContain("记录版本：v0.8 · 2026.07.05");
     expect(root.querySelector(".restart-button")).toBe(null);
     expect(root.querySelector(".restart-text-button")).toBe(null);
     expect(root.querySelector(".stat-strip")).toBe(null);
@@ -94,6 +99,44 @@ describe("renderGame", () => {
     expect(root.querySelectorAll("button.choice-button").length).toBeGreaterThanOrEqual(2);
   });
 
+  it("renders bottom history navigation without exposing answered choice pages", () => {
+    let state = advanceAfterResult(startGame(createInitialState()));
+    state = applyChoice(state, getCardById("P-01").choices[0]);
+    state = advanceAfterResult(state);
+    state = applyChoice(state, getCardById("P-04").choices[0]);
+    state = advanceAfterResult(state);
+    state = advanceAfterResult(state);
+    const reviewing = getViewedState(goToPreviousView(goToPreviousView(state)));
+    const root = document.createElement("main");
+    const onPrevious = vi.fn();
+    const onNext = vi.fn();
+
+    renderGame(root, {
+      state: reviewing,
+      onChoose: vi.fn(),
+      onContinue: vi.fn(),
+      onPrevious,
+      onNext,
+      onRestart: vi.fn()
+    });
+
+    const historyButtons = root.querySelectorAll(".history-button");
+    expect(historyButtons).toHaveLength(2);
+    expect(historyButtons[0].textContent).toBe("← 上一页");
+    expect(historyButtons[1].textContent).toBe("下一页 →");
+    expect(historyButtons[0].disabled).toBe(false);
+    expect(historyButtons[1].disabled).toBe(false);
+    expect(root.textContent).toContain("[走近路]");
+    expect(root.querySelector(".result-panel")).not.toBe(null);
+    expect(root.querySelectorAll(".choice-button")).toHaveLength(0);
+
+    historyButtons[0].click();
+    historyButtons[1].click();
+
+    expect(onPrevious).toHaveBeenCalledTimes(1);
+    expect(onNext).toHaveBeenCalledTimes(1);
+  });
+
   it("reveals the result in place without replacing the current card", () => {
     const root = document.createElement("main");
     const onChoose = vi.fn();
@@ -123,7 +166,7 @@ describe("renderGame", () => {
     expect(root.querySelectorAll("button.choice-button").length).toBe(0);
     expect(root.querySelector(".selected-choice")?.textContent).toBe("[继续申诉]");
     expect(root.textContent).toContain("你继续往下走。每多走一步，都要再花掉一点生活。");
-    expect(root.textContent).toContain("（你开始只处理最急的部分。）");
+    expect(root.textContent).toContain("（你开始只处理最急的部分）");
     expect(root.querySelector(".aftermath-text")).not.toBe(null);
     expect(root.querySelector(".stat-strip")?.textContent).toContain("精力：紧张");
     expect(root.querySelector(".stat-strip")?.textContent).toContain("钱：紧张");
@@ -187,8 +230,8 @@ describe("renderGame", () => {
       onRestart: vi.fn()
     });
 
-    expect(root.textContent).toContain("（余额变薄了。）");
-    expect(root.querySelector(".aftermath-text")?.textContent).toBe("（余额变薄了。）");
+    expect(root.textContent).toContain("（余额变薄了）");
+    expect(root.querySelector(".aftermath-text")?.textContent).toBe("（余额变薄了）");
     expect(root.textContent).not.toContain("钱 -2");
   });
 
@@ -211,10 +254,16 @@ describe("renderGame", () => {
     });
 
     expect(root.textContent).toContain("状态总览");
-    expect(root.textContent).toContain("安全感：危险");
-    expect(root.textContent).toContain("你没有一直遇到危险");
+    expect(root.textContent).toContain("系统第一次把所有状态摆在一起");
+    expect(root.textContent).toContain("安全感");
+    expect(root.textContent).toContain("危险");
+    expect(root.textContent).toContain("本次记录");
+    expect(root.textContent).toContain("被拿走的选择");
     expect(root.textContent).not.toContain("2/12");
-    expect(root.querySelectorAll(".ending-line").length).toBeGreaterThan(0);
+    expect(root.querySelector(".stat-strip")).toBe(null);
+    expect(root.querySelectorAll(".status-card")).toHaveLength(6);
+    expect(root.querySelector(".blocked-choice-block")).not.toBe(null);
+    expect(root.querySelectorAll(".ending-line")).toHaveLength(0);
   });
 
   it("reveals the profile identity on the third ending page after a short pause", () => {
@@ -240,12 +289,12 @@ describe("renderGame", () => {
 
     expect(root.textContent).toContain("性别：女");
     expect(root.textContent).toContain("难度：普通");
-    expect(root.textContent).not.toContain("查看通关报告");
+    expect(root.textContent).not.toContain("查看通关记录");
 
     vi.advanceTimersByTime(1600);
 
     const reportButton = root.querySelector("button.continue-button");
-    expect(reportButton?.textContent).toBe("查看通关报告");
+    expect(reportButton?.textContent).toBe("查看通关记录");
     reportButton?.click();
     expect(onContinue).toHaveBeenCalledTimes(1);
   });
@@ -270,15 +319,24 @@ describe("renderGame", () => {
     });
 
     expect(root.textContent).toContain("普通难度 · 通关记录");
-    expect(root.textContent).toContain("通关方式：高警觉通关");
+    expect(root.textContent).toContain("本次处境");
+    expect(root.textContent).toContain("风险内化");
+    expect(root.textContent).toContain("路灯、出口、车牌和手机电量");
+    expect(root.textContent).not.toContain("状态");
+    expect(root.textContent).toContain("本次代价");
+    expect(root.textContent).toContain("处境说明");
     expect(root.textContent).toContain("女性不是一种性格");
+    expect(root.textContent).not.toContain("通关方式：");
     expect(root.textContent).not.toContain("复制文本");
     expect(root.textContent).not.toContain("保存图片");
+    expect(root.querySelector(".stat-strip")).toBe(null);
+    expect(root.querySelectorAll(".status-card")).toHaveLength(0);
+    expect(root.querySelector(".concept-section")).not.toBe(null);
+    expect(root.querySelector(".history-nav")).toBe(null);
 
-    expect(root.querySelector("button.continue-button")).toBe(null);
-
-    const restart = root.querySelector("button.restart-text-button");
+    const restart = root.querySelector("button.continue-button");
     expect(restart?.textContent).toBe("重新开始");
+    expect(root.querySelector(".restart-text-button")).toBe(null);
     restart?.click();
     expect(onRestart).toHaveBeenCalledTimes(1);
   });

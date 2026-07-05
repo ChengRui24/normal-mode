@@ -9,6 +9,7 @@ import {
   STAT_MIN
 } from "../data/statConfig.js";
 import { CRISIS_CARDS, INSERT_CARDS, getCardById, orderedCardIds } from "../data/levels.js";
+import { CHAPTER_ECHOES } from "../data/textConfig.js";
 
 function addRecordValues(base, delta = {}) {
   const next = { ...base };
@@ -128,6 +129,122 @@ function addCounters(base, delta = {}) {
 
 function addUniqueTags(tags, additions = []) {
   return [...new Set([...tags, ...additions])];
+}
+
+function clonePlain(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function viewSnapshot(state) {
+  const { viewHistory, viewIndex, isViewingHistory, ...snapshot } = state;
+  return clonePlain(snapshot);
+}
+
+function isAnsweredChoiceSnapshot(history, index) {
+  const view = history[index];
+  if (view?.phase !== "choice") return false;
+  return history.slice(index + 1).some((next) => next.phase === "result" && next.currentCardId === view.currentCardId);
+}
+
+function normalizeViewIndex(state) {
+  const history = state.viewHistory ?? [];
+  const fallbackIndex = history.length - 1;
+  const current = Number.isInteger(state.viewIndex) ? state.viewIndex : fallbackIndex;
+
+  if (!isAnsweredChoiceSnapshot(history, current)) return current;
+
+  for (let index = current + 1; index < history.length; index += 1) {
+    if (!isAnsweredChoiceSnapshot(history, index)) return index;
+  }
+
+  for (let index = current - 1; index >= 0; index -= 1) {
+    if (!isAnsweredChoiceSnapshot(history, index)) return index;
+  }
+
+  return current;
+}
+
+function previousViewIndex(state) {
+  const history = state.viewHistory ?? [];
+  const current = normalizeViewIndex(state);
+  for (let index = current - 1; index >= 0; index -= 1) {
+    if (!isAnsweredChoiceSnapshot(history, index)) return index;
+  }
+  return current;
+}
+
+function nextViewIndex(state) {
+  const history = state.viewHistory ?? [];
+  const current = normalizeViewIndex(state);
+  for (let index = current + 1; index < history.length; index += 1) {
+    if (!isAnsweredChoiceSnapshot(history, index)) return index;
+  }
+  return current;
+}
+
+function recordView(state, previousState = null) {
+  const baseState = previousState ?? state;
+  const baseHistory = baseState.viewHistory ?? [];
+  const history = baseHistory.length === 0 && baseState.currentCardId !== "HOME"
+    ? [viewSnapshot(baseState)]
+    : baseHistory;
+  const currentIndex = Number.isInteger(baseState.viewIndex) ? baseState.viewIndex : history.length - 1;
+  let retainedHistory = currentIndex >= 0 ? history.slice(0, currentIndex + 1) : history;
+  const nextView = viewSnapshot(state);
+
+  if (
+    nextView.phase === "result" &&
+    retainedHistory.at(-1)?.phase === "choice" &&
+    retainedHistory.at(-1)?.currentCardId === nextView.currentCardId
+  ) {
+    retainedHistory = retainedHistory.slice(0, -1);
+  }
+
+  const nextHistory = [...retainedHistory, nextView];
+
+  return {
+    ...state,
+    viewHistory: nextHistory,
+    viewIndex: nextHistory.length - 1
+  };
+}
+
+export function getViewedState(state) {
+  const history = state.viewHistory ?? [];
+  const index = normalizeViewIndex(state);
+  const snapshot = index >= 0 ? history[index] : null;
+
+  return {
+    ...state,
+    ...(snapshot ?? {}),
+    viewHistory: history,
+    viewIndex: index,
+    isViewingHistory: index >= 0 && index < history.length - 1
+  };
+}
+
+export function canGoToPreviousView(state) {
+  return previousViewIndex(state) !== normalizeViewIndex(state);
+}
+
+export function canGoToNextView(state) {
+  return nextViewIndex(state) !== normalizeViewIndex(state);
+}
+
+export function goToPreviousView(state) {
+  if (!canGoToPreviousView(state)) return state;
+  return {
+    ...state,
+    viewIndex: previousViewIndex(state)
+  };
+}
+
+export function goToNextView(state) {
+  if (!canGoToNextView(state)) return state;
+  return {
+    ...state,
+    viewIndex: nextViewIndex(state)
+  };
 }
 
 export function getVisibleStatsForCard(card) {
@@ -250,69 +367,69 @@ export function buildChapterEchoLines(state) {
   const tags = tagSet(state);
   const c6Outcome = state.chapterOutcomes?.C6?.id ?? resolveChapterOutcome("C6", state).id;
   const c6Lines = {
-    recognized: "这件事被记录了。它没有完全解决，但至少没有只留在你一个人的记忆里。",
-    recorded: "系统留下了一行处理记录。你不能说完全没用，也不能说它解决了什么。",
-    stopped: "你没有继续。不是因为事情不重要，而是继续本身已经变成另一种消耗。",
-    backlash: "事情被更多人知道以后，你开始解释自己为什么值得被相信。",
-    left: "你离开了。离开切断了一部分风险，也让你重新承担开始的成本。",
-    limited: "系统留下了一行处理记录。你不能说完全没用，也不能说它解决了什么。"
+    recognized: CHAPTER_ECHOES.C6?.partly_recognized,
+    recorded: CHAPTER_ECHOES.C6?.limited_result,
+    stopped: CHAPTER_ECHOES.C6?.gave_up_process,
+    backlash: CHAPTER_ECHOES.C6?.backlash,
+    left: CHAPTER_ECHOES.C6?.exit_ending_flag,
+    limited: CHAPTER_ECHOES.C6?.limited_result
   };
 
   const c1 = (state.stats.reputation ?? STAT_MAX) <= DANGER_MAX
-    ? "这一次没有通过。你开始找下一份更低要求的机会。"
+    ? CHAPTER_ECHOES.C1?.temp_work_route
     : tags.has("low_salary") || (state.stats.money ?? STAT_MAX) <= 4
-      ? "你获得了一个位置。它可以让你留下来，只是价格比你预想的低。"
+      ? CHAPTER_ECHOES.C1?.low_salary_entry
       : (state.stats.reputation ?? STAT_MAX) <= 4
-        ? "你留下来了。只是从第一天起，你就知道这里对你的容错不多。"
-        : "你获得了一个位置。它暂时接收你，也开始要求你继续证明自己。";
+        ? CHAPTER_ECHOES.C1?.probation_shadow
+        : CHAPTER_ECHOES.C1?.normal_entry;
   const c2 = (state.stats.money ?? STAT_MAX) <= 1
-    ? "你暂时有地方睡觉。它不像答案，更像一个缓冲。"
+    ? CHAPTER_ECHOES.C2?.temporary_home
     : tags.has("contract_risk")
-      ? "房子定下来了。几条没有说清的规则，也跟着你住了进来。"
+      ? CHAPTER_ECHOES.C2?.contract_followup
       : tags.has("high_rent") && (state.stats.money ?? STAT_MAX) <= 3
-        ? "你住得近，也住得贵。安全在余额里留下痕迹。"
+        ? CHAPTER_ECHOES.C2?.rent_pressure
         : tags.has("remote_home") || (state.stats.safety ?? STAT_MAX) <= 4
-          ? "你保住了钱。代价是以后每次回家，都要多经过一段路。"
+          ? CHAPTER_ECHOES.C2?.remote_risk
           : (state.stats.safety ?? 0) >= 7 && !tags.has("contract_risk")
-            ? "你租到了一个相对明亮的房间。有些风险被挡在门外。"
-            : "你租到了一个房间。它可以关门，但不代表完全安全。";
+            ? CHAPTER_ECHOES.C2?.safe_home
+            : CHAPTER_ECHOES.C2?.temporary_home;
   const c3 = (state.stats.safety ?? STAT_MAX) <= DANGER_MAX
-    ? "没有发生什么明确的事。只是你已经开始自动确认身后、车牌、楼层和出口。"
+    ? CHAPTER_ECHOES.C3?.high_alert
     : tags.has("someone_knows") || (state.counters.seekHelp ?? 0) >= 2
-      ? "你让几个人知道自己在哪里。你不再完全独自移动。"
+      ? CHAPTER_ECHOES.C3?.known_route
       : (state.stats.safety ?? STAT_MAX) <= 4 && (state.stats.money ?? 0) >= 4
-        ? "你省下了一些钱，也把更多判断留给了自己。"
+        ? CHAPTER_ECHOES.C3?.watchful_commute
         : (state.counters.detour ?? 0) >= 2 || tags.has("habit_detour") || tags.has("avoid_closed_space") || tags.has("pretend_route")
-          ? "你避开了很多不确定。代价是每一天都比路线显示的更长。"
-          : "这一周，你大多准时到达，也没有把自己耗得太空。";
+          ? CHAPTER_ECHOES.C3?.safe_but_tired
+          : CHAPTER_ECHOES.C3?.low_loss_commute;
   const c4 = (state.stats.reputation ?? STAT_MAX) <= DANGER_MAX || (state.hidden.credit ?? 0) <= -2
-    ? "没有人说你没有做事。他们只是说，这个位置可能需要重新考虑。"
+    ? CHAPTER_ECHOES.C4?.position_loose
     : tags.has("reaction_flag") && (state.stats.reputation ?? STAT_MAX) <= 5
-      ? "有些人开始先评价你的反应，再处理你说的内容。"
+      ? CHAPTER_ECHOES.C4?.reaction_reputation
       : (state.stats.energy ?? STAT_MAX) <= 3 && (state.stats.reputation ?? 0) >= 6
-        ? "你保住了位置。只是下班后，你已经没有力气再解释自己为什么累。"
+        ? CHAPTER_ECHOES.C4?.overworked
         : (state.hidden.credit ?? 0) < 0 || tags.has("missing_contribution")
-          ? "项目留下了成果，也留下了一个很难说清的“我们”。"
+          ? CHAPTER_ECHOES.C4?.credit_unclear
           : (state.hidden.evidence ?? 0) >= 2 || (state.hidden.credit ?? 0) >= 1
-            ? "项目结束了。至少这一次，你做过的事没有完全消失在流程里。"
-            : "项目结束了。至少这一次，你做过的事没有完全消失在流程里。";
+            ? CHAPTER_ECHOES.C4?.work_seen
+            : CHAPTER_ECHOES.C4?.work_seen;
   const c5 = tags.has("unclosed_relation") || (tags.has("private_place") && tags.has("distance_retreat"))
-    ? "关系没有真正结束，只是换成了消息、解释和等待。"
+    ? CHAPTER_ECHOES.C5?.followup_risk
     : tags.has("seen_by_friend") || (state.counters.seekHelp ?? 0) >= 2
-      ? "有几个人知道发生过什么。事情没有因此简单，但你不再完全独自拿着它。"
+      ? CHAPTER_ECHOES.C5?.support_available
       : (state.stats.safety ?? 0) >= 7 && (state.stats.relationship ?? STAT_MAX) <= 3
-        ? "你保护住了一部分自己。代价是很多时候，你只能自己判断自己是不是太紧张。"
+        ? CHAPTER_ECHOES.C5?.safe_isolated
         : tags.has("distance_blurry") || tags.has("distance_retreat")
-          ? "关系还在。只是有些界线没有被说清，之后可能还要你继续解释。"
-          : "你靠近过，也退回来过。至少这一次，你没有把所有不舒服都留给自己。";
+          ? CHAPTER_ECHOES.C5?.blurry_relation
+          : CHAPTER_ECHOES.C5?.stable_distance;
 
   return [
-    `筛选：${c1}`,
-    `房间：${c2}`,
-    `路上：${c3}`,
-    `桌面：${c4}`,
-    `靠近：${c5}`,
-    `窗口：${c6Lines[c6Outcome] ?? c6Lines.limited}`
+    `筛选：${c1 ?? ""}`,
+    `房间：${c2 ?? ""}`,
+    `路上：${c3 ?? ""}`,
+    `桌面：${c4 ?? ""}`,
+    `靠近：${c5 ?? ""}`,
+    `窗口：${c6Lines[c6Outcome] ?? c6Lines.limited ?? ""}`
   ];
 }
 
@@ -329,6 +446,57 @@ export function getIntroEcho(card, state) {
   return buildChapterEchoLines(state)[previousChapterIndex]?.replace(/^[^：]+：/, "") ?? "";
 }
 
+export const ENDING_SITUATIONS = {
+  low_margin: {
+    id: "low_margin",
+    label: "余量耗尽",
+    text: "你走到了这里。不是因为每一步都能承受，而是因为生活没有给你停下来的位置。很多选择不是被你放弃的，是在出现之前就已经变窄了。",
+    concept: "当钱、精力、安全感、关系和自我同时接近下限，人仍然可能继续生活，但很难承受新的意外。这不是个人能力不足，而是处境长期挤压后的低缓冲状态。"
+  },
+  always_ready: {
+    id: "always_ready",
+    label: "风险内化",
+    text: "你没有总是遇到危险。只是路灯、出口、车牌和手机电量，慢慢都变成了要提前确认的事。你不是天生多疑，只是太多选择需要先排除风险。",
+    concept: "当风险长期存在但不一定每次发生，人会把预防风险变成日常习惯。外界看到的可能是“小心”“敏感”“想太多”，处境里的人承担的是持续判断、提前排除和自我保护。"
+  },
+  done_until_empty: {
+    id: "done_until_empty",
+    label: "隐性过劳",
+    text: "事情大多被做完了。邮件发了，材料补了，流程走了，别人也看见了结果。只是有些力气，没有出现在任何记录里。",
+    concept: "有些劳动不会被正式命名，例如补位、整理、解释、安抚、维持流程和修补关系。系统记录结果，却不记录让结果顺利发生的消耗。"
+  },
+  held_alone: {
+    id: "held_alone",
+    label: "独自承担",
+    text: "你尽量不麻烦别人。很多判断、害怕、复盘和补救，最后都留在你自己手里。它们没有变成别人的麻烦，只是变成了你的重量。",
+    concept: "独立不一定是主动选择。有时是因为求助本身需要解释、消耗关系、承担误解，甚至带来新的负担。没有求助不代表没有需要，只是很多压力被留在了个人内部。"
+  },
+  kept_the_room_quiet: {
+    id: "kept_the_room_quiet",
+    label: "回避冲突",
+    text: "你让很多场面顺利过去。笑一下，慢一点，少说一句，事情就能继续。只是有些不舒服没有被处理，只是被你带走了。",
+    concept: "冲突没有发生，不代表问题不存在。很多“顺利”“懂事”“好相处”，是由某个人主动吞下不适、调整语气、维护气氛换来的。这里的回避不是性格缺陷，而是降低风险的处境策略。"
+  },
+  kept_explaining: {
+    id: "kept_explaining",
+    label: "反复自证",
+    text: "你把事情一遍遍拆开，变成时间、截图、记录和说明。它因此更像一个可以处理的问题，也更不像你原本经历的那件事。",
+    concept: "弱位者不只是要说出事实，还要证明自己值得被相信。经历必须被拆成材料、证据和可记录信息，才有机会被处理。反复自证是一种二次消耗，也会让原本的经验被制度格式改写。"
+  },
+  left_the_place: {
+    id: "left_the_place",
+    label: "退出的代价",
+    text: "你切断了一部分风险，也把一部分积累留在身后。离开不是失败，只是退出也有代价。",
+    concept: "退出不是零成本选择。离开可以减少一部分风险，也可能意味着失去收入、住处、关系、积累和重新开始的时间。很多时候，人不是不想离开，而是要先计算自己能不能承受离开的后果。"
+  },
+  apparently_stable: {
+    id: "apparently_stable",
+    label: "表面稳定",
+    text: "没有最坏的事发生。记录也大多正常。只是你知道，这不等于真的轻松。",
+    concept: "没有事故、没有投诉失败、没有明显崩溃，并不等于没有消耗。很多处境之所以难被看见，正是因为它们最终呈现为“正常”“稳定”“没什么事”。"
+  }
+};
+
 export function resolvePassStyle(state) {
   const dangerous = STAT_KEYS.filter((key) => (state.stats[key] ?? STAT_MAX) <= DANGER_MAX);
   const counters = state.counters ?? {};
@@ -336,66 +504,34 @@ export function resolvePassStyle(state) {
   const routeStrategyCount = (counters.detour ?? 0) + (counters.paidSafety ?? 0) + (counters.seekHelp ?? 0);
 
   if (dangerous.length >= 3) {
-    return {
-      id: "struggling",
-      label: "勉强通关",
-      text: "你走到了这里。不是因为每一步都可承受，而是因为生活经常要求人在不可承受时继续。"
-    };
+    return ENDING_SITUATIONS.low_margin;
   }
 
   if ((state.stats.safety ?? STAT_MAX) <= DANGER_MAX || routeStrategyCount >= 10) {
-    return {
-      id: "high-alert",
-      label: "高警觉通关",
-      text: "你学会了提前判断路线、距离、灯光、出口和身后的人。你没有总是遇到危险，但你总是在准备。"
-    };
+    return ENDING_SITUATIONS.always_ready;
   }
 
   if (((state.stats.energy ?? STAT_MAX) <= DANGER_MAX && (state.stats.reputation ?? 0) >= 6) || (counters.concede ?? 0) >= 5) {
-    return {
-      id: "overworked",
-      label: "过劳通关",
-      text: "你完成了很多事。它们让你留下来，也把你一点点耗空。"
-    };
+    return ENDING_SITUATIONS.done_until_empty;
   }
 
   if ((state.stats.relationship ?? STAT_MAX) <= DANGER_MAX && (counters.seekHelp ?? 0) <= 1) {
-    return {
-      id: "isolated",
-      label: "孤立通关",
-      text: "你尽量不麻烦别人。于是很多判断、恐惧和补救，都由你一个人完成。"
-    };
+    return ENDING_SITUATIONS.held_alone;
   }
 
   if ((state.stats.reputation ?? 0) >= 8 && (state.stats.self ?? STAT_MAX) <= 3 && ((counters.silence ?? 0) + (counters.concede ?? 0)) >= 6) {
-    return {
-      id: "low-conflict",
-      label: "低冲突通关",
-      text: "你尽量不让场面变难看。很多事情因此顺利过去，也有很多事情没有真正被处理。"
-    };
+    return ENDING_SITUATIONS.kept_the_room_quiet;
   }
 
   if ((state.stats.self ?? 0) >= 8 && ((counters.explain ?? 0) + (counters.evidenceSaved ?? 0)) >= 6) {
-    return {
-      id: "appeal",
-      label: "申诉通关",
-      text: "你坚持把事情说清楚。你得到了一部分记录，也支付了很多继续说下去的成本。"
-    };
+    return ENDING_SITUATIONS.kept_explaining;
   }
 
   if (tags.includes("exit_cost")) {
-    return {
-      id: "exited",
-      label: "退出通关",
-      text: "你切断了一部分风险。离开不是失败，但它让你重新承担开始的成本。"
-    };
+    return ENDING_SITUATIONS.left_the_place;
   }
 
-  return {
-    id: "stable",
-    label: "稳定通关",
-    text: "你避开了最坏的结果，也没有真正轻松。系统称之为稳定。"
-  };
+  return ENDING_SITUATIONS.apparently_stable;
 }
 
 export function buildCostLines(state) {
@@ -403,18 +539,18 @@ export function buildCostLines(state) {
   const counters = state.counters ?? {};
   const hidden = state.hidden ?? {};
   const candidates = [
-    { priority: stats.money <= 3 ? stats.money : Infinity, text: "你保住了一些安全，代价是余额越来越薄。" },
-    { priority: stats.money >= 7 && stats.safety <= 3 ? stats.safety : Infinity, text: "你保住了钱，代价是把更多风险留给自己判断。" },
-    { priority: stats.safety <= 3 ? stats.safety : Infinity, text: "你没有一直遇到危险，但你一直在为危险做准备。" },
-    { priority: stats.energy <= 3 ? stats.energy : Infinity, text: "你完成了很多处理，也失去了解释更多的力气。" },
-    { priority: stats.reputation <= 3 ? stats.reputation : Infinity, text: "有些评价没有被说出口，但它们改变了后面的门槛。" },
-    { priority: stats.relationship <= 3 ? stats.relationship : Infinity, text: "你尽量不麻烦别人，结果很多事只能自己接住。" },
-    { priority: stats.self <= 3 ? stats.self : Infinity, text: "你让很多场面顺利过去，也让很多不舒服留在自己这里。" },
-    { priority: stats.self >= 8 && stats.energy <= 3 ? stats.energy + 0.25 : Infinity, text: "你坚持了很多次，只是每一次坚持都要继续消耗你。" },
-    { priority: hidden.evidence >= 4 ? 4 : Infinity, text: "你留下了很多记录。它们保护了你，也要求你反复回到那些时刻。" },
-    { priority: counters.concede >= 3 ? 4.1 : Infinity, text: "你让事情继续往前走，代价是自己往后退了很多次。" },
-    { priority: counters.silence >= 3 ? 4.2 : Infinity, text: "你减少了冲突，也减少了被看见的机会。" },
-    { priority: counters.seekHelp >= 3 ? 4.3 : Infinity, text: "你让别人知道了你的位置和经历，也消耗了很多关系。" }
+    { priority: stats.money <= 3 ? stats.money : Infinity, text: "你花钱换过安全，也因此失去了一些选择。" },
+    { priority: stats.money >= 7 && stats.safety <= 3 ? stats.safety : Infinity, text: "钱留下来了，判断也更多地留给了你。" },
+    { priority: stats.safety <= 3 ? stats.safety : Infinity, text: "很多事没有发生，但你已经为它们准备过很多次。" },
+    { priority: stats.energy <= 3 ? stats.energy : Infinity, text: "你把流程走完了，但已经没有力气再讲一遍。" },
+    { priority: stats.reputation <= 3 ? stats.reputation : Infinity, text: "有些门没有关上，只是变得更难推开。" },
+    { priority: stats.relationship <= 3 ? stats.relationship : Infinity, text: "你尽量少麻烦别人，很多事就留在了自己手里。" },
+    { priority: stats.self <= 3 ? stats.self : Infinity, text: "场面过去了，有些不舒服也跟着你走了。" },
+    { priority: stats.self >= 8 && stats.energy <= 3 ? stats.energy + 0.25 : Infinity, text: "你说清楚了很多次，也把自己带回那些时刻很多次。" },
+    { priority: hidden.evidence >= 4 ? 4 : Infinity, text: "你留下了很多记录。它们保护你，也让你反复回到那里。" },
+    { priority: counters.concede >= 3 ? 4.1 : Infinity, text: "事情继续往前走，你往后退了一些。" },
+    { priority: counters.silence >= 3 ? 4.2 : Infinity, text: "冲突少了一些，没说出口的也多了一些。" },
+    { priority: counters.seekHelp >= 3 ? 4.3 : Infinity, text: "有人知道你在哪里，也知道你经历过什么。关系因此更近，也更重。" }
   ];
   const lines = candidates
     .filter((item) => Number.isFinite(item.priority))
@@ -459,52 +595,76 @@ function buildStatusSummaryLines(state) {
   return STAT_KEYS.map((key) => `${STAT_LABELS[key]}：${getStateWord(state.stats[key] ?? 0)}`);
 }
 
-export function getEndingDisplay(card, state) {
-  if (card.id === "E-01") {
-    return { ...card, lines: buildChapterEchoLines(state) };
+function buildStatusSummaryItems(state) {
+  return STAT_KEYS.map((key) => ({
+    key,
+    label: STAT_LABELS[key],
+    word: getStateWord(state.stats[key] ?? 0)
+  }));
+}
+
+function buildChapterTimelineItems(state) {
+  return buildChapterEchoLines(state).map((line) => {
+    const [chapter, ...rest] = line.split("：");
+    return {
+      chapter,
+      text: rest.join("：")
+    };
+  });
+}
+
+function templateLines(template = "", replacements = {}) {
+  let text = template;
+  for (const [key, value] of Object.entries(replacements)) {
+    text = text.replaceAll(`{${key}}`, Array.isArray(value) ? value.join("\n") : String(value));
   }
-  if (card.id === "E-02") {
+  return text.split("\n").filter((line) => line !== "");
+}
+
+export function getEndingDisplay(card, state) {
+  const sourceCard = { ...getCardById(card.id), ...card };
+
+  if (sourceCard.id === "E-01") {
+    return { ...sourceCard, lines: [], timelineItems: buildChapterTimelineItems(state) };
+  }
+  if (sourceCard.id === "E-02") {
     const counterLines = buildTopCounterLines(state);
     return {
-      ...card,
-      lines: [
-        ...buildEndingStatusLines(state),
-        "本次记录：",
-        ...(counterLines.length > 0 ? counterLines : ["没有明显重复的记录。"]),
-        "有些选择不是你不想选。",
-        ...buildBlockedChoiceLines(state)
-      ]
+      ...sourceCard,
+      lines: [],
+      statusItems: buildStatusSummaryItems(state),
+      counterLines: counterLines.length > 0 ? counterLines : ["没有明显重复的记录。"],
+      blockedChoiceLines: buildBlockedChoiceLines(state)
     };
   }
-  if (card.id === "E-03") {
+  if (sourceCard.id === "E-03") {
     return {
-      ...card,
-      lines: ["年龄：27", "职业：普通职员", "城市：普通城市", "收入：普通", "家庭：普通", "关系状态：普通"]
+      ...sourceCard,
+      lines: templateLines(sourceCard.content)
     };
   }
-  if (card.id === "E-04") {
+  if (sourceCard.id === "E-04") {
     const style = resolvePassStyle(state);
     return {
-      ...card,
-      lines: [
-        `通关方式：${style.label}`,
-        "难度：普通",
-        style.text,
-        "状态：",
-        ...buildStatusSummaryLines(state),
-        "本次代价：",
-        ...buildCostLines(state),
-        "女性不是一种性格。",
-        "女性是一种处境。",
-        "当一个人长期处在需要被评价、被相信、被允许、被保护、被解释的位置，",
-        "她就会学会谨慎、计算、讨好、沉默、留证和提前道歉。",
-        "这不是因为她天生如此。",
-        "是因为世界经常这样要求她。",
-        "你已经学会了普通生活。"
-      ]
+      ...sourceCard,
+      text: "",
+      lines: [],
+      finalReport: {
+        situation: style,
+        costLines: buildCostLines(state),
+        concept: style.concept,
+        themeLines: [
+          "女性不是一种性格，也不只是一组特征。",
+          "在很多时候，女性意味着一种被反复放置的位置。",
+          "当一个人长期处在需要被评价、被相信、被允许、被保护、被解释的位置，她就会学会谨慎、计算、讨好、沉默、留证和提前道歉。",
+          "这不是因为她天生如此。",
+          "是因为世界经常这样要求她。"
+        ],
+        finalLine: "你已经学会了普通生活。"
+      }
     };
   }
-  return { ...card, lines: [] };
+  return { ...sourceCard, lines: [] };
 }
 
 export function getSettlementDisplay(card, state) {
@@ -524,20 +684,20 @@ export function getSettlementDisplay(card, state) {
 }
 
 export function startGame(state) {
-  return {
+  return recordView({
     ...state,
     phase: "intro",
     currentCardId: "P-I",
     pendingResult: null,
     visibleStats: []
-  };
+  }, state);
 }
 
 export function applyChoice(state, choice) {
   const card = getCardById(state.currentCardId);
   const aftermath = getChoiceAftermath(state, choice);
 
-  return {
+  return recordView({
     ...state,
     phase: "result",
     stats: addStatValues(state.stats, choice.effects),
@@ -558,7 +718,7 @@ export function applyChoice(state, choice) {
         chapterId: card?.chapterId ?? ""
       }
     ]
-  };
+  }, state);
 }
 
 function resolveSettlementState(state, nextCard) {
@@ -686,7 +846,7 @@ export function advanceAfterResult(state) {
   const outcomeState = resolveOutcomeState(state, state.currentCardId);
   const resolvedState = resolveSettlementState(outcomeState, nextCard);
 
-  return {
+  return recordView({
     ...resolvedState,
     phase: phaseForCard(nextCard),
     currentCardId: nextId,
@@ -695,5 +855,5 @@ export function advanceAfterResult(state) {
     triggeredInserts: inserted ? [...state.triggeredInserts, inserted.id] : state.triggeredInserts,
     triggeredCrises: crisis ? [...(state.triggeredCrises ?? []), crisisKey(currentCard, crisis)] : state.triggeredCrises ?? [],
     returnCardId: crisis ? mainlineNextId : currentCard?.crisis ? null : state.returnCardId ?? null
-  };
+  }, state);
 }

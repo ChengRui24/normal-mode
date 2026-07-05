@@ -131,7 +131,7 @@ describe("level data", () => {
       chapterTitle: "第一章：筛选",
       kicker: "第一章",
       title: "筛选",
-      text: "你需要一个位置。表格、照片、问题和等待区，会比你先开口。这里不会只看你会做什么，也看你是不是适合被放进来。",
+      text: "你需要一个位置。表格、照片、问题和等待区，会比你先开口。这里会看你会做什么，也会看你会不会让流程停下来。",
       objective: "目标：获得一个位置。",
       buttonLabel: "进入筛选",
       theme: {
@@ -165,7 +165,7 @@ describe("level data", () => {
     );
   });
 
-  it("uses v0.7 short-mainline scene copy without changing choice configuration", () => {
+  it("uses v0.8 short-mainline scene copy without changing choice configuration", () => {
     expect(getCardById("P-01").scene).toBe(
       "今天有一场重要见面。你站在镜子前，灯光把衣服上的褶皱照得很清楚。有人说过你“不够认真”，也有人说过你“太用力”。时间不多了，你要决定怎么出门。"
     );
@@ -176,7 +176,7 @@ describe("level data", () => {
       "系统给出结果：证据不足，但会提醒相关人员注意。你不能说它完全没用，也不能说它解决了什么。页面上显示“已处理”。这个词很短，短到装不下你花掉的时间。"
     );
     expect(getCardById("CR-self").scene).toBe(
-      "你知道自己不愿意。只是拒绝这件事本身也需要力气。边界还在心里，要说出来却要再多撑一下。"
+      "你知道自己不愿意，但拒绝这件事本身也需要力气。"
     );
     expect(getCardById("C6-08").choices.map((choice) => choice.id)).toEqual([
       "accept",

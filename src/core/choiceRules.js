@@ -1,3 +1,5 @@
+import { REQUIREMENT_REASON_MAP } from "../data/textConfig.js";
+
 export function getDisabledReason(choice, state) {
   const requirements = choice.requirements;
   if (!requirements) return "";
@@ -5,7 +7,7 @@ export function getDisabledReason(choice, state) {
   if (requirements.minStats) {
     for (const [key, min] of Object.entries(requirements.minStats)) {
       if ((state.stats[key] ?? 0) < min) {
-        return requirements.reason ?? "条件不足";
+        return requirements.reason ?? REQUIREMENT_REASON_MAP[key] ?? "条件不足";
       }
     }
   }
