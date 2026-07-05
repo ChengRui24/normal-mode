@@ -7,6 +7,7 @@ import {
   buildChapterEchoLines,
   buildEndingStats,
   buildBlockedChoiceLines,
+  getChoiceAftermath,
   getEndingDisplay,
   getVisibleStatsForCard,
   resolvePassStyle,
@@ -18,7 +19,7 @@ describe("game engine choice application", () => {
   it("starts ordinary difficulty stats on the approved 0-12 scale", () => {
     expect(createInitialState().stats).toEqual({
       reputation: 6,
-      money: 6,
+      money: 5,
       safety: 6,
       energy: 7,
       relationship: 5,
@@ -46,7 +47,7 @@ describe("game engine choice application", () => {
     });
 
     expect(next.phase).toBe("result");
-    expect(next.stats.money).toBe(4);
+    expect(next.stats.money).toBe(3);
     expect(next.stats.safety).toBe(7);
     expect(next.hidden.time).toBe(1);
     expect(next.tags).toContain("platform_trip");
@@ -54,7 +55,8 @@ describe("game engine choice application", () => {
     expect(next.pendingResult).toEqual({
       cardId: "C3-04",
       choiceId: "taxi",
-      text: "你不用走夜路了，但余额又少了一截。"
+      text: "你不用走夜路了，但余额又少了一截。",
+      aftermath: "余额变薄了。"
     });
     expect(next.history[0]).toMatchObject({
       cardId: "C3-04",
@@ -114,6 +116,38 @@ describe("game engine choice application", () => {
     expect(state.history).toEqual([{ cardId: "P-01", choiceId: "formal", chapterId: "P" }]);
     expect(next.history).toHaveLength(2);
   });
+
+  it("builds natural aftermath lines without exposing numeric changes", () => {
+    const base = createInitialState();
+
+    expect(getChoiceAftermath({
+      ...base,
+      stats: { ...base.stats, safety: 5 }
+    }, {
+      effects: { safety: -2 }
+    })).toBe("你开始更留意周围。");
+
+    expect(getChoiceAftermath(base, {
+      effects: { safety: -2 }
+    })).toBe("路线、出口和身后的人，变得更难忽略。");
+
+    expect(getChoiceAftermath({
+      ...base,
+      stats: { ...base.stats, reputation: 6 }
+    }, {
+      effects: { reputation: -2 }
+    })).toBe("有些话开始需要多说一遍。");
+
+    expect(getChoiceAftermath(base, {
+      effects: { reputation: -1, self: 1 },
+      hiddenEffects: { evidence: 2 },
+      track: { evidenceSaved: 1 }
+    })).toBe("这件事会留下来。");
+
+    expect(getChoiceAftermath(base, {
+      effects: { safety: 1 }
+    })).toBe("");
+  });
 });
 
 describe("game engine visible stats", () => {
@@ -164,7 +198,7 @@ describe("game engine progression", () => {
     const next = advanceAfterResult(state);
 
     expect(next.phase).toBe("choice");
-    expect(next.currentCardId).toBe("P-02");
+    expect(next.currentCardId).toBe("P-04");
     expect(next.pendingResult).toBe(null);
   });
 
@@ -178,28 +212,23 @@ describe("game engine progression", () => {
 
     const next = advanceAfterResult(state);
 
-    expect(next.currentCardId).toBe("P-S");
-    expect(next.phase).toBe("settlement");
-    expect(next.visibleStats).toEqual([]);
+    expect(next.currentCardId).toBe("C1-I");
+    expect(next.phase).toBe("intro");
+    expect(next.visibleStats).toEqual(["reputation"]);
 
-    const chapterStart = advanceAfterResult(next);
-
-    expect(chapterStart.currentCardId).toBe("C1-I");
-    expect(chapterStart.phase).toBe("intro");
-    expect(chapterStart.visibleStats).toEqual(["reputation"]);
-
-    const firstChapterCard = advanceAfterResult(chapterStart);
+    const firstChapterCard = advanceAfterResult(next);
 
     expect(firstChapterCard.currentCardId).toBe("C1-01");
     expect(firstChapterCard.phase).toBe("choice");
     expect(firstChapterCard.visibleStats).toEqual(["reputation"]);
   });
 
-  it("uses intro phase between settlement and the next chapter", () => {
+  it("uses intro phase between short chapters without settlement cards", () => {
     const state = {
       ...createInitialState(),
-      phase: "settlement",
-      currentCardId: "C1-S"
+      phase: "result",
+      currentCardId: "C1-07",
+      pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
@@ -209,21 +238,91 @@ describe("game engine progression", () => {
     expect(next.visibleStats).toEqual(["reputation", "money"]);
   });
 
-  it("inserts an eligible risk card before the next mainline card", () => {
+  it("routes to the platform-trip card when the player took a taxi", () => {
     const state = {
       ...createInitialState(),
       phase: "result",
       currentCardId: "C3-04",
-      visibleStats: ["reputation", "money", "safety"],
-      stats: { ...createInitialState().stats, safety: 2 },
-      tags: ["low_battery", "night_quiet_route"],
+      tags: ["platform_trip"],
       pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
 
-    expect(next.currentCardId).toBe("I-C3-footsteps");
-    expect(next.triggeredInserts).toContain("I-C3-footsteps");
+    expect(next.currentCardId).toBe("C3-05");
+    expect(next.phase).toBe("choice");
+  });
+
+  it("routes to the building card when the player did not take a taxi", () => {
+    const state = {
+      ...createInitialState(),
+      phase: "result",
+      currentCardId: "C3-04",
+      tags: ["habit_detour"],
+      pendingResult: { text: "完成" }
+    };
+
+    const next = advanceAfterResult(state);
+
+    expect(next.currentCardId).toBe("C3-06");
+    expect(next.phase).toBe("choice");
+  });
+
+  it("continues from either chapter 3 replacement card to chapter 4", () => {
+    for (const currentCardId of ["C3-05", "C3-06"]) {
+      const next = advanceAfterResult({
+        ...createInitialState(),
+        phase: "result",
+        currentCardId,
+        pendingResult: { text: "完成" }
+      });
+
+      expect(next.currentCardId).toBe("C4-I");
+      expect(next.phase).toBe("intro");
+    }
+  });
+
+  it("routes chapter 4 to the reaction card when conflict is high", () => {
+    const state = {
+      ...createInitialState(),
+      phase: "result",
+      currentCardId: "C4-04",
+      hidden: { ...createInitialState().hidden, conflict: 2 },
+      pendingResult: { text: "完成" }
+    };
+
+    const next = advanceAfterResult(state);
+
+    expect(next.currentCardId).toBe("C4-06");
+    expect(next.phase).toBe("choice");
+  });
+
+  it("routes chapter 4 to performance materials without conflict flags", () => {
+    const state = {
+      ...createInitialState(),
+      phase: "result",
+      currentCardId: "C4-04",
+      pendingResult: { text: "完成" }
+    };
+
+    const next = advanceAfterResult(state);
+
+    expect(next.currentCardId).toBe("C4-07");
+    expect(next.phase).toBe("choice");
+  });
+
+  it("continues from either chapter 4 replacement card to chapter 5", () => {
+    for (const currentCardId of ["C4-06", "C4-07"]) {
+      const next = advanceAfterResult({
+        ...createInitialState(),
+        phase: "result",
+        currentCardId,
+        pendingResult: { text: "完成" }
+      });
+
+      expect(next.currentCardId).toBe("C5-I");
+      expect(next.phase).toBe("intro");
+    }
   });
 
   it("inserts a stat crisis card once when a stat first becomes dangerous", () => {
@@ -239,8 +338,8 @@ describe("game engine progression", () => {
 
     expect(next.currentCardId).toBe("CR-money");
     expect(next.phase).toBe("choice");
-    expect(next.returnCardId).toBe("C2-02");
-    expect(next.triggeredCrises).toEqual(["money"]);
+    expect(next.returnCardId).toBe("C2-03");
+    expect(next.triggeredCrises).toEqual(["C2:money"]);
   });
 
   it("returns from a crisis card to the stored mainline card", () => {
@@ -248,14 +347,14 @@ describe("game engine progression", () => {
       ...createInitialState(),
       phase: "result",
       currentCardId: "CR-money",
-      returnCardId: "C2-02",
-      triggeredCrises: ["money"],
+      returnCardId: "C2-03",
+      triggeredCrises: ["C2:money"],
       pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
 
-    expect(next.currentCardId).toBe("C2-02");
+    expect(next.currentCardId).toBe("C2-03");
     expect(next.phase).toBe("choice");
     expect(next.returnCardId).toBe(null);
   });
@@ -266,29 +365,14 @@ describe("game engine progression", () => {
       phase: "result",
       currentCardId: "C2-01",
       stats: { ...createInitialState().stats, money: 2 },
-      triggeredCrises: ["money"],
+      triggeredCrises: ["C2:money"],
       pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
 
-    expect(next.currentCardId).toBe("C2-02");
-    expect(next.triggeredCrises).toEqual(["money"]);
-  });
-
-  it("continues from an inserted card back to the next mainline card", () => {
-    const state = {
-      ...createInitialState(),
-      phase: "result",
-      currentCardId: "I-C3-footsteps",
-      visibleStats: ["reputation", "money", "safety"],
-      triggeredInserts: ["I-C3-footsteps"],
-      pendingResult: { text: "完成" }
-    };
-
-    const next = advanceAfterResult(state);
-
-    expect(next.currentCardId).toBe("C3-05");
+    expect(next.currentCardId).toBe("C2-03");
+    expect(next.triggeredCrises).toEqual(["C2:money"]);
   });
 
   it("throws when advancing from an unknown current card", () => {
@@ -301,40 +385,39 @@ describe("game engine progression", () => {
     expect(() => advanceAfterResult(state)).toThrow(/missing-card/);
   });
 
-  it("skips an already triggered insert without duplicating it", () => {
+  it("limits crisis cards to two per playthrough", () => {
     const state = {
       ...createInitialState(),
       phase: "result",
       currentCardId: "C3-04",
-      visibleStats: ["reputation", "money", "safety"],
       stats: { ...createInitialState().stats, safety: 2 },
-      tags: ["low_battery", "night_quiet_route"],
-      triggeredInserts: ["I-C3-footsteps"],
-      triggeredCrises: ["safety"],
+      triggeredCrises: ["C1:reputation", "C2:money"],
       pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
 
-    expect(next.currentCardId).toBe("C3-05");
-    expect(next.triggeredInserts).toEqual(["I-C3-footsteps"]);
+    expect(next.currentCardId).toBe("C3-06");
+    expect(next.triggeredCrises).toEqual(["C1:reputation", "C2:money"]);
   });
 
-  it("uses settlement phase when the next card is a settlement", () => {
+  it("limits crisis cards to one per chapter", () => {
     const state = {
       ...createInitialState(),
       phase: "result",
-      currentCardId: "C1-07",
+      currentCardId: "C3-04",
+      stats: { ...createInitialState().stats, safety: 2 },
+      triggeredCrises: ["C3:money"],
       pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
 
-    expect(next.currentCardId).toBe("C1-S");
-    expect(next.phase).toBe("settlement");
+    expect(next.currentCardId).toBe("C3-06");
+    expect(next.triggeredCrises).toEqual(["C3:money"]);
   });
 
-  it("records chapter 6 outcome and applies its counters when entering the settlement", () => {
+  it("records chapter 6 outcome and applies its counters when entering the ending", () => {
     const state = {
       ...createInitialState(),
       phase: "result",
@@ -354,8 +437,8 @@ describe("game engine progression", () => {
 
     const next = advanceAfterResult(state);
 
-    expect(next.currentCardId).toBe("C6-S");
-    expect(next.phase).toBe("settlement");
+    expect(next.currentCardId).toBe("E-01");
+    expect(next.phase).toBe("ending");
     expect(next.chapterOutcomes.C6).toEqual({
       id: "backlash",
       label: "反噬",
@@ -367,8 +450,8 @@ describe("game engine progression", () => {
   it("does not resolve chapter 6 outcome more than once", () => {
     const state = {
       ...createInitialState(),
-      phase: "settlement",
-      currentCardId: "C6-S",
+      phase: "result",
+      currentCardId: "C6-08",
       chapterOutcomes: {
         C6: { id: "backlash", label: "反噬", counters: { explain: 3 } }
       },
@@ -377,28 +460,23 @@ describe("game engine progression", () => {
 
     const next = advanceAfterResult(state);
 
-    expect(next.currentCardId).toBe("E-I");
+    expect(next.currentCardId).toBe("E-01");
     expect(next.counters.explain).toBe(5);
     expect(next.chapterOutcomes.C6).toEqual(state.chapterOutcomes.C6);
   });
 
-  it("uses ending phase when advancing from the final settlement", () => {
+  it("uses ending phase when advancing from the final level", () => {
     const state = {
       ...createInitialState(),
       phase: "result",
-      currentCardId: "C6-S",
+      currentCardId: "C6-08",
       pendingResult: { text: "完成" }
     };
 
     const next = advanceAfterResult(state);
 
-    expect(next.currentCardId).toBe("E-I");
-    expect(next.phase).toBe("intro");
-
-    const endingStart = advanceAfterResult(next);
-
-    expect(endingStart.currentCardId).toBe("E-01");
-    expect(endingStart.phase).toBe("ending");
+    expect(next.currentCardId).toBe("E-01");
+    expect(next.phase).toBe("ending");
   });
 
   it("keeps ending phase when advancing between ending cards", () => {
@@ -624,7 +702,11 @@ describe("settlements and ending statistics", () => {
   it("builds chapter echo lines from recorded tags and chapter 6 outcome", () => {
     const state = {
       ...createInitialState(),
-      tags: ["low_salary", "remote_home", "night_quiet_route", "visible_work", "support_network"],
+      stats: {
+        ...createInitialState().stats,
+        safety: 2
+      },
+      tags: ["low_salary", "remote_home", "night_quiet_route", "visible_work", "seen_by_friend"],
       chapterOutcomes: {
         C6: { id: "backlash", label: "反噬", counters: { explain: 3 } }
       }

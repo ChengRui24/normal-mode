@@ -23,9 +23,11 @@ describe("renderGame", () => {
     expect(root.querySelector(".home-card")).not.toBe(null);
     expect(root.textContent).toContain("普通难度");
     expect(root.textContent).toContain("一段普通生活记录");
-    expect(root.textContent).toContain("做出你的选择");
-    expect(root.textContent).toContain("没有标准答案");
-    expect(root.textContent).toContain("只有后续的结果");
+    expect(root.textContent).toContain("读文字。");
+    expect(root.textContent).toContain("做选择。");
+    expect(root.textContent).toContain("继续。");
+    expect(root.textContent).toContain("没有标准答案。");
+    expect(root.textContent).toContain("只有之后发生的事。");
     expect(root.textContent).toContain("无需登录");
     expect(root.textContent).toContain("建议竖屏");
     expect(root.querySelector(".restart-button")).toBe(null);
@@ -84,10 +86,10 @@ describe("renderGame", () => {
     });
 
     expect(root.textContent).toContain("第三章");
-    expect(root.textContent).toContain("第三章：路上 · 4/7");
+    expect(root.textContent).toContain("第三章：路上 · 2/3");
     expect(root.textContent).toContain("加班后的路线");
     expect(root.querySelector(".game-card")?.getAttribute("style")).toContain("--chapter-primary: #65798A");
-    expect(root.querySelectorAll(".progress-dot")).toHaveLength(7);
+    expect(root.querySelectorAll(".progress-dot")).toHaveLength(3);
     expect(root.querySelectorAll(".progress-dot.is-current")).toHaveLength(1);
     expect(root.querySelectorAll("button.choice-button").length).toBeGreaterThanOrEqual(2);
   });
@@ -119,8 +121,12 @@ describe("renderGame", () => {
     expect(root.querySelector(".game-card")).toBe(gameCard);
     expect(onChoose).toHaveBeenCalledTimes(1);
     expect(root.querySelectorAll("button.choice-button").length).toBe(0);
-    expect(root.querySelector(".selected-choice")?.textContent).toContain("继续申诉");
+    expect(root.querySelector(".selected-choice")?.textContent).toBe("[继续申诉]");
     expect(root.textContent).toContain("你继续往下走。每多走一步，都要再支付一点生活。");
+    expect(root.textContent).toContain("（你开始只处理最急的部分。）");
+    expect(root.querySelector(".aftermath-text")).not.toBe(null);
+    expect(root.querySelector(".stat-strip")?.textContent).toContain("精力：紧张");
+    expect(root.querySelector(".stat-strip")?.textContent).toContain("钱：紧张");
 
     root.querySelector("button.continue-button")?.click();
     expect(onContinue).toHaveBeenCalledTimes(1);
@@ -149,7 +155,7 @@ describe("renderGame", () => {
     expect(resultPanel).not.toBe(null);
     const selected = root.querySelector(".selected-choice");
     expect(selected).not.toBe(null);
-    expect(selected?.textContent).toContain("继续申诉");
+    expect(selected?.textContent).toBe("[继续申诉]");
     expect(selected?.tagName).toBe("P");
     expect(resultPanel?.contains(selected)).toBe(true);
     expect(root.querySelector("button.selected-choice")).toBe(null);
@@ -160,6 +166,30 @@ describe("renderGame", () => {
     expect(root.textContent).not.toContain("精力 -2");
     expect(root.textContent).not.toContain("新增状态");
     expect(root.querySelectorAll(".change-line").length).toBe(0);
+  });
+
+  it("renders saved aftermath text on a result card when present", () => {
+    const root = document.createElement("main");
+
+    renderGame(root, {
+      state: {
+        ...createInitialState(),
+        phase: "result",
+        currentCardId: "C3-04",
+        pendingResult: {
+          choiceId: "taxi",
+          text: "你坐进车里，不用经过那段路。价格比白天更像一张提醒。",
+          aftermath: "余额变薄了。"
+        }
+      },
+      onChoose: vi.fn(),
+      onContinue: vi.fn(),
+      onRestart: vi.fn()
+    });
+
+    expect(root.textContent).toContain("（余额变薄了。）");
+    expect(root.querySelector(".aftermath-text")?.textContent).toBe("（余额变薄了。）");
+    expect(root.textContent).not.toContain("钱 -2");
   });
 
   it("renders dynamic ending lines without raw score numbers", () => {
@@ -253,25 +283,24 @@ describe("renderGame", () => {
     expect(onRestart).toHaveBeenCalledTimes(1);
   });
 
-  it("renders chapter 6 settlement outcome when it has been resolved", () => {
+  it("renders previous chapter echo on chapter intro cards", () => {
     const root = document.createElement("main");
 
     renderGame(root, {
       state: {
         ...createInitialState(),
-        phase: "settlement",
-        currentCardId: "C6-S",
-        chapterOutcomes: {
-          C6: { id: "backlash", label: "反噬", counters: { explain: 3 } }
-        }
+        phase: "intro",
+        currentCardId: "C2-I",
+        tags: ["low_salary"]
       },
       onChoose: vi.fn(),
       onContinue: vi.fn(),
       onRestart: vi.fn()
     });
 
-    expect(root.textContent).toContain("处理结果：解释次数继续增加。");
-    expect(root.querySelectorAll(".ending-line").length).toBe(1);
+    expect(root.textContent).toContain("上一段记录：");
+    expect(root.textContent).toContain("它可以让你留下来，只是价格比你预想的低。");
+    expect(root.querySelector(".intro-echo")).not.toBe(null);
   });
 
   it("renders visible stats as a compact line without a prefix", () => {
@@ -292,7 +321,7 @@ describe("renderGame", () => {
     const statText = root.querySelector(".stat-strip")?.textContent;
     expect(statText).not.toContain("记录：");
     expect(statText).toContain("信誉：稳定");
-    expect(statText).toContain("钱：稳定");
+    expect(statText).toContain("钱：紧张");
     expect(root.querySelector(".stat-pill")).toBe(null);
   });
 
