@@ -79,7 +79,10 @@ export const HIDDEN_KEYS = [
   "evidence",
   "exposure",
   "credit",
-  "conflict"
+  "conflict",
+  "lockChanged",
+  "askedPermission",
+  "keyUncertain"
 ];
 
 export const STATE_WORDS = [

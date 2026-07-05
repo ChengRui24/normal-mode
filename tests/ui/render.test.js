@@ -126,7 +126,7 @@ describe("renderGame", () => {
     expect(historyButtons[1].textContent).toBe("下一页 →");
     expect(historyButtons[0].disabled).toBe(false);
     expect(historyButtons[1].disabled).toBe(false);
-    expect(root.textContent).toContain("[走近路]");
+    expect(root.textContent).toContain("[先发消息说明已经到楼下]");
     expect(root.querySelector(".result-panel")).not.toBe(null);
     expect(root.querySelectorAll(".choice-button")).toHaveLength(0);
 
@@ -165,7 +165,7 @@ describe("renderGame", () => {
     expect(onChoose).toHaveBeenCalledTimes(1);
     expect(root.querySelectorAll("button.choice-button").length).toBe(0);
     expect(root.querySelector(".selected-choice")?.textContent).toBe("[继续申诉]");
-    expect(root.textContent).toContain("你继续往下走。每多走一步，都要再花掉一点生活。");
+    expect(root.textContent).toContain("你点开申诉入口，又开始整理时间、截图和说明。系统允许你继续，也要求你再说一遍。");
     expect(root.textContent).toContain("（你开始只处理最急的部分）");
     expect(root.querySelector(".aftermath-text")).not.toBe(null);
     expect(root.querySelector(".stat-strip")?.textContent).toContain("精力：紧张");
@@ -185,7 +185,7 @@ describe("renderGame", () => {
         currentCardId: "C6-08",
         pendingResult: {
           choiceId: "appeal",
-          text: "你继续往下走。每多走一步，都要再支付一点生活。"
+          text: "你点开申诉入口，又开始整理时间、截图和说明。系统允许你继续，也要求你再说一遍。"
         }
       },
       onChoose: vi.fn(),
@@ -193,7 +193,7 @@ describe("renderGame", () => {
       onRestart: vi.fn()
     });
 
-    expect(root.textContent).toContain("系统给出结果：证据不足");
+    expect(root.textContent).toContain("未发现明确违规");
     const resultPanel = root.querySelector(".result-panel");
     expect(resultPanel).not.toBe(null);
     const selected = root.querySelector(".selected-choice");
@@ -203,7 +203,7 @@ describe("renderGame", () => {
     expect(resultPanel?.contains(selected)).toBe(true);
     expect(root.querySelector("button.selected-choice")).toBe(null);
     expect(root.querySelectorAll("button.choice-button").length).toBe(0);
-    expect(root.textContent).toContain("你继续往下走。每多走一步，都要再支付一点生活。");
+    expect(root.textContent).toContain("你点开申诉入口，又开始整理时间、截图和说明。系统允许你继续，也要求你再说一遍。");
     expect(root.textContent).not.toContain("你选择了");
     expect(root.textContent).not.toContain("自我 +1");
     expect(root.textContent).not.toContain("精力 -2");
@@ -326,6 +326,8 @@ describe("renderGame", () => {
     expect(root.textContent).toContain("本次代价");
     expect(root.textContent).toContain("处境说明");
     expect(root.textContent).toContain("女性不是一种性格");
+    expect(root.textContent).toContain("这种位置不只属于女性");
+    expect(root.textContent).toContain("很多普通女性更频繁、更密集地被放在这里");
     expect(root.textContent).not.toContain("通关方式：");
     expect(root.textContent).not.toContain("复制文本");
     expect(root.textContent).not.toContain("保存图片");

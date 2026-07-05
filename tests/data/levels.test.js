@@ -131,7 +131,7 @@ describe("level data", () => {
       chapterTitle: "第一章：筛选",
       kicker: "第一章",
       title: "筛选",
-      text: "你需要一个位置。表格、照片、问题和等待区，会比你先开口。这里会看你会做什么，也会看你会不会让流程停下来。",
+      text: "你开始找工作。表格、照片、问题和等待区，会比你先开口。这里会看你会做什么，也会看你会不会让流程停下来。",
       objective: "目标：获得一个位置。",
       buttonLabel: "进入筛选",
       theme: {
@@ -158,22 +158,22 @@ describe("level data", () => {
     );
 
     expect(c201ChoicesByLabel["远且便宜"].result).toBe(
-      "你保住了现金。地图上回家的那段路，被拉得更长，也更暗。"
+      "你选了更便宜的房子。现金留下来了，通勤和夜里回家的路都变长了。"
     );
     expect(c608ChoicesByLabel["继续申诉"].result).toBe(
-      "你继续往下走。每多走一步，都要再花掉一点生活。"
+      "你点开申诉入口，又开始整理时间、截图和说明。系统允许你继续，也要求你再说一遍。"
     );
   });
 
   it("uses v0.8 short-mainline scene copy without changing choice configuration", () => {
     expect(getCardById("P-01").scene).toBe(
-      "今天有一场重要见面。你站在镜子前，灯光把衣服上的褶皱照得很清楚。有人说过你“不够认真”，也有人说过你“太用力”。时间不多了，你要决定怎么出门。"
+      "今天有一场重要见面，地点在城另一边。你站在镜子前。深色外套看起来正式，但上次有人说这样显得太强硬；浅色衬衫轻松一点，又可能被说不够重视。时间不多了，你要决定怎么出门。"
     );
     expect(getCardById("C3-04").scene).toBe(
-      "晚上十点，地铁口到家有两条路。近路人少，大路绕远。打车价格翻倍。地图把它们标成三个普通选项，没有标出路灯、店铺和途中会不会遇到谁。"
+      "晚上十点，你从地铁口出来，离住处还有一段路。近路人少，大路绕远，打车价格翻倍。地图把它们标成三个普通选项，没有标出路灯、店铺和途中会不会遇到谁。"
     );
     expect(getCardById("C6-08").scene).toBe(
-      "系统给出结果：证据不足，但会提醒相关人员注意。你不能说它完全没用，也不能说它解决了什么。页面上显示“已处理”。这个词很短，短到装不下你花掉的时间。"
+      "几天后，系统给出结果：未发现明确违规，但会提醒对方注意沟通边界。你不能说它完全没用，也不能说它解决了什么。页面上显示“已处理”。这个词很短，短到装不下你花掉的时间。"
     );
     expect(getCardById("CR-self").scene).toBe(
       "你知道自己不愿意，但拒绝这件事本身也需要力气。"
@@ -201,8 +201,17 @@ describe("level data", () => {
     expect(getCardById("C4-07").title).toBe("绩效材料");
   });
 
-  it("keeps v0.4 hidden keys and counter keys", () => {
-    expect(HIDDEN_KEYS).toEqual(["time", "evidence", "exposure", "credit", "conflict"]);
+  it("keeps approved hidden keys and counter keys", () => {
+    expect(HIDDEN_KEYS).toEqual([
+      "time",
+      "evidence",
+      "exposure",
+      "credit",
+      "conflict",
+      "lockChanged",
+      "askedPermission",
+      "keyUncertain"
+    ]);
     expect(Object.keys(createInitialState().counters)).toEqual([
       "detour",
       "seekHelp",
@@ -257,20 +266,100 @@ describe("level data", () => {
     }
   });
 
+  it("keeps rewritten option mechanics aligned with their narrative meaning", () => {
+    const c205Choices = Object.fromEntries(getCardById("C2-05").choices.map((choice) => [choice.label, choice]));
+    expect(getCardById("C2-05")).toMatchObject({
+      title: "换锁",
+      scene: "搬进来的第三天，你发现门锁很旧。中介说房东、保洁和上一任租客都“可能还有钥匙”，但一般不会出事。换锁要自己付钱，还要先问房东。不换也能住，只是每次关门时，你都会多看一眼。"
+    });
+    expect(c205Choices["自己付钱换锁"]).toMatchObject({
+      result: "师傅下午来换了锁，花了 280 元。房东说退租时要交回新钥匙。余额少了一点，但今晚你不用再反复确认门锁。",
+      effects: { money: -2, safety: 2, self: 1 },
+      hiddenEffects: { lockChanged: 1 },
+      tagsAdded: ["lock_changed"],
+      track: { paidSafety: 1 },
+      requirements: {
+        minStats: { money: 3 },
+        reason: "余额不够"
+      }
+    });
+    expect(c205Choices["先问房东能不能换"]).toMatchObject({
+      result: "你把照片发给房东。对方几小时后才回：可以换，费用自理，退租时恢复原样。锁还没换，你先解释了一轮。",
+      effects: { energy: -1, safety: 1 },
+      hiddenEffects: { conflict: 1, askedPermission: 1 },
+      tagsAdded: ["asked_permission"],
+      track: { explain: 1 }
+    });
+    expect(c205Choices["先不换"]).toMatchObject({
+      result: "你决定先不换。钱省下来了，也不用和房东来回确认。晚上关门时，你还是多拧了一次反锁。",
+      effects: { safety: -2, self: -1 },
+      hiddenEffects: { keyUncertain: 1 },
+      tagsAdded: ["key_uncertain"],
+      track: { concede: 1 }
+    });
+    for (const choice of Object.values(c205Choices)) {
+      expect(choice.effects ?? {}).not.toHaveProperty("relationship");
+      expect(choice.track ?? {}).not.toHaveProperty("seekHelp");
+    }
+
+    const p04Choices = Object.fromEntries(getCardById("P-04").choices.map((choice) => [choice.label, choice]));
+    expect(p04Choices["不发消息，直接上楼"]).toMatchObject({
+      effects: { reputation: -1, energy: 1 },
+      tagsAdded: ["no_message"],
+      track: { silence: 1 }
+    });
+    expect(p04Choices["不发消息，直接上楼"].effects).not.toHaveProperty("money");
+    expect(p04Choices["不发消息，直接上楼"].effects).not.toHaveProperty("safety");
+    expect(p04Choices["不发消息，直接上楼"].tagsAdded).not.toContain("platform_trip");
+    expect(p04Choices["不发消息，直接上楼"].track).not.toHaveProperty("paidSafety");
+    expect(p04Choices["不发消息，直接上楼"].requirements).toBeUndefined();
+
+    const c507Choices = Object.fromEntries(getCardById("C5-07").choices.map((choice) => [choice.label, choice]));
+    expect(c507Choices["解释得更完整一点"]).toMatchObject({
+      effects: { energy: -2, relationship: -1 },
+      tagsAdded: ["explain_loop"],
+      track: { explain: 1 },
+      requirements: {
+        minStats: { energy: 3 },
+        reason: "没有力气再讲一遍"
+      }
+    });
+    expect(c507Choices["解释得更完整一点"].track).not.toHaveProperty("silence");
+
+    const c604Choices = Object.fromEntries(getCardById("C6-04").choices.map((choice) => [choice.label, choice]));
+    expect(c604Choices["接受先记作误会"]).toMatchObject({
+      effects: { energy: 1, self: -2 },
+      tagsAdded: ["accepted_misunderstanding"],
+      track: { concede: 1 }
+    });
+    expect(c604Choices["接受先记作误会"].hiddenEffects ?? {}).not.toHaveProperty("conflict");
+    expect(c604Choices["接受先记作误会"].track).not.toHaveProperty("clearRefusal");
+    expect(c604Choices["接受先记作误会"].requirements).toBeUndefined();
+
+    const c608Choices = Object.fromEntries(getCardById("C6-08").choices.map((choice) => [choice.label, choice]));
+    expect(c608Choices["关闭页面，先让自己休息"]).toMatchObject({
+      effects: { energy: 2, self: -1 },
+      tagsAdded: ["paused_unresolved"],
+      track: { silence: 1 }
+    });
+    expect(c608Choices["关闭页面，先让自己休息"].effects).not.toHaveProperty("money");
+    expect(c608Choices["关闭页面，先让自己休息"].effects).not.toHaveProperty("safety");
+    expect(c608Choices["关闭页面，先让自己休息"].tagsAdded).not.toContain("exit_cost");
+    expect(c608Choices["关闭页面，先让自己休息"].track).not.toHaveProperty("paidSafety");
+    expect(c608Choices["关闭页面，先让自己休息"].requirements).toBeUndefined();
+  });
+
   it("keeps approved disabled-choice requirements", () => {
     const c608ChoicesByLabel = Object.fromEntries(
       getCardById("C6-08").choices.map((choice) => [choice.label, choice])
     );
 
-    expect(c608ChoicesByLabel["接受结果"].requirements).toBeUndefined();
+    expect(c608ChoicesByLabel["接受结果，保存记录"].requirements).toBeUndefined();
     expect(c608ChoicesByLabel["继续申诉"].requirements).toEqual({
       minStats: { energy: 3 },
       reason: "没有力气再讲一遍"
     });
-    expect(c608ChoicesByLabel["离开环境"].requirements).toEqual({
-      minStats: { money: 3 },
-      reason: "余额不够"
-    });
+    expect(c608ChoicesByLabel["关闭页面，先让自己休息"].requirements).toBeUndefined();
   });
 
   it("can retrieve cards by id", () => {

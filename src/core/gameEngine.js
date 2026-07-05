@@ -64,7 +64,7 @@ const AFTERMATH_TEXT = {
   },
   self: {
     up: "你更清楚自己不想退到哪里。",
-    down: "你又往后退了一点。",
+    down: "你想说的话又少说了一句。",
     tense: "你知道边界在哪里，只是说出来越来越费力。",
     danger: "拒绝还在心里，但已经很难出口。"
   }
@@ -372,6 +372,7 @@ export function buildChapterEchoLines(state) {
     stopped: CHAPTER_ECHOES.C6?.gave_up_process,
     backlash: CHAPTER_ECHOES.C6?.backlash,
     left: CHAPTER_ECHOES.C6?.exit_ending_flag,
+    paused: CHAPTER_ECHOES.C6?.paused_unresolved,
     limited: CHAPTER_ECHOES.C6?.limited_result
   };
 
@@ -382,7 +383,13 @@ export function buildChapterEchoLines(state) {
       : (state.stats.reputation ?? STAT_MAX) <= 4
         ? CHAPTER_ECHOES.C1?.probation_shadow
         : CHAPTER_ECHOES.C1?.normal_entry;
-  const c2 = (state.stats.money ?? STAT_MAX) <= 1
+  const c2 = (state.hidden.lockChanged ?? 0) > 0
+    ? CHAPTER_ECHOES.C2?.lock_changed
+    : (state.hidden.askedPermission ?? 0) > 0
+      ? CHAPTER_ECHOES.C2?.asked_permission
+      : (state.hidden.keyUncertain ?? 0) > 0
+        ? CHAPTER_ECHOES.C2?.key_uncertain
+        : (state.stats.money ?? STAT_MAX) <= 1
     ? CHAPTER_ECHOES.C2?.temporary_home
     : tags.has("contract_risk")
       ? CHAPTER_ECHOES.C2?.contract_followup
@@ -423,13 +430,17 @@ export function buildChapterEchoLines(state) {
           ? CHAPTER_ECHOES.C5?.blurry_relation
           : CHAPTER_ECHOES.C5?.stable_distance;
 
+  const c6 = tags.has("paused_unresolved")
+    ? c6Lines.paused
+    : c6Lines[c6Outcome] ?? c6Lines.limited;
+
   return [
     `筛选：${c1 ?? ""}`,
     `房间：${c2 ?? ""}`,
     `路上：${c3 ?? ""}`,
     `桌面：${c4 ?? ""}`,
     `靠近：${c5 ?? ""}`,
-    `窗口：${c6Lines[c6Outcome] ?? c6Lines.limited ?? ""}`
+    `窗口：${c6 ?? ""}`
   ];
 }
 
@@ -548,7 +559,7 @@ export function buildCostLines(state) {
     { priority: stats.self <= 3 ? stats.self : Infinity, text: "场面过去了，有些不舒服也跟着你走了。" },
     { priority: stats.self >= 8 && stats.energy <= 3 ? stats.energy + 0.25 : Infinity, text: "你说清楚了很多次，也把自己带回那些时刻很多次。" },
     { priority: hidden.evidence >= 4 ? 4 : Infinity, text: "你留下了很多记录。它们保护你，也让你反复回到那里。" },
-    { priority: counters.concede >= 3 ? 4.1 : Infinity, text: "事情继续往前走，你往后退了一些。" },
+    { priority: counters.concede >= 3 ? 4.1 : Infinity, text: "很多场面继续过去了，你想说的话也少说了几次。" },
     { priority: counters.silence >= 3 ? 4.2 : Infinity, text: "冲突少了一些，没说出口的也多了一些。" },
     { priority: counters.seekHelp >= 3 ? 4.3 : Infinity, text: "有人知道你在哪里，也知道你经历过什么。关系因此更近，也更重。" }
   ];
@@ -656,6 +667,8 @@ export function getEndingDisplay(card, state) {
         themeLines: [
           "女性不是一种性格，也不只是一组特征。",
           "在很多时候，女性意味着一种被反复放置的位置。",
+          "这种位置不只属于女性。",
+          "但在现实中，很多普通女性更频繁、更密集地被放在这里。",
           "当一个人长期处在需要被评价、被相信、被允许、被保护、被解释的位置，她就会学会谨慎、计算、讨好、沉默、留证和提前道歉。",
           "这不是因为她天生如此。",
           "是因为世界经常这样要求她。"

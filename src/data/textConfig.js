@@ -41,7 +41,10 @@ export const CHAPTER_ECHOES = {
     "rent_pressure": "你住得近，也住得贵。安全在余额里留下痕迹。",
     "remote_risk": "你保住了钱。代价是以后每次回家，都要多经过一段路。",
     "contract_followup": "房子定下来了。几条没有说清的规则，也跟着你住了进来。",
-    "temporary_home": "你暂时有地方睡觉。它不像答案，更像一个缓冲。"
+    "temporary_home": "你暂时有地方睡觉。它不像答案，更像一个缓冲。",
+    "lock_changed": "你花钱换了一把新的锁。门合上的声音让房间稍微像自己的地方。",
+    "asked_permission": "你问过能不能换锁。安全没有被拒绝，只是多了一层解释。",
+    "key_uncertain": "你住下来了。只是那把旧锁让每次关门都多停一秒。"
   },
   "C3": {
     "low_loss_commute": "这一周，你大多准时到达，也没有把自己耗得太空。",
@@ -69,7 +72,8 @@ export const CHAPTER_ECHOES = {
     "limited_result": "系统留下一行处理记录。你不能说完全没用，也不能说它解决了什么。",
     "gave_up_process": "你没有继续。不是因为事情不重要，而是继续本身已经变成另一种消耗。",
     "backlash": "事情被更多人知道以后，你开始解释自己为什么值得被相信。",
-    "exit_ending_flag": "你离开了。离开切断了一部分风险，也让你重新承担开始的成本。"
+    "exit_ending_flag": "你离开了。离开切断了一部分风险，也让你重新承担开始的成本。",
+    "paused_unresolved": "你先停下来。不是因为问题消失，而是继续处理已经变成另一种消耗。"
   }
 };
 

@@ -805,6 +805,49 @@ describe("settlements and ending statistics", () => {
     ]);
   });
 
+  it("uses paused unresolved echo without resolving to the exit ending", () => {
+    const state = {
+      ...createInitialState(),
+      tags: ["paused_unresolved"],
+      chapterOutcomes: {
+        C6: { id: "limited", label: "问题未闭合", counters: {} }
+      }
+    };
+
+    expect(buildChapterEchoLines(state).at(-1)).toBe(
+      "窗口：你先停下来。不是因为问题消失，而是继续处理已经变成另一种消耗。"
+    );
+    expect(resolvePassStyle(state)).not.toMatchObject({
+      id: "left_the_place"
+    });
+  });
+
+  it("uses lock-control echoes for the room chapter", () => {
+    expect(buildChapterEchoLines({
+      ...createInitialState(),
+      hidden: {
+        ...createInitialState().hidden,
+        lockChanged: 1
+      }
+    })[1]).toBe("房间：你花钱换了一把新的锁。门合上的声音让房间稍微像自己的地方。");
+
+    expect(buildChapterEchoLines({
+      ...createInitialState(),
+      hidden: {
+        ...createInitialState().hidden,
+        askedPermission: 1
+      }
+    })[1]).toBe("房间：你问过能不能换锁。安全没有被拒绝，只是多了一层解释。");
+
+    expect(buildChapterEchoLines({
+      ...createInitialState(),
+      hidden: {
+        ...createInitialState().hidden,
+        keyUncertain: 1
+      }
+    })[1]).toBe("房间：你住下来了。只是那把旧锁让每次关门都多停一秒。");
+  });
+
   it("builds blocked choice lines from current constraints", () => {
     const state = {
       ...createInitialState(),
