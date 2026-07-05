@@ -39,7 +39,7 @@ describe("content table tooling", () => {
     expect(cards.find((row) => row.id === "C3-04")?.scene).toContain("打车价格翻倍");
     expect(choices.find((row) => row.cardId === "C6-08" && row.id === "appeal")?.stat_energy).toBe("-2");
     expect(choices[0]).not.toHaveProperty("visibleChanges");
-    expect(triggers.find((row) => row.cardId === "I-C3-footsteps")?.tagsAll).toBe("low_battery|night_quiet_route");
+    expect(triggers).toEqual([]);
     expect(config.find((row) => row.section === "stat" && row.key === "money")?.label).toBe("钱");
   });
 

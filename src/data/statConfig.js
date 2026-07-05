@@ -18,7 +18,7 @@ export const STAT_LABELS = {
 
 export const INITIAL_STATS = {
   "reputation": 6,
-  "money": 6,
+  "money": 5,
   "safety": 6,
   "energy": 7,
   "relationship": 5,

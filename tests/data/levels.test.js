@@ -14,20 +14,19 @@ import { createInitialState } from "../../src/core/initialState.js";
 
 const expectedOrderedIds = [
   "P-I",
-  "P-01", "P-02", "P-03", "P-04", "P-S",
+  "P-01", "P-04",
   "C1-I",
-  "C1-01", "C1-02", "C1-03", "C1-04", "C1-05", "C1-06", "C1-07", "C1-S",
+  "C1-01", "C1-04", "C1-07",
   "C2-I",
-  "C2-01", "C2-02", "C2-03", "C2-04", "C2-05", "C2-06", "C2-07", "C2-S",
+  "C2-01", "C2-03", "C2-05",
   "C3-I",
-  "C3-01", "C3-02", "C3-03", "C3-04", "C3-05", "C3-06", "C3-07", "C3-S",
+  "C3-03", "C3-04", "C3-05", "C3-06",
   "C4-I",
-  "C4-01", "C4-02", "C4-03", "C4-04", "C4-05", "C4-06", "C4-07", "C4-S",
+  "C4-02", "C4-04", "C4-06", "C4-07",
   "C5-I",
-  "C5-01", "C5-02", "C5-03", "C5-04", "C5-05", "C5-06", "C5-07", "C5-S",
+  "C5-02", "C5-05", "C5-07",
   "C6-I",
-  "C6-01", "C6-02", "C6-03", "C6-04", "C6-05", "C6-06", "C6-07", "C6-08", "C6-S",
-  "E-I",
+  "C6-02", "C6-04", "C6-08",
   "E-01", "E-02", "E-03", "E-04"
 ];
 
@@ -78,7 +77,7 @@ describe("level data", () => {
   });
 
   it("has valid choice cards", () => {
-    expect(LEVEL_CARDS).toHaveLength(47);
+    expect(LEVEL_CARDS).toHaveLength(22);
 
     for (const card of LEVEL_CARDS) {
       expect(card.type).toBe("level");
@@ -96,13 +95,11 @@ describe("level data", () => {
     }
   });
 
-  it("has chapter settlements and ending reveal cards", () => {
+  it("has chapter intros, no settlement pages, and four ending cards", () => {
     expect(INTRO_CARDS.map((card) => card.id)).toEqual([
-      "P-I", "C1-I", "C2-I", "C3-I", "C4-I", "C5-I", "C6-I", "E-I"
+      "P-I", "C1-I", "C2-I", "C3-I", "C4-I", "C5-I", "C6-I"
     ]);
-    expect(SETTLEMENT_CARDS.map((card) => card.id)).toEqual([
-      "P-S", "C1-S", "C2-S", "C3-S", "C4-S", "C5-S", "C6-S"
-    ]);
+    expect(SETTLEMENT_CARDS).toEqual([]);
     expect(ENDING_CARDS.map((card) => card.id)).toEqual([
       "E-01", "E-02", "E-03", "E-04"
     ]);
@@ -134,7 +131,7 @@ describe("level data", () => {
       chapterTitle: "第一章：筛选",
       kicker: "第一章",
       title: "筛选",
-      text: "你需要获得一个位置。这里的人会看你的资料、回答、语气和反应，也会看一些你以为不该重要的东西。你还不知道，很多评价会留下来。",
+      text: "你需要获得一个位置。这里的人会看你的资料、回答、语气和反应，也会看一些你以为不该重要的东西。",
       objective: "目标：获得一个位置。",
       buttonLabel: "进入筛选",
       theme: {
@@ -144,30 +141,12 @@ describe("level data", () => {
       }
     });
 
-    expect(getCardById("E-I").buttonLabel).toBe("查看结果");
     expect(getCardById("C5-I").objective).toBe("目标：靠近别人，同时保留距离。");
   });
 
-  it("uses colder chapter settlement copy without mechanic explanations", () => {
-    expect(getCardById("C1-S")).toEqual({
-      id: "C1-S",
-      type: "settlement",
-      chapterId: "C1",
-      chapterTitle: "第一章：筛选",
-      title: "记录更新",
-      text: "你获得了一个位置。它暂时接收你，也开始要求你用之后的表现继续证明自己。",
-      reveal: "记录更新：信誉。有些评价会留下来，之后还会被调用。"
-    });
-
-    expect(getCardById("C6-S")).toEqual({
-      id: "C6-S",
-      type: "settlement",
-      chapterId: "C6",
-      chapterTitle: "第六章：窗口",
-      title: "记录更新",
-      text: "这件事被记录了。它没有完全解决，但至少没有只留在你一个人的记忆里。",
-      reveal: "记录更新：自我。"
-    });
+  it("removes standalone settlement cards from the short version", () => {
+    expect(getCardById("C1-S")).toBeUndefined();
+    expect(getCardById("C6-S")).toBeUndefined();
   });
 
   it("uses natural-language result feedback from the approved copy library", () => {
@@ -186,7 +165,7 @@ describe("level data", () => {
     );
   });
 
-  it("uses v0.5 expanded scene copy without changing choice configuration", () => {
+  it("uses v0.6 short-mainline scene copy without changing choice configuration", () => {
     expect(getCardById("P-01").scene).toBe(
       "今天有一场重要见面。你站在镜子前，灯光把衣服上的褶皱照得很清楚。你想起有人曾说你“不够认真”，也有人说你“太用力”。时间不多了，你需要决定以什么样子出门。"
     );
@@ -197,7 +176,7 @@ describe("level data", () => {
       "系统给出结果：证据不足，但会提醒相关人员注意。你不能说它完全没用，也不能说它解决了什么。页面上显示“已处理”。这个词很短，短到装不下你花掉的时间。"
     );
     expect(getCardById("CR-self").scene).toBe(
-      "你知道自己不愿意，但拒绝这件事本身也需要力气。你能感觉到边界在哪里，只是要把它说出来，还要再多撑一下。"
+      "你知道自己不愿意，但拒绝这件事本身也需要力气。"
     );
     expect(getCardById("C6-08").choices.map((choice) => choice.id)).toEqual([
       "accept",
@@ -214,9 +193,12 @@ describe("level data", () => {
     expect(getCardById("E-04").buttonLabel).toBe("重新开始");
   });
 
-  it("includes at least one conditional insert card", () => {
-    expect(INSERT_CARDS.length).toBeGreaterThanOrEqual(1);
-    expect(INSERT_CARDS[0].trigger.tagsAll).toContain("low_battery");
+  it("keeps conditional replacement cards in the short-mainline data", () => {
+    expect(INSERT_CARDS).toEqual([]);
+    expect(getCardById("C3-05").title).toBe("路线偏移");
+    expect(getCardById("C3-06").title).toBe("楼道");
+    expect(getCardById("C4-06").title).toBe("别激动");
+    expect(getCardById("C4-07").title).toBe("绩效材料");
   });
 
   it("keeps v0.4 hidden keys and counter keys", () => {
@@ -275,31 +257,25 @@ describe("level data", () => {
     }
   });
 
-  it("keeps approved insert triggers and disabled-choice requirements", () => {
-    expect(getCardById("I-C3-footsteps").trigger).toEqual({
-      afterCardId: "C3-04",
-      tagsAll: ["low_battery", "night_quiet_route"],
-      statMax: { safety: 2 }
-    });
-
+  it("keeps approved disabled-choice requirements", () => {
     const c608ChoicesByLabel = Object.fromEntries(
       getCardById("C6-08").choices.map((choice) => [choice.label, choice])
     );
 
     expect(c608ChoicesByLabel["接受结果"].requirements).toBeUndefined();
     expect(c608ChoicesByLabel["继续申诉"].requirements).toEqual({
-      minStats: { energy: 3, self: 3 },
-      reason: "无法继续消耗"
+      minStats: { energy: 3 },
+      reason: "你已经说不下去"
     });
     expect(c608ChoicesByLabel["离开环境"].requirements).toEqual({
-      minStats: { money: 3, self: 3 },
-      reason: "退出成本不足"
+      minStats: { money: 3 },
+      reason: "余额不足"
     });
   });
 
   it("can retrieve cards by id", () => {
     expect(getCardById("C3-04").title).toBe("加班后的路线");
     expect(getCardById("C6-08").title).toBe("处理结果");
-    expect(getCardById("P-S").text).toBe("你准时抵达。今天没有发生什么。只是你已经调整过自己，确认过电量，避开过一次不确定，也把一段普通的路走得比导航更长。");
+    expect(getCardById("P-S")).toBeUndefined();
   });
 });

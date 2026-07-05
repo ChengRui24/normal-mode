@@ -1,7 +1,8 @@
 import { getDisabledReason } from "../core/choiceRules.js";
-import { getEndingDisplay, getSettlementDisplay } from "../core/gameEngine.js";
+import { getChoiceAftermath, getEndingDisplay, getIntroEcho, getSettlementDisplay } from "../core/gameEngine.js";
 import { getVisibleStats } from "../core/stateWords.js";
 import { INTRO_CARDS, LEVEL_CARDS, getCardById } from "../data/levels.js";
+import { STAT_MAX, STAT_MIN } from "../data/statConfig.js";
 
 function escapeText(value) {
   const span = document.createElement("span");
@@ -26,12 +27,35 @@ function renderStatStrip(state) {
   `;
 }
 
+function clampStat(value) {
+  return Math.min(STAT_MAX, Math.max(STAT_MIN, value));
+}
+
+function projectStatsAfterChoice(state, choice) {
+  const stats = { ...state.stats };
+  for (const [key, value] of Object.entries(choice.effects ?? {})) {
+    stats[key] = clampStat((stats[key] ?? 0) + value);
+  }
+  return stats;
+}
+
+function updateStatStripAfterChoice(root, state, choice) {
+  const currentStrip = root.querySelector(".stat-strip");
+  if (!currentStrip) return;
+
+  currentStrip.outerHTML = renderStatStrip({
+    ...state,
+    stats: projectStatsAfterChoice(state, choice)
+  });
+}
+
 function getChapterTheme(card) {
   return INTRO_CARDS.find((intro) => intro.chapterId === card?.chapterId)?.theme;
 }
 
 function getChapterProgress(card) {
   if (card?.type !== "level" || card.insert || card.crisis) return null;
+  if (card.progress) return card.progress;
 
   const chapterCards = LEVEL_CARDS.filter((item) => item.chapterId === card.chapterId);
   const index = chapterCards.findIndex((item) => item.id === card.id);
@@ -81,21 +105,22 @@ function restartFooterHtml() {
   `;
 }
 
-function resultPanelHtml(choice, resultText) {
+function resultPanelHtml(choice, resultText, aftermath = "") {
   return `
     <div class="result-panel">
-      ${choice ? `<p class="selected-choice">${escapeText(choice.label)}</p>` : ""}
+      ${choice ? `<p class="selected-choice">[${escapeText(choice.label)}]</p>` : ""}
       <p class="result-text">${escapeText(resultText)}</p>
+      ${aftermath ? `<p class="aftermath-text">（${escapeText(aftermath)}）</p>` : ""}
     </div>
   `;
 }
 
-function revealInlineResult(root, choice, onContinue) {
+function revealInlineResult(root, choice, aftermath, onContinue) {
   const choiceList = root.querySelector(".choice-list");
   if (!choiceList) return;
 
   choiceList.outerHTML = `
-    ${resultPanelHtml(choice, choice.result)}
+    ${resultPanelHtml(choice, choice.result, aftermath)}
     <button class="continue-button" type="button">继续</button>
   `;
   root.querySelector(".continue-button").addEventListener("click", onContinue);
@@ -127,7 +152,8 @@ function renderChoiceCard(root, card, state, onChoose, onContinue) {
     button.addEventListener("click", () => {
       const choice = card.choices.find((item) => item.id === button.dataset.choiceId);
       if (choice) {
-        revealInlineResult(root, choice, onContinue);
+        updateStatStripAfterChoice(root, state, choice);
+        revealInlineResult(root, choice, getChoiceAftermath(state, choice), onContinue);
         onChoose(choice, { render: false });
       }
     });
@@ -141,7 +167,7 @@ function renderResultCard(root, card, state, onContinue) {
     <section class="game-card themed-card" style="${cardStyle(card)}">
       ${renderHeader(card, state)}
       <p class="scene-text">${escapeText(card.scene)}</p>
-      ${resultPanelHtml(selectedChoice, result.text)}
+      ${resultPanelHtml(selectedChoice, result.text, result.aftermath)}
       <button class="continue-button" type="button">继续</button>
       ${restartFooterHtml()}
     </section>
@@ -161,11 +187,13 @@ function cardStyle(card) {
   return themeStyle(getChapterTheme(card));
 }
 
-function renderIntroCard(root, card, onContinue) {
+function renderIntroCard(root, card, state, onContinue) {
+  const echo = getIntroEcho(card, state);
   root.innerHTML = `
     <section class="game-card themed-card chapter-intro-card" style="${themeStyle(card.theme)}">
       <p class="intro-kicker">${escapeText(card.kicker)}</p>
       <h1>${escapeText(card.title)}</h1>
+      ${echo ? `<p class="intro-echo">上一段记录：${escapeText(echo)}</p>` : ""}
       <p class="scene-text">${escapeText(card.text)}</p>
       <p class="intro-objective">${escapeText(card.objective)}</p>
       <button class="continue-button intro-button" type="button">${escapeText(card.buttonLabel)}</button>
@@ -179,12 +207,16 @@ function renderIntroCard(root, card, onContinue) {
 function renderHomeCard(root, onContinue) {
   root.innerHTML = `
     <section class="game-card home-card" aria-labelledby="home-title">
-      <p class="home-kicker">一段普通生活记录</p>
       <h1 id="home-title">普通难度</h1>
+      <p class="home-kicker">一段普通生活记录。</p>
       <div class="home-lines">
-        <p>做出你的选择</p>
-        <p>没有标准答案</p>
-        <p>只有后续的结果</p>
+        <p>读文字。</p>
+        <p>做选择。</p>
+        <p>继续。</p>
+      </div>
+      <div class="home-lines home-lines-secondary">
+        <p>没有标准答案。</p>
+        <p>只有之后发生的事。</p>
       </div>
       <div class="home-notes" aria-label="提示">
         <span>无需登录</span>
@@ -272,7 +304,7 @@ export function renderGame(root, { state, onChoose, onContinue, onRestart }) {
   if (state.phase === "result") {
     renderResultCard(root, card, state, onContinue);
   } else if (card.type === "chapterIntro") {
-    renderIntroCard(root, card, onContinue);
+    renderIntroCard(root, card, state, onContinue);
   } else if (card.id === "E-03") {
     renderProfileCard(root, card, state, onContinue);
   } else if (state.phase === "settlement" || state.phase === "ending") {

@@ -134,6 +134,18 @@ button {
   font-size: 0.9rem;
 }
 
+.intro-echo {
+  margin: -8px 0 18px;
+  color: #7b756d;
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.home-lines-secondary {
+  margin-top: 18px;
+  color: #5e5952;
+}
+
 .intro-button {
   border-color: color-mix(in srgb, var(--chapter-accent) 46%, #d5d0c7);
   color: var(--chapter-accent);
@@ -217,8 +229,8 @@ h1 {
 }
 
 .scene-text,
-.selected-choice,
 .result-text,
+.aftermath-text,
 .content-text {
   margin: 0;
   color: #2b2b2a;
@@ -226,10 +238,25 @@ h1 {
   line-height: 1.9;
 }
 
+.selected-choice {
+  margin: 0 0 28px;
+  color: #35322f;
+  font-size: 0.97rem;
+  line-height: 1.85;
+  text-align: left;
+}
+
 .result-text {
   color: #3f3d39;
   font-size: 0.97rem;
   line-height: 1.82;
+}
+
+.aftermath-text {
+  margin: 21px 0 0;
+  color: #5f5a52;
+  font-size: 0.94rem;
+  line-height: 1.75;
 }
 
 .result-panel {
@@ -245,8 +272,8 @@ h1 {
 
 .choice-list {
   display: grid;
-  gap: 9px;
-  margin-top: 24px;
+  gap: 7px;
+  margin-top: 22px;
 }
 
 .continue-button {
@@ -269,22 +296,27 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
-  min-height: 43px;
-  border: 1px solid color-mix(in srgb, var(--chapter-primary, #7a6d5e) 18%, #e4dfd7);
+  min-height: 40px;
+  border: 1px solid color-mix(in srgb, var(--chapter-primary, #7a6d5e) 11%, #e7e2da);
   border-radius: 7px;
-  background: rgba(255, 255, 253, 0.36);
-  color: #363431;
-  padding: 9px 12px;
+  background: rgba(255, 255, 253, 0.24);
+  color: #45413b;
+  padding: 8px 11px;
   text-align: left;
-  font-size: 0.97rem;
+  font-size: 0.93rem;
   line-height: 1.45;
 }
 
 .choice-button:hover {
-  border-color: color-mix(in srgb, var(--chapter-primary, #7a6d5e) 38%, #d5d0c7);
-  background: rgba(255, 255, 253, 0.74);
+  border-color: color-mix(in srgb, var(--chapter-primary, #7a6d5e) 26%, #d8d2c9);
+  background: rgba(255, 255, 253, 0.58);
+}
+
+.choice-button:active {
+  border-color: color-mix(in srgb, var(--chapter-primary, #7a6d5e) 42%, #ccc4ba);
+  background: color-mix(in srgb, var(--chapter-surface, #f7f4ef) 42%, #fffefd);
 }
 
 .choice-button small {
@@ -298,8 +330,6 @@ h1 {
 }
 
 .result-panel {
-  display: grid;
-  gap: 16px;
   margin-top: 28px;
 }
 

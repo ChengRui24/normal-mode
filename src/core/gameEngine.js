@@ -30,6 +30,94 @@ function addStatValues(base, delta = {}) {
   return next;
 }
 
+const AFTERMATH_TEXT = {
+  reputation: {
+    up: "这一次，你更容易被接收。",
+    down: "之后，解释可能会变多一点。",
+    tense: "有些话开始需要多说一遍。",
+    danger: "你说的内容，开始不如别人对你的判断重要。"
+  },
+  money: {
+    up: "余额暂时松了一点。",
+    down: "余额变薄了。",
+    tense: "后面有些选择会变贵。",
+    danger: "有些路，在出现前就被余额拿走了。"
+  },
+  safety: {
+    up: "你稍微放松了一点。",
+    down: "你开始更留意周围。",
+    tense: "路线、出口和身后的人，变得更难忽略。",
+    danger: "你还没遇到危险，但已经开始为危险做准备。"
+  },
+  energy: {
+    up: "你恢复了一点力气。",
+    down: "你更累了。",
+    tense: "你开始只处理最急的部分。",
+    danger: "事情还没结束，你已经快说不下去了。"
+  },
+  relationship: {
+    up: "你和别人之间还有一点连接。",
+    down: "下次开口，会更需要斟酌。",
+    tense: "每一次求助都开始变重。",
+    danger: "你不是没有人可找，只是每个名字后面都有上一次。"
+  },
+  self: {
+    up: "你更清楚自己不想退到哪里。",
+    down: "你又往后退了一点。",
+    tense: "你知道边界在哪里，只是说出来越来越费力。",
+    danger: "拒绝还在心里，但已经很难出口。"
+  }
+};
+
+function aftermathStateFor(value) {
+  if (value <= DANGER_MAX) return "danger";
+  if (value <= 5) return "tense";
+  return "stable";
+}
+
+function trackedMinorCost(key, choice) {
+  const track = choice.track ?? {};
+  if (key === "relationship" && (track.seekHelp ?? 0) > 0) return true;
+  if (key === "self" && ((track.concede ?? 0) > 0 || (track.silence ?? 0) > 0)) return true;
+  if (key === "money" && (track.paidSafety ?? 0) > 0) return true;
+  if (key === "reputation" && (track.clearRefusal ?? 0) > 0) return true;
+  return false;
+}
+
+export function getChoiceAftermath(state, choice) {
+  const candidates = [];
+
+  for (const key of STAT_KEYS) {
+    const delta = choice.effects?.[key] ?? 0;
+    if (delta === 0) continue;
+
+    const before = state.stats[key] ?? 0;
+    const after = clampStat(before + delta);
+    const beforeState = aftermathStateFor(before);
+    const afterState = aftermathStateFor(after);
+
+    if (afterState === "danger" && beforeState !== "danger") {
+      candidates.push({ priority: 0, magnitude: Math.abs(delta), text: AFTERMATH_TEXT[key].danger });
+    } else if (afterState === "tense" && beforeState === "stable") {
+      candidates.push({ priority: 1, magnitude: Math.abs(delta), text: AFTERMATH_TEXT[key].tense });
+    } else if (delta <= -2) {
+      candidates.push({ priority: 2, magnitude: Math.abs(delta), text: AFTERMATH_TEXT[key].down });
+    } else if (delta < 0 && trackedMinorCost(key, choice)) {
+      candidates.push({ priority: 3, magnitude: Math.abs(delta), text: AFTERMATH_TEXT[key].down });
+    } else if (delta >= 2) {
+      candidates.push({ priority: 4, magnitude: Math.abs(delta), text: AFTERMATH_TEXT[key].up });
+    }
+  }
+
+  const leavesEvidence = (choice.track?.evidenceSaved ?? 0) > 0 || (choice.hiddenEffects?.evidence ?? 0) >= 2;
+  const hasDangerOrMajorLoss = candidates.some((candidate) => candidate.priority === 0 || candidate.priority === 2);
+  if (leavesEvidence && !hasDangerOrMajorLoss) {
+    candidates.push({ priority: 0.5, magnitude: 1, text: "这件事会留下来。" });
+  }
+
+  return candidates.sort((a, b) => a.priority - b.priority || b.magnitude - a.magnitude)[0]?.text ?? "";
+}
+
 function addCounters(base, delta = {}) {
   const next = { ...base };
   for (const [key, value] of Object.entries(delta)) {
@@ -158,13 +246,9 @@ function tagSet(state) {
   return new Set(state.tags ?? []);
 }
 
-function firstMatchingEcho(tags, rules, fallback) {
-  return rules.find(([tag]) => tags.has(tag))?.[1] ?? fallback;
-}
-
 export function buildChapterEchoLines(state) {
   const tags = tagSet(state);
-  const c6Outcome = state.chapterOutcomes?.C6?.id;
+  const c6Outcome = state.chapterOutcomes?.C6?.id ?? resolveChapterOutcome("C6", state).id;
   const c6Lines = {
     recognized: "这件事被记录了。它没有完全解决，但至少没有只留在你一个人的记忆里。",
     recorded: "系统留下了一行处理记录。你不能说完全没用，也不能说它解决了什么。",
@@ -174,41 +258,53 @@ export function buildChapterEchoLines(state) {
     limited: "系统留下了一行处理记录。你不能说完全没用，也不能说它解决了什么。"
   };
 
-  const c1 = firstMatchingEcho(tags, [
-    ["low_salary", "你获得了一个位置。它可以让你留下来，只是价格比你预想的低。"],
-    ["career_driven", "你获得了一个位置。对方认可你的能力，也提前放上了更多期待。"],
-    ["pending_offer", "你留下来了。只是从第一天起，你就知道这里对你的容错不多。"],
-    ["file_blocked", "这一次没有通过。你开始找下一份更低要求的机会。"]
-  ], "你获得了一个位置。它暂时接收你，也开始要求你继续证明自己。");
-  const c2 = firstMatchingEcho(tags, [
-    ["checked_building", "你租到了一个相对明亮的房间。有些风险被挡在门外。"],
-    ["viewed_with_friend", "你租到了一个相对明亮的房间。有些风险被挡在门外。"],
-    ["high_rent", "你住得近，也住得贵。安全在余额里留下痕迹。"],
-    ["remote_home", "你保住了钱。代价是以后每次回家，都要多经过一段路。"],
-    ["temporary_home", "你暂时有地方睡觉。它不像答案，更像一个缓冲。"],
-    ["contract_risk", "房子定下来了。几条没有说清的规则，也跟着你住了进来。"]
-  ], "你租到了一个房间。它可以关门，但不代表完全安全。");
-  const c3 = (state.stats.safety ?? STAT_MAX) <= DANGER_MAX || tags.has("watchful") || tags.has("night_quiet_route")
+  const c1 = (state.stats.reputation ?? STAT_MAX) <= DANGER_MAX
+    ? "这一次没有通过。你开始找下一份更低要求的机会。"
+    : tags.has("low_salary") || (state.stats.money ?? STAT_MAX) <= 4
+      ? "你获得了一个位置。它可以让你留下来，只是价格比你预想的低。"
+      : (state.stats.reputation ?? STAT_MAX) <= 4
+        ? "你留下来了。只是从第一天起，你就知道这里对你的容错不多。"
+        : "你获得了一个位置。它暂时接收你，也开始要求你继续证明自己。";
+  const c2 = (state.stats.money ?? STAT_MAX) <= 1
+    ? "你暂时有地方睡觉。它不像答案，更像一个缓冲。"
+    : tags.has("contract_risk")
+      ? "房子定下来了。几条没有说清的规则，也跟着你住了进来。"
+      : tags.has("high_rent") && (state.stats.money ?? STAT_MAX) <= 3
+        ? "你住得近，也住得贵。安全在余额里留下痕迹。"
+        : tags.has("remote_home") || (state.stats.safety ?? STAT_MAX) <= 4
+          ? "你保住了钱。代价是以后每次回家，都要多经过一段路。"
+          : (state.stats.safety ?? 0) >= 7 && !tags.has("contract_risk")
+            ? "你租到了一个相对明亮的房间。有些风险被挡在门外。"
+            : "你租到了一个房间。它可以关门，但不代表完全安全。";
+  const c3 = (state.stats.safety ?? STAT_MAX) <= DANGER_MAX
     ? "没有发生什么明确的事。只是你已经开始自动确认身后、车牌、楼层和出口。"
-    : firstMatchingEcho(tags, [
-      ["detour", "你避开了很多不确定。代价是每一天都比路线显示的更长。"],
-      ["someone_knows", "你让几个人知道自己在哪里。你不再完全独自移动。"],
-      ["platform_trip", "这一周，你大多准时到达，也没有把自己耗得太空。"]
-    ], "这一周，你大多准时到达，也没有把自己耗得太空。");
-  const c4 = firstMatchingEcho(tags, [
-    ["visible_work", "项目结束了。至少这一次，你做过的事没有完全消失在流程里。"],
-    ["unclear_credit", "项目留下了成果，也留下了一个很难说清的“我们”。"],
-    ["invisible_labor", "你保住了位置。只是下班后，你已经没有力气再解释自己为什么累。"],
-    ["reaction_flag", "有些人开始先评价你的反应，再处理你说的内容。"],
-    ["missing_contribution", "没有人说你没有做事。他们只是说，这个位置可能需要重新考虑。"]
-  ], "项目结束了。至少这一次，你做过的事没有完全消失在流程里。");
-  const c5 = firstMatchingEcho(tags, [
-    ["distance_clear", "你靠近过，也退回来过。至少这一次，你没有把所有不舒服都留给自己。"],
-    ["distance_blurry", "关系还在。只是有些界线没有被说清，之后可能还要你继续解释。"],
-    ["alone_with_it", "你保护住了一部分自己。代价是很多时候，你只能自己判断自己是不是太紧张。"],
-    ["unclosed_relation", "关系没有真正结束，只是换成了消息、解释和等待。"],
-    ["support_network", "有几个人知道发生过什么。事情没有因此简单，但你不再完全独自拿着它。"]
-  ], "你靠近过，也退回来过。至少这一次，你没有把所有不舒服都留给自己。");
+    : tags.has("someone_knows") || (state.counters.seekHelp ?? 0) >= 2
+      ? "你让几个人知道自己在哪里。你不再完全独自移动。"
+      : (state.stats.safety ?? STAT_MAX) <= 4 && (state.stats.money ?? 0) >= 4
+        ? "你省下了一些钱，也把更多判断留给了自己。"
+        : (state.counters.detour ?? 0) >= 2 || tags.has("habit_detour") || tags.has("avoid_closed_space") || tags.has("pretend_route")
+          ? "你避开了很多不确定。代价是每一天都比路线显示的更长。"
+          : "这一周，你大多准时到达，也没有把自己耗得太空。";
+  const c4 = (state.stats.reputation ?? STAT_MAX) <= DANGER_MAX || (state.hidden.credit ?? 0) <= -2
+    ? "没有人说你没有做事。他们只是说，这个位置可能需要重新考虑。"
+    : tags.has("reaction_flag") && (state.stats.reputation ?? STAT_MAX) <= 5
+      ? "有些人开始先评价你的反应，再处理你说的内容。"
+      : (state.stats.energy ?? STAT_MAX) <= 3 && (state.stats.reputation ?? 0) >= 6
+        ? "你保住了位置。只是下班后，你已经没有力气再解释自己为什么累。"
+        : (state.hidden.credit ?? 0) < 0 || tags.has("missing_contribution")
+          ? "项目留下了成果，也留下了一个很难说清的“我们”。"
+          : (state.hidden.evidence ?? 0) >= 2 || (state.hidden.credit ?? 0) >= 1
+            ? "项目结束了。至少这一次，你做过的事没有完全消失在流程里。"
+            : "项目结束了。至少这一次，你做过的事没有完全消失在流程里。";
+  const c5 = tags.has("unclosed_relation") || (tags.has("private_place") && tags.has("distance_retreat"))
+    ? "关系没有真正结束，只是换成了消息、解释和等待。"
+    : tags.has("seen_by_friend") || (state.counters.seekHelp ?? 0) >= 2
+      ? "有几个人知道发生过什么。事情没有因此简单，但你不再完全独自拿着它。"
+      : (state.stats.safety ?? 0) >= 7 && (state.stats.relationship ?? STAT_MAX) <= 3
+        ? "你保护住了一部分自己。代价是很多时候，你只能自己判断自己是不是太紧张。"
+        : tags.has("distance_blurry") || tags.has("distance_retreat")
+          ? "关系还在。只是有些界线没有被说清，之后可能还要你继续解释。"
+          : "你靠近过，也退回来过。至少这一次，你没有把所有不舒服都留给自己。";
 
   return [
     `筛选：${c1}`,
@@ -218,6 +314,19 @@ export function buildChapterEchoLines(state) {
     `靠近：${c5}`,
     `窗口：${c6Lines[c6Outcome] ?? c6Lines.limited}`
   ];
+}
+
+export function getIntroEcho(card, state) {
+  const previousChapterIndex = {
+    C2: 0,
+    C3: 1,
+    C4: 2,
+    C5: 3,
+    C6: 4
+  }[card?.chapterId];
+
+  if (previousChapterIndex === undefined) return "";
+  return buildChapterEchoLines(state)[previousChapterIndex]?.replace(/^[^：]+：/, "") ?? "";
 }
 
 export function resolvePassStyle(state) {
@@ -242,7 +351,7 @@ export function resolvePassStyle(state) {
     };
   }
 
-  if (((state.stats.energy ?? STAT_MAX) <= DANGER_MAX && (state.stats.reputation ?? 0) >= 6) || tags.includes("default_filler") || tags.includes("invisible_labor")) {
+  if (((state.stats.energy ?? STAT_MAX) <= DANGER_MAX && (state.stats.reputation ?? 0) >= 6) || (counters.concede ?? 0) >= 5) {
     return {
       id: "overworked",
       label: "过劳通关",
@@ -258,7 +367,7 @@ export function resolvePassStyle(state) {
     };
   }
 
-  if ((state.stats.reputation ?? 0) >= 8 && (state.stats.self ?? STAT_MAX) <= 3 && ((counters.silence ?? 0) + (counters.concede ?? 0)) >= 2) {
+  if ((state.stats.reputation ?? 0) >= 8 && (state.stats.self ?? STAT_MAX) <= 3 && ((counters.silence ?? 0) + (counters.concede ?? 0)) >= 6) {
     return {
       id: "low-conflict",
       label: "低冲突通关",
@@ -266,7 +375,7 @@ export function resolvePassStyle(state) {
     };
   }
 
-  if ((state.stats.self ?? 0) >= 8 && (state.stats.energy ?? STAT_MAX) <= 4 && ((counters.explain ?? 0) + (counters.evidenceSaved ?? 0)) >= 3) {
+  if ((state.stats.self ?? 0) >= 8 && ((counters.explain ?? 0) + (counters.evidenceSaved ?? 0)) >= 6) {
     return {
       id: "appeal",
       label: "申诉通关",
@@ -426,6 +535,7 @@ export function startGame(state) {
 
 export function applyChoice(state, choice) {
   const card = getCardById(state.currentCardId);
+  const aftermath = getChoiceAftermath(state, choice);
 
   return {
     ...state,
@@ -437,7 +547,8 @@ export function applyChoice(state, choice) {
     pendingResult: {
       cardId: state.currentCardId,
       choiceId: choice.id,
-      text: choice.result
+      text: choice.result,
+      aftermath
     },
     history: [
       ...state.history,
@@ -482,6 +593,18 @@ function nextIdAfterCurrent(state) {
   if (currentCard?.insert && currentCard.trigger?.afterCardId) {
     return nextOrderedId(currentCard.trigger.afterCardId);
   }
+  if (state.currentCardId === "C3-04") {
+    return state.tags.includes("platform_trip") ? "C3-05" : "C3-06";
+  }
+  if (state.currentCardId === "C3-05" || state.currentCardId === "C3-06") {
+    return "C4-I";
+  }
+  if (state.currentCardId === "C4-04") {
+    return (state.hidden.conflict ?? 0) >= 2 || state.tags.includes("corrected_live") ? "C4-06" : "C4-07";
+  }
+  if (state.currentCardId === "C4-06" || state.currentCardId === "C4-07") {
+    return "C5-I";
+  }
   return nextOrderedId(state.currentCardId);
 }
 
@@ -513,9 +636,20 @@ function findInsert(state) {
 
 function findCrisis(state) {
   const triggered = state.triggeredCrises ?? [];
-  const stat = STAT_KEYS.find((key) => (state.stats[key] ?? STAT_MAX) <= DANGER_MAX && !triggered.includes(key));
+  if (triggered.length >= 2) return null;
+
+  const currentCard = getCardById(state.currentCardId);
+  const currentChapterId = currentCard?.chapterId ?? "";
+  if (triggered.some((entry) => entry.startsWith(`${currentChapterId}:`))) return null;
+
+  const hasTriggeredStat = (key) => triggered.some((entry) => entry === key || entry.endsWith(`:${key}`));
+  const stat = STAT_KEYS.find((key) => (state.stats[key] ?? STAT_MAX) <= DANGER_MAX && !hasTriggeredStat(key));
   if (!stat) return null;
   return CRISIS_CARDS.find((card) => card.stat === stat) ?? null;
+}
+
+function crisisKey(card, crisis) {
+  return `${card?.chapterId ?? "unknown"}:${crisis.stat}`;
 }
 
 function phaseForCard(card) {
@@ -523,6 +657,22 @@ function phaseForCard(card) {
   if (card?.type === "settlement") return "settlement";
   if (card?.type === "ending") return "ending";
   return "choice";
+}
+
+function resolveOutcomeState(state, currentCardId) {
+  if (currentCardId !== "C6-08" || state.chapterOutcomes?.C6) {
+    return state;
+  }
+
+  const outcome = resolveChapterOutcome("C6", state);
+  return {
+    ...state,
+    chapterOutcomes: {
+      ...state.chapterOutcomes,
+      C6: outcome
+    },
+    counters: addCounters(state.counters, outcome.counters)
+  };
 }
 
 export function advanceAfterResult(state) {
@@ -533,7 +683,8 @@ export function advanceAfterResult(state) {
   const crisis = !inserted && state.phase === "result" && !currentCard?.crisis ? findCrisis(state) : null;
   const nextId = crisis?.id ?? mainlineNextId;
   const nextCard = getCardById(nextId);
-  const resolvedState = resolveSettlementState(state, nextCard);
+  const outcomeState = resolveOutcomeState(state, state.currentCardId);
+  const resolvedState = resolveSettlementState(outcomeState, nextCard);
 
   return {
     ...resolvedState,
@@ -542,7 +693,7 @@ export function advanceAfterResult(state) {
     pendingResult: null,
     visibleStats: crisis ? state.visibleStats : getVisibleStatsForCard(nextCard),
     triggeredInserts: inserted ? [...state.triggeredInserts, inserted.id] : state.triggeredInserts,
-    triggeredCrises: crisis ? [...(state.triggeredCrises ?? []), crisis.stat] : state.triggeredCrises ?? [],
+    triggeredCrises: crisis ? [...(state.triggeredCrises ?? []), crisisKey(currentCard, crisis)] : state.triggeredCrises ?? [],
     returnCardId: crisis ? mainlineNextId : currentCard?.crisis ? null : state.returnCardId ?? null
   };
 }
