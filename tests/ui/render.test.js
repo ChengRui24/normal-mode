@@ -1,10 +1,22 @@
 // @vitest-environment jsdom
 
 import { afterEach, describe, expect, it, vi } from "vitest";
+import packageInfo from "../../package.json";
 import { createInitialState } from "../../src/core/initialState.js";
 import { advanceAfterResult, applyChoice, getViewedState, goToPreviousView, startGame } from "../../src/core/gameEngine.js";
 import { getCardById } from "../../src/data/levels.js";
 import { renderGame } from "../../src/ui/render.js";
+
+function todayRecordDate() {
+  return new Intl.DateTimeFormat("sv-SE", {
+    timeZone: "Asia/Singapore",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  })
+    .format(new Date())
+    .replaceAll("-", ".");
+}
 
 describe("renderGame", () => {
   afterEach(() => {
@@ -30,11 +42,11 @@ describe("renderGame", () => {
     expect(root.textContent).toContain("继续。");
     expect(root.textContent).toContain("没有标准答案。");
     expect(root.textContent).toContain("只有之后发生的事。");
-    expect(root.textContent).toContain("无需登录");
+    expect(root.textContent).not.toContain("无需登录");
     expect(root.textContent).toContain("建议竖屏");
     expect(root.textContent).toContain("序章 + 六章 + 终章");
     expect(root.textContent).toContain("约 10-15 分钟");
-    expect(root.textContent).toContain("记录版本：v0.8 · 2026.07.05");
+    expect(root.textContent).toContain(`记录版本：v${packageInfo.version} · ${todayRecordDate()}`);
     expect(root.querySelector(".restart-button")).toBe(null);
     expect(root.querySelector(".restart-text-button")).toBe(null);
     expect(root.querySelector(".stat-strip")).toBe(null);

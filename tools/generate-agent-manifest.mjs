@@ -1,6 +1,14 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname } from "node:path";
-import {
+import { getBuildMetadata } from "./buildMetadata.mjs";
+
+const outputPath = process.argv[2] ?? "public/agent-manifest.json";
+const buildMetadata = getBuildMetadata();
+
+globalThis.__NORMAL_MODE_VERSION__ = buildMetadata.version;
+globalThis.__NORMAL_MODE_BUILD_DATE__ = buildMetadata.recordDate;
+
+const {
   CRISIS_CARDS,
   ENDING_CARDS,
   INSERT_CARDS,
@@ -8,8 +16,8 @@ import {
   LEVEL_CARDS,
   SETTLEMENT_CARDS,
   orderedCardIds
-} from "../src/data/levels.js";
-import {
+} = await import("../src/data/levels.js");
+const {
   CHAPTER_VISIBLE_STATS,
   DANGER_MAX,
   HIDDEN_KEYS,
@@ -19,17 +27,15 @@ import {
   STAT_LABELS,
   STAT_MAX,
   STAT_MIN
-} from "../src/data/statConfig.js";
-import {
+} = await import("../src/data/statConfig.js");
+const {
   CHAPTER_ECHOES,
   HOME_CONTENT,
   RECORD_VERSION_DATE,
   REQUIREMENT_REASON_MAP,
   TEXT_VERSION
-} from "../src/data/textConfig.js";
-import { ENDING_SITUATIONS } from "../src/core/gameEngine.js";
-
-const outputPath = process.argv[2] ?? "public/agent-manifest.json";
+} = await import("../src/data/textConfig.js");
+const { ENDING_SITUATIONS } = await import("../src/core/gameEngine.js");
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));

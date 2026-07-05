@@ -1,5 +1,7 @@
-export const TEXT_VERSION = "0.8";
-export const RECORD_VERSION_DATE = "2026.07.05";
+export const TEXT_VERSION =
+  typeof globalThis.__NORMAL_MODE_VERSION__ === "string" ? globalThis.__NORMAL_MODE_VERSION__ : "0.0.0";
+export const RECORD_VERSION_DATE =
+  typeof globalThis.__NORMAL_MODE_BUILD_DATE__ === "string" ? globalThis.__NORMAL_MODE_BUILD_DATE__ : "0000.00.00";
 
 export const HOME_CONTENT = {
   "title": "普通难度",
@@ -14,7 +16,6 @@ export const HOME_CONTENT = {
     "只有之后发生的事。"
   ],
   "noteLine": [
-    "无需登录",
     "建议竖屏"
   ],
   "metaLines": [
@@ -23,7 +24,7 @@ export const HOME_CONTENT = {
       "约 10-15 分钟"
     ],
     [
-      "记录版本：v0.8 · 2026.07.05"
+      `记录版本：v${TEXT_VERSION} · ${RECORD_VERSION_DATE}`
     ]
   ],
   "buttonLabel": "开始"
