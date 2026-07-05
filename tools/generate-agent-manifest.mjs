@@ -29,7 +29,6 @@ function clone(value) {
 
 const manifest = {
   schemaVersion: "1.0.0",
-  generatedAt: new Date().toISOString(),
   project: {
     id: "normal-mode",
     title: "普通难度",
